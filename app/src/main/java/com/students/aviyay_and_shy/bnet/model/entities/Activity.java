@@ -9,7 +9,7 @@ public class Activity {
     String description;
     int businessId;
 
-    public ActivityType getActivityType() {
+    public ActivityType getType() {
         return activityType;
     }
 
