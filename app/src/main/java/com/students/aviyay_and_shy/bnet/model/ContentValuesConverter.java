@@ -3,8 +3,10 @@ package com.students.aviyay_and_shy.bnet.model;
 import android.content.ContentValues;
 
 import com.students.aviyay_and_shy.bnet.model.entities.Activity;
+import com.students.aviyay_and_shy.bnet.model.entities.ActivityType;
 import com.students.aviyay_and_shy.bnet.model.entities.Address;
 import com.students.aviyay_and_shy.bnet.model.entities.Business;
+import com.students.aviyay_and_shy.bnet.model.entities.DateTime;
 
 public class ContentValuesConverter {
 
@@ -17,6 +19,12 @@ public class ContentValuesConverter {
     private static final String ADDRESS_COUNTRY = "country";
     private static final String ADDRESS_CITY = "city";
     private static final String ADDRESS_STREET = "street";
+
+    private static final String ACTIVITY_DESCRIPTION = "description";
+    private static final String ACTIVITY_PRICE = "price";
+    private static final String ACTIVITY_START = "start";
+    private static final String ACTIVITY_END = "end";
+    private static final String ACTIVITY_TYPE = "type";
 
     public static ContentValues businessToContentValues(Business business) {
         ContentValues result = new ContentValues();
@@ -33,7 +41,7 @@ public class ContentValuesConverter {
 
         return result;
     }
-    public static Business contentValuesToBusiness(ContentValues contentValues) {
+    public static Business contentValuesToBusiness(ContentValues contentValues) throws Exception {
         Business result = new Business();
 
         result.setId(contentValues.getAsInteger(BUSINESS_ID));
@@ -50,12 +58,6 @@ public class ContentValuesConverter {
         return result;
     }
 
-    private static final String ACTIVITY_DESCRIPTION = "description";
-    private static final String ACTIVITY_PRICE = "price";
-    private static final String ACTIVITY_START = "start";
-    private static final String ACTIVITY_END = "end";
-    private static final String ACTIVITY_TYPE = "type";
-
     public static ContentValues activityToContentValues(Activity activity) {
         ContentValues result = new ContentValues();
 
@@ -63,10 +65,22 @@ public class ContentValuesConverter {
         result.put(BUSINESS_ID, activity.getBusinessId());
         result.put(ACTIVITY_DESCRIPTION, activity.getDescription());
         result.put(ACTIVITY_PRICE, activity.getPrice());
-
         result.put(ACTIVITY_START, activity.getStart().format());
         result.put(ACTIVITY_END, activity.getEnd().format());
         result.put(ACTIVITY_TYPE, String.valueOf(activity.getType()));
+
+        return result;
+    }
+    public static Activity contentValuesToActivity(ContentValues contentValues) throws Exception{
+        Activity result = new Activity();
+
+        result.setCountry(contentValues.getAsString(ADDRESS_COUNTRY));
+        result.setBusinessId(contentValues.getAsInteger(BUSINESS_ID));
+        result.setDescription(contentValues.getAsString(ACTIVITY_DESCRIPTION));
+        result.setPrice(contentValues.getAsDouble(ACTIVITY_PRICE));
+        result.setStart(DateTime.parse(contentValues.getAsString(ACTIVITY_START)));
+        result.setEnd(DateTime.parse(contentValues.getAsString(ACTIVITY_END)));
+        result.setType(ActivityType.valueOf(contentValues.getAsString(ACTIVITY_TYPE)));
 
         return result;
     }

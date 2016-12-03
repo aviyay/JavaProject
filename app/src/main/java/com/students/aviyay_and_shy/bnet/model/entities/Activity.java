@@ -13,7 +13,7 @@ public class Activity {
         return activityType;
     }
 
-    public void setActivityType(ActivityType activityType) {
+    public void setType(ActivityType activityType) {
         this.activityType = activityType;
     }
 

@@ -1,5 +1,7 @@
 package com.students.aviyay_and_shy.bnet.model.entities;
 
+import java.lang.reflect.InvocationTargetException;
+import java.text.ParseException;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -54,22 +56,40 @@ public class DateTime {
         return String.format("%d:%d %s/%s/%s", getHour(), getMinute(), getDay(), getMonth(), getYear());
     }
 
-    public static DateTime parse (String formattedDateTime) throws Exception{
+    public static DateTime parse (String formattedDateTime) throws ParseException{
         DateTime result = new DateTime();
-        Pattern pattern = Pattern.compile("\\d+");
+        Pattern pattern = Pattern.compile("(\\d+):(\\d+) (\\d+)/(\\d+)/(\\d+)");
         Matcher matcher = pattern.matcher(formattedDateTime);
 
-        boolean resul = matcher.matches();
+        try {
+            matcher.matches();
 
-        int a = Integer.parseInt(matcher.group(1));
-        return resul ? new DateTime() : null;
+            result.setYear(Integer.parseInt(matcher.group(5)));
+            result.setMonth(Integer.parseInt(matcher.group(4)));
+            result.setDay(Integer.parseInt(matcher.group(3)));
+            result.setHour(Integer.parseInt(matcher.group(1)));
+            result.setMinute(Integer.parseInt(matcher.group(2)));
 
-        /*result.setYear(Integer.parseInt(1));
-        result.setMonth(Integer.parseInt(matcher.group(1)));
-        result.setDay(Integer.parseInt(matcher.group(1)));
-        result.setHour(Integer.parseInt(matcher.group(1)));
-        result.setMinute(Integer.parseInt(matcher.group(1)));
+            return result;
+        }
+        catch (Exception e) {
+            throw new ParseException("Invalid input, should be in the pattern hh:hh dd/MM/yyyy", 0);
+        }
+    }
 
-        return result;*/
+    @Override
+    public boolean equals(Object obj) {
+
+        if (!(obj instanceof DateTime))
+            return false;
+
+        DateTime other = (DateTime)obj;
+
+        return format().equals(other.format());
+    }
+
+    @Override
+    public int hashCode() {
+        return format().hashCode();
     }
 }

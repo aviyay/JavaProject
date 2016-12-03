@@ -2,8 +2,11 @@ package com.students.aviyay_and_shy.bnet.model;
 
 import android.content.ContentValues;
 
+import com.students.aviyay_and_shy.bnet.model.entities.Activity;
+import com.students.aviyay_and_shy.bnet.model.entities.ActivityType;
 import com.students.aviyay_and_shy.bnet.model.entities.Address;
 import com.students.aviyay_and_shy.bnet.model.entities.Business;
+import com.students.aviyay_and_shy.bnet.model.entities.DateTime;
 
 import org.junit.Test;
 
@@ -41,4 +44,29 @@ public class ContentValuesConverterTest {
         assertEquals(business.getAddress().getStreet(),result.getAddress().getStreet());
     }
 
+    @Test
+    public void activityToContentValuesAndBack() throws Exception {
+        Activity activity = new Activity();
+        DateTime start = DateTime.parse("8:15 7/8/2016");
+        DateTime end = DateTime.parse("21:00 7/8/2016");
+
+        activity.setBusinessId(1);
+        activity.setCountry("Israel");
+        activity.setPrice(53.5);
+        activity.setDescription("Test activity");
+        activity.setType(ActivityType.AIRLINE);
+        activity.setStart(start);
+        activity.setEnd(end);
+
+        ContentValues contentValues = ContentValuesConverter.activityToContentValues(activity);
+        Activity result = ContentValuesConverter.contentValuesToActivity(contentValues);
+
+        assertEquals(activity.getCountry(), result.getCountry());
+        assertEquals(activity.getBusinessId(), result.getBusinessId());
+        assertEquals(activity.getDescription(), result.getDescription());
+        assertEquals(activity.getPrice(), result.getPrice(), 0.00001);
+        assertEquals(activity.getType(), result.getType());
+        assertEquals(activity.getStart(), result.getStart());
+        assertEquals(activity.getEnd(), result.getEnd());
+    }
 }
