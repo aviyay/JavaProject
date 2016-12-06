@@ -6,12 +6,16 @@ import android.content.UriMatcher;
 import android.database.Cursor;
 import android.database.MatrixCursor;
 import android.net.Uri;
+import android.webkit.MimeTypeMap;
 
 import com.bnet.data.model.backend.Database;
 import com.bnet.data.model.backend.DatabaseFactory;
 import com.bnet.data.model.entities.Activity;
 import com.bnet.data.model.entities.Business;
 
+import java.lang.reflect.Constructor;
+import java.net.URI;
+import java.text.ParseException;
 import java.util.List;
 
 public class DataProvider extends ContentProvider {
@@ -30,6 +34,11 @@ public class DataProvider extends ContentProvider {
     }
 
     @Override
+    public boolean onCreate() {
+        return true;
+    }
+
+    @Override
     public int delete(Uri uri, String selection, String[] selectionArgs) {
 
         // Implement this to handle requests to delete one or more rows.
@@ -38,21 +47,42 @@ public class DataProvider extends ContentProvider {
 
     @Override
     public String getType(Uri uri) {
-        // TODO: Implement this to handle requests for the MIME type of the data
-        // at the given URI.
-        throw new UnsupportedOperationException("Not yet implemented");
+        final String MIME_PREFIX = "vnd.android.cursor.dir/vnd." + AUTHORITY;
+        switch (uriMatcher.match(uri)) {
+            case ACTIVITIES:
+                return MIME_PREFIX + ".activities";
+            case BUSINESSES:
+                return MIME_PREFIX + ".businesses";
+            default:
+                throw new IllegalArgumentException("No Such Entity");
+        }
     }
 
     @Override
     public Uri insert(Uri uri, ContentValues values) {
-        // TODO: Implement this to handle requests to insert a new row.
-        throw new UnsupportedOperationException("Not yet implemented");
-    }
+        try {
+            int id;
 
-    @Override
-    public boolean onCreate() {
-        // TODO: Implement this to initialize your content provider on startup.
-        return false;
+            switch (uriMatcher.match(uri)) {
+                case ACTIVITIES:
+                    Activity activity = ContentValuesConverter.contentValuesToActivity(values);
+                    db.addActivity(activity);
+                    id = activity.getId();
+                    break;
+                case BUSINESSES:
+                    Business business = ContentValuesConverter.contentValuesToBusiness(values);
+                    db.addBusiness(business);
+                    id = business.getId();
+                    break;
+                default:
+                    throw new IllegalArgumentException("No Such Entity");
+            }
+
+            return Uri.withAppendedPath(uri, "" + id);
+        }
+        catch (Exception e) {
+            throw new IllegalArgumentException("values is not an activity");
+        }
     }
 
     @Override
@@ -64,7 +94,7 @@ public class DataProvider extends ContentProvider {
             case BUSINESSES:
                 return businessesToCursor();
             default:
-                return null;
+                throw new IllegalArgumentException("No Such Entity");
         }
     }
 
