@@ -1,6 +1,7 @@
 package com.bnet.data.model.entities;
 
 public class Activity {
+    private int id;
     private ActivityType activityType;
     private String country;
     private DateTime start;
@@ -8,6 +9,14 @@ public class Activity {
     private double price;
     private String description;
     private int businessId;
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
 
     public ActivityType getType() {
         return activityType;
@@ -64,4 +73,5 @@ public class Activity {
     public void setBusinessId(int businessId) {
         this.businessId = businessId;
     }
+
 }

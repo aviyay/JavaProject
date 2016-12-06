@@ -10,7 +10,7 @@ import com.bnet.data.model.entities.DateTime;
 
 class ContentValuesConverter {
 
-    private static final String BUSINESS_ID = "id";
+    private static final String BUSINESS_ID = "business_id";
     private static final String BUSINESS_NAME = "name";
     private static final String BUSINESS_EMAIL = "email";
     private static final String BUSINESS_PHONE = "phone";
@@ -20,6 +20,7 @@ class ContentValuesConverter {
     private static final String ADDRESS_CITY = "city";
     private static final String ADDRESS_STREET = "street";
 
+    private static final String ACTIVITY_ID = "activity_id";
     private static final String ACTIVITY_DESCRIPTION = "description";
     private static final String ACTIVITY_PRICE = "price";
     private static final String ACTIVITY_START = "start";
@@ -61,6 +62,7 @@ class ContentValuesConverter {
     static ContentValues activityToContentValues(Activity activity) {
         ContentValues result = new ContentValues();
 
+        result.put(ACTIVITY_ID, activity.getId());
         result.put(ADDRESS_COUNTRY, activity.getCountry());
         result.put(BUSINESS_ID, activity.getBusinessId());
         result.put(ACTIVITY_DESCRIPTION, activity.getDescription());
@@ -74,6 +76,7 @@ class ContentValuesConverter {
     static Activity contentValuesToActivity(ContentValues contentValues) throws Exception{
         Activity result = new Activity();
 
+        result.setId(contentValues.getAsInteger(ACTIVITY_ID));
         result.setCountry(contentValues.getAsString(ADDRESS_COUNTRY));
         result.setBusinessId(contentValues.getAsInteger(BUSINESS_ID));
         result.setDescription(contentValues.getAsString(ACTIVITY_DESCRIPTION));

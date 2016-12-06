@@ -50,6 +50,7 @@ public class ContentValuesConverterTest {
         DateTime start = DateTime.parse("8:15 7/8/2016");
         DateTime end = DateTime.parse("21:00 7/8/2016");
 
+        activity.setId(2);
         activity.setBusinessId(1);
         activity.setCountry("Israel");
         activity.setPrice(53.5);
@@ -61,6 +62,7 @@ public class ContentValuesConverterTest {
         ContentValues contentValues = ContentValuesConverter.activityToContentValues(activity);
         Activity result = ContentValuesConverter.contentValuesToActivity(contentValues);
 
+        assertEquals(activity.getId(), result.getId());
         assertEquals(activity.getCountry(), result.getCountry());
         assertEquals(activity.getBusinessId(), result.getBusinessId());
         assertEquals(activity.getDescription(), result.getDescription());
