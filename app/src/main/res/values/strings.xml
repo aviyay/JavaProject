@@ -1,3 +1,12 @@
 <resources>
     <string name="app_name">BNet</string>
+    <string name="main_header">BNet Database</string>
+    <string name="username_label">Username</string>
+    <string name="password_label">Password</string>
+    <string name="login_label">Sign in</string>
+    <string name="register_label">Register</string>
+    <string name="empty_fields_msg">Some of the fields are empty!</string>
+    <string name="username_is_taken_msg">Username is already taken!</string>
+    <string name="password_or_username_incorrect">Password or Username Incorrect</string>
+
 </resources>
