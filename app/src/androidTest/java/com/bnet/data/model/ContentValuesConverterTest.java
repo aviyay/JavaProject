@@ -15,20 +15,7 @@ import static org.junit.Assert.*;
 public class ContentValuesConverterTest {
     @Test
     public void businessToContentValuesAndBack() throws Exception {
-        Business business = new Business();
-        Address address = new Address();
-
-        business.setId(1);
-        business.setName("Name");
-        business.setEmail("email@gmail.com");
-        business.setLinkToWebsite("www.website.com");
-        business.setPhone("052-555-3322");
-
-        address.setCountry("Israel");
-        address.setCity("Jerusalem");
-        address.setStreet("Havad Haleumi");
-
-        business.setAddress(address);
+        Business business = EntitiesSamples.getBusiness();
 
         ContentValues contentValues = ContentValuesConverter.businessToContentValues(business);
         Business result = ContentValuesConverter.contentValuesToBusiness(contentValues);
@@ -46,18 +33,7 @@ public class ContentValuesConverterTest {
 
     @Test
     public void activityToContentValuesAndBack() throws Exception {
-        Activity activity = new Activity();
-        DateTime start = DateTime.parse("8:15 7/8/2016");
-        DateTime end = DateTime.parse("21:00 7/8/2016");
-
-        activity.setId(2);
-        activity.setBusinessId(1);
-        activity.setCountry("Israel");
-        activity.setPrice(53.5);
-        activity.setDescription("Test activity");
-        activity.setType(ActivityType.AIRLINE);
-        activity.setStart(start);
-        activity.setEnd(end);
+        Activity activity = EntitiesSamples.getActivity();
 
         ContentValues contentValues = ContentValuesConverter.activityToContentValues(activity);
         Activity result = ContentValuesConverter.contentValuesToActivity(contentValues);

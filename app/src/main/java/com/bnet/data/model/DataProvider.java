@@ -6,17 +6,11 @@ import android.content.UriMatcher;
 import android.database.Cursor;
 import android.database.MatrixCursor;
 import android.net.Uri;
-import android.webkit.MimeTypeMap;
 
 import com.bnet.data.model.backend.Database;
 import com.bnet.data.model.backend.DatabaseFactory;
 import com.bnet.data.model.entities.Activity;
 import com.bnet.data.model.entities.Business;
-
-import java.lang.reflect.Constructor;
-import java.net.URI;
-import java.text.ParseException;
-import java.util.List;
 
 public class DataProvider extends ContentProvider {
     Database db = DatabaseFactory.getDatabase();
@@ -43,7 +37,7 @@ public class DataProvider extends ContentProvider {
 
         // Implement this to handle requests to delete one or more rows.
         throw new UnsupportedOperationException("Not yet implemented");
-    }
+}
 
     @Override
     public String getType(Uri uri) {
