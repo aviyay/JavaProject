@@ -1,6 +1,7 @@
 package com.bnet.data.controller;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
@@ -20,8 +21,8 @@ public class MainActivity extends Activity {
     }
     private void initializeButtons()
     {
-        initializeSignInButton();
         initializeRegisterButton();
+        initializeSignInButton();
     }
 
     private void initializeRegisterButton() {
@@ -44,7 +45,7 @@ public class MainActivity extends Activity {
     }
 
     private void initializeSignInButton() {
-        findViewById(R.id.signInButton).setOnClickListener(new View.OnClickListener() {
+       findViewById(R.id.signInButton).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if(!validateFields())
@@ -72,7 +73,6 @@ public class MainActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         setContentView(R.layout.activity_main);
         usernameField=(EditText)findViewById(R.id.usernameField);
         passwordField=(EditText)findViewById(R.id.passwordField);
@@ -80,7 +80,9 @@ public class MainActivity extends Activity {
     }
 
     private void doSignIn(Account item) {
-        Toast.makeText(getApplicationContext(), "TEMP: Signed in - "+ item.getUsername(), Toast.LENGTH_SHORT).show();
+       Toast.makeText(getApplicationContext(), "TEMP: Signed in - "+ item.getUsername(), Toast.LENGTH_SHORT).show();
+        Intent k = new Intent(this, Menu.class);
+        startActivity(k);
     }
 
 }

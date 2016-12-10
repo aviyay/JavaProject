@@ -8,5 +8,14 @@
     <string name="empty_fields_msg">Some of the fields are empty!</string>
     <string name="username_is_taken_msg">Username is already taken!</string>
     <string name="password_or_username_incorrect">Password or Username Incorrect</string>
+    <string name="add_business_button">Add Business</string>
+    <string name="add_activity_button">Add Activity</string>
+    <string name="title_activity_view_business">Busniesss</string>
+    <string name="business_name_hint">Name</string>
+    <string name="business_address_hint">Address</string>
+    <string name="business_phone_hint">Phone Number</string>
+    <string name="business_email_hint">Email</string>
+    <string name="business_website_hint">Website</string>
+    <string name="submit_button_string">Submit</string>
 
 </resources>

@@ -20,7 +20,24 @@
             android:name=".model.DataProvider"
             android:authorities="com.bnet.provider"
             android:enabled="true"
-            android:exported="true"></provider>
+            android:exported="true" />
+
+        <activity
+            android:name=".controller.Menu"
+            android:parentActivityName=".controller.MainActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.bnet.data.controller.MainActivity" />
+        </activity>
+        <activity
+            android:name=".controller.ViewBusiness"
+            android:label="@string/title_activity_view_business"
+            android:parentActivityName=".controller.Menu">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.bnet.data.controller.Menu" />
+        </activity>
+        <activity android:name=".controller.BusinessEditor"></activity>
     </application>
 
 </manifest>
