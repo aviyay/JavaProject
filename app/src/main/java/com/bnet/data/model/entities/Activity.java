@@ -1,6 +1,8 @@
 package com.bnet.data.model.entities;
 
-public class Activity {
+import com.bnet.data.model.backend.Providable;
+
+public class Activity implements Providable {
     private int id;
     private ActivityType activityType;
     private String country;
@@ -10,10 +12,12 @@ public class Activity {
     private String description;
     private int businessId;
 
+    @Override
     public int getId() {
         return id;
     }
 
+    @Override
     public void setId(int id) {
         this.id = id;
     }
@@ -73,5 +77,4 @@ public class Activity {
     public void setBusinessId(int businessId) {
         this.businessId = businessId;
     }
-
 }

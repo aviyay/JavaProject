@@ -1,6 +1,8 @@
 package com.bnet.data.model.entities;
 
-public class Business {
+import com.bnet.data.model.backend.Providable;
+
+public class Business implements Providable {
     private int id;
     private String name;
     private Address address;
@@ -8,10 +10,12 @@ public class Business {
     private String email;
     private String linkToWebsite;
 
+    @Override
     public int getId() {
         return id;
     }
 
+    @Override
     public void setId(int id) {
         this.id = id;
     }
