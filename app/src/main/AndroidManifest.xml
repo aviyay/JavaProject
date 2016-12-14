@@ -37,7 +37,15 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.bnet.data.controller.Menu" />
         </activity>
-        <activity android:name=".controller.BusinessEditor"></activity>
+        <activity android:name=".controller.BusinessEditor" />
+        <activity
+            android:name=".controller.ActivityEditor"
+            android:label="@string/title_activity_editor"
+            android:parentActivityName=".controller.Menu">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.bnet.data.controller.Menu" />
+        </activity>
     </application>
 
 </manifest>

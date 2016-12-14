@@ -15,6 +15,17 @@ public class Business implements Providable {
         return id;
     }
 
+    public Business(String name, Address address, String phone, String email, String linkToWebsite) {
+        this.name = name;
+        this.address = address;
+        this.phone = phone;
+        this.email = email;
+        this.linkToWebsite = linkToWebsite;
+    }
+public  Business()
+{
+
+}
     @Override
     public void setId(int id) {
         this.id = id;
