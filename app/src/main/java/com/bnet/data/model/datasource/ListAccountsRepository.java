@@ -23,6 +23,6 @@ public class ListAccountsRepository implements AccountsRepository {
 
     @Override
     public List<Account> getAll() {
-        return (List<Account>) accounts.values();
+        return new ArrayList<>(accounts.values());
     }
 }
