@@ -17,5 +17,9 @@
     <string name="business_email_hint">Email</string>
     <string name="business_website_hint">Website</string>
     <string name="submit_button_string">Submit</string>
+    <string name="title_activity_editor">Activity Editor</string>
+    <string name="country">Country</string>
+    <string name="city">City</string>
+    <string name="street">Street</string>
 
 </resources>

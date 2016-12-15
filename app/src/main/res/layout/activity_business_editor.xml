@@ -34,27 +34,33 @@
         android:layout_alignParentStart="true" />
 
     <EditText
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:inputType="textPostalAddress"
-        android:id="@+id/addressField"
+        android:id="@+id/countryField"
         android:layout_below="@id/nameField"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:hint="@string/business_address_hint"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true" />
+        android:hint="@string/country" />
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:inputType="textPostalAddress"
+        android:id="@+id/cityField"
+        android:layout_below="@id/countryField"
+        android:hint="@string/city" />
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:inputType="textPostalAddress"
+        android:id="@+id/streetField"
+        android:layout_below="@id/cityField"
+        android:hint="@string/street" />
 
     <EditText
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:inputType="phone"
         android:id="@+id/phoneField"
-        android:layout_below="@id/addressField"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true"
+        android:layout_below="@id/streetField"
         android:hint="@string/business_phone_hint" />
 
     <EditText
@@ -70,15 +76,11 @@ android:layout_below="@id/phoneField"
         android:hint="@string/business_email_hint" />
 
     <EditText
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:inputType="textWebEditText"
         android:layout_below="@id/emailField"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
         android:id="@+id/websiteField"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true"
         android:hint="@string/business_website_hint" />
 
     <Button
