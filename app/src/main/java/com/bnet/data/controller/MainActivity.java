@@ -2,8 +2,11 @@ package com.bnet.data.controller;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.view.View;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.Toast;
 
@@ -74,15 +77,29 @@ public class MainActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
+        SharedPreferences.Editor editor =  sharedPreferences.edit();
+        if(sharedPreferences.getBoolean("isLogIn",false))
+            goToMenu();
         usernameField=(EditText)findViewById(R.id.usernameField);
         passwordField=(EditText)findViewById(R.id.passwordField);
         initializeButtons();
     }
 
-    private void doSignIn(Account item) {
-       Toast.makeText(getApplicationContext(), "TEMP: Signed in - "+ item.getUsername(), Toast.LENGTH_SHORT).show();
+    private void goToMenu() {
         Intent k = new Intent(this, Menu.class);
         startActivity(k);
+    }
+
+    private void doSignIn(Account item) {
+        if(((CheckBox)findViewById(R.id.checkBox)).isChecked()) {
+            SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
+            SharedPreferences.Editor editor = sharedPreferences.edit();
+            editor.putBoolean("isLogIn", true);
+            editor.commit();
+        }
+            Toast.makeText(getApplicationContext(), "TEMP: Signed in - "+ item.getUsername(), Toast.LENGTH_SHORT).show();
+        goToMenu();
     }
 
 }

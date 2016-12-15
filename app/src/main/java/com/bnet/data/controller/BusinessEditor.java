@@ -1,7 +1,9 @@
 package com.bnet.data.controller;
 
 import android.app.Activity;
+import android.os.AsyncTask;
 import android.os.Bundle;
+import android.provider.ContactsContract;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -17,9 +19,13 @@ public class BusinessEditor extends Activity {
     private boolean isEmpty(EditText etText) {
         return etText.getText().toString().trim().length() == 0;
     }
+    private String getText(EditText editText) throws Exception {
+        assertField(editText);
+        return editText.getText().toString();
+    }
     private void assertField(EditText text) throws Exception {
         if(isEmpty(text))
-            throw new  Exception("The field "+text.getHint()+ "can't be empty!");
+            throw new  Exception("The field "+text.getHint()+ " can't be empty!");
     }
     void initializeSubmit()
     {
@@ -27,21 +33,40 @@ public class BusinessEditor extends Activity {
             @Override
             public void onClick(View v) {
                 try {
-                    assertField(nameField);
-                    assertField(countryField);
-                    assertField(cityField);
-                    assertField(streetField);
-                    assertField(phoneField);
-                    assertField(emailField);
-                    assertField(websiteField);
+                    Business bis=new Business();
+                    bis.setName(getText(nameField));
+                    bis.setAddress(new Address(getText(countryField),getText(cityField),getText(streetField)));
+                    bis.setPhone(getText(phoneField));
+                    bis.setEmail(getText(emailField));
+                    bis.setLinkToWebsite(getText(websiteField));
+                    new AsyncTask<Business,Void,Void>()
+                    {
+                        @Override
+                        protected void onPreExecute() {
+                            super.onPreExecute();
+                            Toast.makeText(getApplicationContext(), R.string.connecting_to_server, Toast.LENGTH_SHORT).show();
+                        }
 
-                    DatabaseFactory.getDatabase().addBusiness(new Business(nameField.getText().toString(), new Address(countryField.getText().toString(),cityField.getText().toString(),streetField.getText().toString()),
-                            phoneField.getText().toString(),emailField.getText().toString(),websiteField.getText().toString()));
-                    Toast.makeText(getApplicationContext(), "TEMP: Business "+nameField.getText().toString()+" was created", Toast.LENGTH_SHORT).show();
+                        @Override
+                        protected Void doInBackground(Business... params) {
+                            DatabaseFactory.getDatabase().addBusiness(params[0]);
+                            return null;
+
+                        }
+                        @Override
+                        protected void onPostExecute(Void aVoid) {
+                            super.onPostExecute(aVoid);
+                            Toast.makeText(getApplicationContext(), "TEMP: Business was added", Toast.LENGTH_SHORT).show();
+                            finish();
+
+
+                        }
+                    }.execute(bis);
+
                 }
                 catch (Exception ex)
                 {
-                    Toast.makeText(getApplicationContext(), "Error: "+ex.getMessage(), Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), getString(R.string.error_header)+ex.getMessage(), Toast.LENGTH_SHORT).show();
 
                 }
             }
@@ -61,5 +86,7 @@ public class BusinessEditor extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_business_editor);
+        initializeFields();
+        initializeSubmit();
     }
 }
