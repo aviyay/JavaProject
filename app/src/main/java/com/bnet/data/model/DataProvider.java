@@ -42,7 +42,6 @@ public class DataProvider extends ContentProvider {
         return true;
     }
 
-
     @Override
     public Uri insert(Uri uri, ContentValues values) {
         int id;

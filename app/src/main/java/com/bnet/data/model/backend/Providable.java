@@ -1,18 +1,18 @@
 package com.bnet.data.model.backend;
 
 import android.content.ContentValues;
-
-import com.bnet.data.model.entities.Activity;
+import android.database.Cursor;
 
 import java.util.List;
 
-public interface Providable {
+public interface Providable<T extends Providable> {
     int getId();
     void setId(int id);
 
     String getURIPath();
 
-    ProvidableRepository getRepository();
+    ProvidableRepository<T> getRepository();
 
-    Providable fromContentValues(ContentValues contentValues);
+    T fromContentValues(ContentValues contentValues);
+
 }

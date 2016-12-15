@@ -7,7 +7,7 @@ import com.bnet.data.model.backend.Providable;
 import com.bnet.data.model.backend.ProvidableRepository;
 import com.bnet.data.model.backend.RepositoriesFactory;
 
-public class Business implements Providable {
+public class Business implements Providable<Business> {
     private int id = -1;
     private String name;
     private Address address;
@@ -43,12 +43,12 @@ public class Business implements Providable {
     }
 
     @Override
-    public ProvidableRepository getRepository() {
+    public ProvidableRepository<Business> getRepository() {
         return RepositoriesFactory.getBusinessesRepository();
     }
 
     @Override
-    public Providable fromContentValues(ContentValues contentValues) {
+    public Business fromContentValues(ContentValues contentValues) {
         try {
             return ContentValuesConverter.contentValuesToBusiness(contentValues);
         } catch (Exception e) {
