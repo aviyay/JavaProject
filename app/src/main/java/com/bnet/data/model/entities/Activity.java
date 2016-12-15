@@ -7,7 +7,7 @@ import com.bnet.data.model.backend.Providable;
 import com.bnet.data.model.backend.ProvidableRepository;
 import com.bnet.data.model.backend.RepositoriesFactory;
 
-public class Activity implements Providable {
+public class Activity implements Providable<Activity> {
     private int id = -1;
     private ActivityType activityType;
     private String country;
@@ -33,12 +33,12 @@ public class Activity implements Providable {
     }
 
     @Override
-    public ProvidableRepository getRepository() {
+    public ProvidableRepository<Activity> getRepository() {
         return RepositoriesFactory.getActivitiesRepository();
     }
 
     @Override
-    public Providable fromContentValues(ContentValues contentValues) {
+    public Activity fromContentValues(ContentValues contentValues) {
         try {
             return ContentValuesConverter.contentValuesToActivity(contentValues);
         } catch (Exception e) {

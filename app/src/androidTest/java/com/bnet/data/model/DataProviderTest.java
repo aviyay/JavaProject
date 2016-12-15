@@ -17,11 +17,11 @@ public class DataProviderTest {
     private static final String URI_PREFIX = "content://" + DataProvider.AUTHORITY + "/";
     private static final String ACTIVITIES_POSTFIX = "activities";
     private static final String BUSINESSES_POSTFIX = "businesses";
+
     @Before
     public void setUp() throws Exception {
         provider = new DataProvider();
     }
-
 
     @Test
     public void insertActivity() throws Exception {
