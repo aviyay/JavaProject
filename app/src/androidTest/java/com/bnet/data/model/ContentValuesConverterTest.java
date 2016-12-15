@@ -3,10 +3,8 @@ package com.bnet.data.model;
 import android.content.ContentValues;
 
 import com.bnet.data.model.entities.Activity;
-import com.bnet.data.model.entities.ActivityType;
-import com.bnet.data.model.entities.Address;
 import com.bnet.data.model.entities.Business;
-import com.bnet.data.model.entities.DateTime;
+import com.bnet.data.model.entities.EntitiesSamples;
 
 import org.junit.Test;
 

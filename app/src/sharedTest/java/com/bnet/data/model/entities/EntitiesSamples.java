@@ -1,14 +1,8 @@
-package com.bnet.data.model;
-
-import com.bnet.data.model.entities.Activity;
-import com.bnet.data.model.entities.ActivityType;
-import com.bnet.data.model.entities.Address;
-import com.bnet.data.model.entities.Business;
-import com.bnet.data.model.entities.DateTime;
+package com.bnet.data.model.entities;
 
 import java.text.ParseException;
 
-class EntitiesSamples {
+public class EntitiesSamples {
     private static Business business;
     private static Activity activity;
 
