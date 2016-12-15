@@ -8,7 +8,7 @@ import com.bnet.data.model.entities.Address;
 import com.bnet.data.model.entities.Business;
 import com.bnet.data.model.entities.DateTime;
 
-class ContentValuesConverter {
+public class ContentValuesConverter {
 
     private static final String BUSINESS_ID = "business_id";
     private static final String BUSINESS_NAME = "name";
@@ -42,7 +42,7 @@ class ContentValuesConverter {
 
         return result;
     }
-    static Business contentValuesToBusiness(ContentValues contentValues) throws Exception {
+    public static Business contentValuesToBusiness(ContentValues contentValues) throws Exception {
         Business result = new Business();
 
         result.setId(contentValues.getAsInteger(BUSINESS_ID));
@@ -73,7 +73,7 @@ class ContentValuesConverter {
 
         return result;
     }
-    static Activity contentValuesToActivity(ContentValues contentValues) throws Exception{
+    public static Activity contentValuesToActivity(ContentValues contentValues) throws Exception{
         Activity result = new Activity();
 
         result.setId(contentValues.getAsInteger(ACTIVITY_ID));

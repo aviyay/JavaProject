@@ -3,6 +3,8 @@ import android.content.ContentUris;
 import android.content.ContentValues;
 import android.net.Uri;
 import com.bnet.data.model.entities.Activity;
+import com.bnet.data.model.entities.Business;
+import com.bnet.data.model.entities.EntitiesSamples;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -20,20 +22,6 @@ public class DataProviderTest {
         provider = new DataProvider();
     }
 
-    @Test
-    public void GetType() throws Exception {
-        getTypeTestHelper(ACTIVITIES_POSTFIX);
-        getTypeTestHelper(BUSINESSES_POSTFIX);
-    }
-
-    private void getTypeTestHelper(String entityType) {
-        Uri uri = Uri.parse(URI_PREFIX + entityType);
-
-        String expected = "vnd.android.cursor.dir/vnd.com.bnet.provider." + entityType;
-        String result = provider.getType(uri);
-
-        assertEquals(expected, result);
-    }
 
     @Test
     public void insertActivity() throws Exception {
@@ -41,22 +29,20 @@ public class DataProviderTest {
         ContentValues values = ContentValuesConverter.activityToContentValues(activity);
         Uri result = provider.insert(Uri.parse(URI_PREFIX + ACTIVITIES_POSTFIX), values);
 
-        assertEquals(2, ContentUris.parseId(result));
+        assertEquals(0, ContentUris.parseId(result));
+    }
+
+    @Test
+    public void insertBusiness() throws Exception {
+        Business business = EntitiesSamples.getBusiness();
+        ContentValues values = ContentValuesConverter.businessToContentValues(business);
+        Uri result = provider.insert(Uri.parse(URI_PREFIX + BUSINESSES_POSTFIX), values);
+
+        assertEquals(0, ContentUris.parseId(result));
     }
 
     @Test
     public void query() throws Exception {
 
     }
-
-    @Test
-    public void delete() throws Exception {
-
-    }
-
-    @Test
-    public void update() throws Exception {
-
-    }
-
 }

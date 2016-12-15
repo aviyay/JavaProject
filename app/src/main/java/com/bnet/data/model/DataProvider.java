@@ -9,74 +9,49 @@ import android.net.Uri;
 
 import com.bnet.data.model.backend.Database;
 import com.bnet.data.model.backend.DatabaseFactory;
+import com.bnet.data.model.backend.Providable;
 import com.bnet.data.model.entities.Activity;
 import com.bnet.data.model.entities.Business;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import static com.bnet.data.model.DataProvider.registerProvidable;
+
 public class DataProvider extends ContentProvider {
-    Database db = DatabaseFactory.getDatabase();
-
+    private static final Database db = DatabaseFactory.getDatabase();
     public static final String AUTHORITY = "com.bnet.provider";
-
-    private static final int ACTIVITIES = 1;
-    private static final int BUSINESSES = 2;
-
+    private static final ArrayList<Providable> providableList = new ArrayList<>();
     private static final UriMatcher uriMatcher = new UriMatcher(UriMatcher.NO_MATCH);
 
-    static {
-        uriMatcher.addURI(AUTHORITY, "activities", ACTIVITIES);
-        uriMatcher.addURI(AUTHORITY, "businesses", BUSINESSES);
+    private static final int ACTIVITIES = 0;
+    private static final int BUSINESSES = 1;
+
+    public static void registerProvidable(Providable providable) {
+        providableList.add(providable);
+        uriMatcher.addURI(AUTHORITY, providable.getURIPath(), providableList.indexOf(providable));
     }
 
     @Override
     public boolean onCreate() {
+        if (providableList.size() == 0) {
+            registerProvidable(new Activity());
+            registerProvidable(new Business());
+        }
+
         return true;
     }
 
-    @Override
-    public int delete(Uri uri, String selection, String[] selectionArgs) {
-
-        // Implement this to handle requests to delete one or more rows.
-        throw new UnsupportedOperationException("Not yet implemented");
-}
-
-    @Override
-    public String getType(Uri uri) {
-        final String MIME_PREFIX = "vnd.android.cursor.dir/vnd." + AUTHORITY;
-        switch (uriMatcher.match(uri)) {
-            case ACTIVITIES:
-                return MIME_PREFIX + ".activities";
-            case BUSINESSES:
-                return MIME_PREFIX + ".businesses";
-            default:
-                throw new IllegalArgumentException("No Such Entity");
-        }
-    }
 
     @Override
     public Uri insert(Uri uri, ContentValues values) {
-        try {
-            int id;
+        int id;
 
-            switch (uriMatcher.match(uri)) {
-                case ACTIVITIES:
-                    Activity activity = ContentValuesConverter.contentValuesToActivity(values);
-                    db.addActivity(activity);
-                    id = activity.getId();
-                    break;
-                case BUSINESSES:
-                    Business business = ContentValuesConverter.contentValuesToBusiness(values);
-                    db.addBusiness(business);
-                    id = business.getId();
-                    break;
-                default:
-                    throw new IllegalArgumentException("No Such Entity");
-            }
+        Providable match = providableList.get(uriMatcher.match(uri));
+        Providable item = match.fromContentValues(values);
+        id = match.getRepository().addAndReturnAssignedId(item);
 
-            return Uri.withAppendedPath(uri, "" + id);
-        }
-        catch (Exception e) {
-            throw new IllegalArgumentException("values is not an activity");
-        }
+        return Uri.withAppendedPath(uri, "" + id);
     }
 
     @Override
@@ -95,12 +70,21 @@ public class DataProvider extends ContentProvider {
     @Override
     public int update(Uri uri, ContentValues values, String selection,
                       String[] selectionArgs) {
-        // TODO: Implement this to handle requests to update one or more rows.
+        throw new UnsupportedOperationException("Not yet implemented");
+    }
+
+    @Override
+    public int delete(Uri uri, String selection, String[] selectionArgs) {
+        throw new UnsupportedOperationException("Not yet implemented");
+    }
+
+    @Override
+    public String getType(Uri uri) {
         throw new UnsupportedOperationException("Not yet implemented");
     }
 
     private Cursor activitiesToCursor() {
-        String [] columns = {"_id", "business_id", "country", "description", "price", "start", "end", "type"};
+        String[] columns = {"_id", "business_id", "country", "description", "price", "start", "end", "type"};
 
         MatrixCursor matrixCursor = new MatrixCursor(columns);
 
@@ -112,8 +96,9 @@ public class DataProvider extends ContentProvider {
 
         return matrixCursor;
     }
+
     private Cursor businessesToCursor() {
-        String [] columns = {"_id", "name", "address", "email", "phone", "link"};
+        String[] columns = {"_id", "name", "address", "email", "phone", "link"};
 
         MatrixCursor matrixCursor = new MatrixCursor(columns);
 

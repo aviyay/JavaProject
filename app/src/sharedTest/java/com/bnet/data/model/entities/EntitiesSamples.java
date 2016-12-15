@@ -27,7 +27,6 @@ public class EntitiesSamples {
             e.printStackTrace();
         }
 
-        activity.setId(2);
         activity.setBusinessId(1);
         activity.setCountry("Israel");
         activity.setPrice(53.5);
@@ -41,7 +40,6 @@ public class EntitiesSamples {
         business = new Business();
         Address address = new Address();
 
-        business.setId(1);
         business.setName("Name");
         business.setEmail("email@gmail.com");
         business.setLinkToWebsite("www.website.com");

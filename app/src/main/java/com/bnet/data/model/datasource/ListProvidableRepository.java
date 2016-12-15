@@ -11,9 +11,12 @@ public class ListProvidableRepository<T extends Providable> implements Providabl
     private ArrayList<T> news = new ArrayList<>();
 
     @Override
-    public void add(T item) {
+    public int addAndReturnAssignedId(T item) {
         items.add(item);
         news.add(item);
+
+        item.setId(items.indexOf(item));
+        return item.getId();
     }
 
     @Override

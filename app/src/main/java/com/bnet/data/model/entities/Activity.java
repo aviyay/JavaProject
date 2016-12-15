@@ -1,9 +1,14 @@
 package com.bnet.data.model.entities;
 
+import android.content.ContentValues;
+
+import com.bnet.data.model.ContentValuesConverter;
 import com.bnet.data.model.backend.Providable;
+import com.bnet.data.model.backend.ProvidableRepository;
+import com.bnet.data.model.backend.RepositoriesFactory;
 
 public class Activity implements Providable {
-    private int id;
+    private int id = -1;
     private ActivityType activityType;
     private String country;
     private DateTime start;
@@ -21,6 +26,26 @@ public class Activity implements Providable {
     public void setId(int id) {
         this.id = id;
     }
+
+    @Override
+    public String getURIPath() {
+        return "activities";
+    }
+
+    @Override
+    public ProvidableRepository getRepository() {
+        return RepositoriesFactory.getActivitiesRepository();
+    }
+
+    @Override
+    public Providable fromContentValues(ContentValues contentValues) {
+        try {
+            return ContentValuesConverter.contentValuesToActivity(contentValues);
+        } catch (Exception e) {
+            throw new IllegalArgumentException("This contentValues is not a valid activity");
+        }
+    }
+
 
     public ActivityType getType() {
         return activityType;

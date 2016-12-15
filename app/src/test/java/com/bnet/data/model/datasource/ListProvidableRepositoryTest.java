@@ -18,7 +18,16 @@ public class ListProvidableRepositoryTest {
     public void setUpAndAddProvidable() throws Exception {
         repository = new ListProvidableRepository();
         business = new Business();
-        repository.add(business);
+        repository.addAndReturnAssignedId(business);
+    }
+
+    @Test
+    public void addAndCheckId() throws Exception {
+        Business business2 = new Business();
+
+        assertEquals(-1, business2.getId());
+        int id = repository.addAndReturnAssignedId(business2);
+        assertEquals(1, id); //0 was added in the setup method
     }
 
     @Test
@@ -38,7 +47,7 @@ public class ListProvidableRepositoryTest {
         assertEquals(0, businesses.size());
 
         Business business2 = new Business();
-        repository.add(business2);
+        repository.addAndReturnAssignedId(business2);
         businesses = repository.getAllNews();
         assertEquals(1, businesses.size());
         assertTrue(businesses.contains(business2));
