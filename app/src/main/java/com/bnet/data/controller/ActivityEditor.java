@@ -1,22 +1,29 @@
 package com.bnet.data.controller;
 
+import android.app.DatePickerDialog;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.app.Activity;
+import android.text.Editable;
+import android.text.TextWatcher;
+import android.text.style.ForegroundColorSpan;
+import android.view.KeyEvent;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bnet.data.R;
-import com.bnet.data.model.backend.DatabaseFactory;
+import com.bnet.data.model.backend.RepositoriesFactory;
 import com.bnet.data.model.entities.ActivityType;
-import com.bnet.data.model.entities.Address;
+
 import com.bnet.data.model.entities.Business;
 import com.bnet.data.model.entities.DateTime;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class ActivityEditor extends Activity {
 
@@ -29,7 +36,7 @@ public class ActivityEditor extends Activity {
     private EditText priceField;
     private EditText descriptionField;
     private EditText businessIDField;
-
+    private Spinner businessIDSpinner;
     private boolean isEmpty(EditText etText) {
         return etText.getText().toString().trim().length() == 0;
     }
@@ -58,7 +65,70 @@ public class ActivityEditor extends Activity {
         endTimeField = (EditText)findViewById( R.id.endTimeField );
         priceField = (EditText)findViewById( R.id.priceField );
         descriptionField = (EditText)findViewById( R.id.descriptionField );
+        initializeBusinessId();
+    }
+
+    private void initializeBusinessId() {
         businessIDField = (EditText)findViewById( R.id.businessIDField );
+        businessIDField.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                if(businessIDSpinner.getVisibility()== View.VISIBLE) {
+                    if(businessIDSpinner.getSelectedItem()!=null) {
+                        String item = businessIDSpinner.getSelectedItem().toString();
+                        if (item.substring(item.indexOf('(') + 1).replace(")", "").equals(s.toString()))
+                            return;
+                    }
+
+                        businessIDSpinner.setSelection(0);
+                }
+            }
+        });
+        businessIDSpinner=((Spinner) findViewById(R.id.businessSpinner));
+        new AsyncTask<Void,Void,List<Business>>()
+        {
+
+            @Override
+            protected List<Business> doInBackground(Void... params) {
+                return RepositoriesFactory.getBusinessesRepository().getAll();
+            }
+
+            @Override
+            protected void onPostExecute(List<Business> businesses) {
+                ArrayList<String> st=new ArrayList<String>();
+                st.add("Select Business");
+                for(Business item : businesses)
+                    st.add(item.getName()+"("+item.getId()+")");
+                if(st.size()>1) {
+                    businessIDSpinner.setAdapter(new ArrayAdapter<String>(getBaseContext(), android.R.layout.simple_spinner_item, st));
+                    businessIDSpinner.setVisibility(View.VISIBLE);
+                    businessIDSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                        @Override
+                        public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                            if(position==0)
+                                return;
+                            String item=businessIDSpinner.getSelectedItem().toString();
+                            businessIDField.setText(item.substring(item.indexOf('(')+1).replace(")",""));
+                        }
+
+                        @Override
+                        public void onNothingSelected(AdapterView<?> parent) {
+
+                        }
+                    });
+                }
+            }
+        }.execute();
     }
 
     void initializeSubmit()
@@ -85,7 +155,7 @@ public class ActivityEditor extends Activity {
 
                         @Override
                         protected Void doInBackground(com.bnet.data.model.entities.Activity... params) {
-                            DatabaseFactory.getDatabase().addActivity(params[0]);
+                            RepositoriesFactory.getActivitiesRepository().addAndReturnAssignedId(params[0]);
                             return null;
 
                         }

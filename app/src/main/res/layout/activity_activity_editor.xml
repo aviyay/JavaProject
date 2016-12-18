@@ -9,87 +9,99 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="com.bnet.data.controller.ActivityEditor">
-
-    <TextView
-        android:text="Activiy Details"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="12dp"
-        android:id="@+id/textView"
-        android:textSize="20sp" />
-
-    <Spinner
+    <ScrollView android:id="@+id/ScrollView01"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="48dp"
-        android:id="@+id/typeSpinner"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
-    <EditText
-        android:id="@+id/countryField"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/typeSpinner"
-        android:hint="Country"/>
+        android:layout_height="match_parent">
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <TextView
+                android:text="Activiy Details"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="12dp"
+                android:id="@+id/textView"
+                android:textSize="20sp" />
+
+            <Spinner
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="48dp"
+                android:id="@+id/typeSpinner"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true" />
+            <EditText
+                android:id="@+id/countryField"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/typeSpinner"
+                android:hint="Country"/>
 
 
-    <EditText
-        android:id="@+id/startDateField"
-        android:hint="Start Date(dd/mm/yy)"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/countryField"/>
-    <EditText
-        android:id="@+id/startTimeField"
-        android:hint="Start Time(hh:mm)"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/countryField"
-        android:layout_toRightOf="@id/startDateField"/>
-    <EditText
-        android:id="@+id/endDateField"
-        android:hint="End Date(dd/mm/yy)"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/startDateField"/>
-    <EditText
-        android:id="@+id/endTimeField"
-        android:hint="End Time(hh:mm)"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/startTimeField"
-        android:layout_toRightOf="@id/endDateField"/>
-    <EditText
-        android:id="@+id/priceField"
-        android:hint="Price($)"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:inputType="numberDecimal"
-        android:layout_below="@id/endDateField"/>
-    <EditText
-        android:id="@+id/descriptionField"
-        android:layout_marginTop="10dp"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:hint="Description\nWrite a few words about the activity."
-        android:layout_below="@id/priceField"/>
-    <EditText
-        android:id="@+id/businessIDField"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:hint="Business ID"
-        android:layout_below="@id/descriptionField"/>
+            <EditText
+                android:id="@+id/startDateField"
+                android:hint="Start Date(dd/mm/yy)"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/countryField"/>
+            <EditText
+                android:id="@+id/startTimeField"
+                android:hint="Start Time(hh:mm)"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/startDateField"/>
+            <EditText
+                android:id="@+id/endDateField"
+                android:hint="End Date(dd/mm/yy)"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/startTimeField"/>
+            <EditText
+                android:id="@+id/endTimeField"
+                android:hint="End Time(hh:mm)"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/endDateField"/>
+            <EditText
+                android:id="@+id/priceField"
+                android:hint="Price($)"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:inputType="numberDecimal"
+                android:layout_below="@id/endTimeField"/>
+            <EditText
+                android:id="@+id/descriptionField"
+                android:layout_marginTop="10dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Description\nWrite a few words about the activity."
+                android:layout_below="@id/priceField"/>
 
-    <Button
-        android:text="@string/submit_button_string"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true"
-        android:id="@+id/submitBtn" />
+            <Spinner
+                android:id="@+id/businessSpinner"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/descriptionField"
+                android:visibility="gone"/>
+            <EditText
+                android:id="@+id/businessIDField"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:hint="Business ID"
+                android:layout_below="@id/businessSpinner"/>
 
+            <Button
+                android:text="@string/submit_button_string"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentEnd="true"
+                android:layout_below="@id/businessIDField"
+                android:id="@+id/submitBtn" />
+        </RelativeLayout>
+    </ScrollView>
 </RelativeLayout>

@@ -3,13 +3,12 @@ package com.bnet.data.controller;
 import android.app.Activity;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.provider.ContactsContract;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 
 import com.bnet.data.R;
-import com.bnet.data.model.backend.DatabaseFactory;
+import com.bnet.data.model.backend.RepositoriesFactory;
 import com.bnet.data.model.entities.Address;
 import com.bnet.data.model.entities.Business;
 
@@ -49,7 +48,7 @@ public class BusinessEditor extends Activity {
 
                         @Override
                         protected Void doInBackground(Business... params) {
-                            DatabaseFactory.getDatabase().addBusiness(params[0]);
+                            RepositoriesFactory.getBusinessesRepository().addAndReturnAssignedId(params[0]);
                             return null;
 
                         }
