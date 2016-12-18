@@ -32,8 +32,13 @@ public class ListProvidableRepository<T extends Providable> implements Providabl
     }
 
     @Override
-    public void clear() {
+    public void reset() {
         items.clear();
         news.clear();
+    }
+
+    @Override
+    public boolean isSomethingNew() {
+        return news.size() > 0;
     }
 }
