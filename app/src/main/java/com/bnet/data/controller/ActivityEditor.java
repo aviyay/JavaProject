@@ -29,10 +29,16 @@ public class ActivityEditor extends Activity {
 
     private Spinner typeSpinner;
     private EditText countryField;
-    private EditText startDateField;
-    private EditText startTimeField;
-    private EditText endDateField;
-    private EditText endTimeField;
+    private EditText startDay;
+    private EditText startMonth;
+    private EditText startYear;
+    private EditText startHour;
+    private EditText startMinute;
+    private EditText endDay;
+    private EditText endMonth;
+    private EditText endYear;
+    private EditText endHour;
+    private EditText endMinute;
     private EditText priceField;
     private EditText descriptionField;
     private EditText businessIDField;
@@ -46,7 +52,7 @@ public class ActivityEditor extends Activity {
     }
     private void assertField(EditText text) throws Exception {
         if(isEmpty(text))
-            throw new  Exception("The field "+text.getHint()+ " can't be empty!");
+            throw new  Exception(String.format(getString(R.string.error_field_empty), text.getHint()));
     }
     /**
      * Find the Views in the layout<br />
@@ -57,12 +63,17 @@ public class ActivityEditor extends Activity {
     private void findViews() {
         typeSpinner = (Spinner)findViewById( R.id.typeSpinner );
         typeSpinner.setAdapter(new ArrayAdapter<ActivityType>(this, android.R.layout.simple_spinner_item, ActivityType.values()));
-
         countryField = (EditText)findViewById( R.id.countryField );
-        startDateField = (EditText)findViewById( R.id.startDateField );
-        startTimeField = (EditText)findViewById( R.id.startTimeField );
-        endDateField = (EditText)findViewById( R.id.endDateField );
-        endTimeField = (EditText)findViewById( R.id.endTimeField );
+        startDay=(EditText)findViewById( R.id.startDay );
+        startMonth=(EditText)findViewById( R.id.startMonth );
+        startYear=(EditText)findViewById( R.id.startYear );
+        startHour=(EditText)findViewById( R.id.startHour );
+        startMinute=(EditText)findViewById( R.id.startMinute );
+        endDay=(EditText)findViewById( R.id.endDay );
+        endMonth=(EditText)findViewById( R.id.endMonth );
+        endYear=(EditText)findViewById( R.id.endYear );
+        endHour=(EditText)findViewById( R.id.endHour );
+        endMinute=(EditText)findViewById( R.id.endMinute );
         priceField = (EditText)findViewById( R.id.priceField );
         descriptionField = (EditText)findViewById( R.id.descriptionField );
         initializeBusinessId();
@@ -106,7 +117,7 @@ public class ActivityEditor extends Activity {
             @Override
             protected void onPostExecute(List<Business> businesses) {
                 ArrayList<String> st=new ArrayList<String>();
-                st.add("Select Business");
+                st.add(getString(R.string.select_business));
                 for(Business item : businesses)
                     st.add(item.getName()+"("+item.getId()+")");
                 if(st.size()>1) {
@@ -140,8 +151,8 @@ public class ActivityEditor extends Activity {
                     com.bnet.data.model.entities.Activity acti=new com.bnet.data.model.entities.Activity();
                             acti.setType(ActivityType.valueOf(typeSpinner.getSelectedItem().toString()));
                     acti.setCountry(getText(countryField));
-                    acti.setStart(DateTime.parse(getText(startTimeField)+' '+getText(startDateField)));
-                    acti.setEnd(DateTime.parse(getText(endTimeField)+' '+getText(endDateField)));
+                    acti.setStart(DateTime.parse(String.format("%s:%s %s/%s/%s", getText(startHour), getText(startMinute), getText(startDay), getText(startMonth), getText(startYear))));
+                    acti.setEnd(DateTime.parse(String.format("%s:%s %s/%s/%s", getText(endHour), getText(endMinute), getText(endDay), getText(endMonth), getText(endYear))));
                     acti.setPrice(Double.parseDouble(getText(priceField)));
                     acti.setDescription(getText(descriptionField));
                     acti.setBusinessId(Integer.parseInt(getText(businessIDField)));

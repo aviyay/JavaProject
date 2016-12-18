@@ -16,7 +16,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
             <TextView
-                android:text="Activiy Details"
+                android:text="@string/activiy_details"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentTop="true"
@@ -38,46 +38,130 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/typeSpinner"
-                android:hint="Country"/>
+                android:hint="@string/country"/>
+            <LinearLayout
+                android:id="@+id/startDate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/countryField">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="16sp"
+                    android:text="@string/start_date"/>
+                <EditText
+                    android:layout_marginLeft="10dp"
+                    android:inputType="date"
+                    android:id="@+id/startDay"
+                    android:layout_width="70dp"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/day"/>
+                <EditText
+                    android:id="@+id/startMonth"
+                    android:inputType="date"
+                    android:layout_width="80dp"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/month"/>
+                <EditText
+                    android:id="@+id/startYear"
+                    android:inputType="date"
+                    android:layout_width="100dp"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/year"/>
+            </LinearLayout>
+            <LinearLayout
+                android:id="@+id/startTime"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/startDate">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="16sp"
+                    android:text="@string/start_time"/>
+                <EditText
+                    android:layout_marginLeft="10dp"
+                    android:inputType="datetime"
+                    android:id="@+id/startHour"
+                    android:layout_width="70dp"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/hour"/>
+                <EditText
+                    android:id="@+id/startMinute"
+                    android:inputType="datetime"
+                    android:layout_width="80dp"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/minute"/>
+            </LinearLayout>
+            <LinearLayout
+                android:id="@+id/endDate"
+                android:layout_marginTop="15dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/startTime">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="16sp"
+                    android:text="@string/end_date"/>
+                <EditText
+                    android:layout_marginLeft="10dp"
+                    android:inputType="date"
+                    android:id="@+id/endDay"
+                    android:layout_width="70dp"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/day"/>
+                <EditText
+                    android:id="@+id/endMonth"
+                    android:inputType="date"
+                    android:layout_width="80dp"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/month"/>
+                <EditText
+                    android:id="@+id/endYear"
+                    android:inputType="date"
+                    android:layout_width="100dp"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/year"/>
+            </LinearLayout>
+            <LinearLayout
+                android:id="@+id/endTime"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/endDate">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="16sp"
+                    android:text="@string/end_time"/>
+                <EditText
+                    android:layout_marginLeft="10dp"
+                    android:inputType="datetime"
+                    android:id="@+id/endHour"
+                    android:layout_width="70dp"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/hour"/>
+                <EditText
+                    android:id="@+id/endMinute"
+                    android:inputType="datetime"
+                    android:layout_width="80dp"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/minute"/>
+            </LinearLayout>
 
-
-            <EditText
-                android:id="@+id/startDateField"
-                android:hint="Start Date(dd/mm/yy)"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/countryField"/>
-            <EditText
-                android:id="@+id/startTimeField"
-                android:hint="Start Time(hh:mm)"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/startDateField"/>
-            <EditText
-                android:id="@+id/endDateField"
-                android:hint="End Date(dd/mm/yy)"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/startTimeField"/>
-            <EditText
-                android:id="@+id/endTimeField"
-                android:hint="End Time(hh:mm)"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/endDateField"/>
             <EditText
                 android:id="@+id/priceField"
-                android:hint="Price($)"
+                android:hint="@string/price"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:inputType="numberDecimal"
-                android:layout_below="@id/endTimeField"/>
+                android:layout_below="@id/endTime"/>
             <EditText
                 android:id="@+id/descriptionField"
                 android:layout_marginTop="10dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Description\nWrite a few words about the activity."
+                android:hint="@string/description_hint"
                 android:layout_below="@id/priceField"/>
 
             <Spinner
@@ -90,7 +174,7 @@
                 android:id="@+id/businessIDField"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:hint="Business ID"
+                android:hint="@string/business_id"
                 android:layout_below="@id/businessSpinner"/>
 
             <Button

@@ -24,7 +24,7 @@ public class BusinessEditor extends Activity {
     }
     private void assertField(EditText text) throws Exception {
         if(isEmpty(text))
-            throw new  Exception("The field "+text.getHint()+ " can't be empty!");
+            throw new  Exception(String.format(getString(R.string.error_field_empty), text.getHint()));
     }
     void initializeSubmit()
     {
