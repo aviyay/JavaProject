@@ -25,8 +25,8 @@ public class DataProviderTest {
     @Before
     public void setUp() throws Exception {
         provider = new DataProvider();
-        RepositoriesFactory.getActivitiesRepository().clear();
-        RepositoriesFactory.getBusinessesRepository().clear();
+        RepositoriesFactory.getActivitiesRepository().reset();
+        RepositoriesFactory.getBusinessesRepository().reset();
     }
 
     @Test
