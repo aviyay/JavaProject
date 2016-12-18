@@ -30,4 +30,10 @@ public class ListProvidableRepository<T extends Providable> implements Providabl
         news.clear();
         return result;
     }
+
+    @Override
+    public void clear() {
+        items.clear();
+        news.clear();
+    }
 }

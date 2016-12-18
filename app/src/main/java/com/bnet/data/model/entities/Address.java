@@ -37,4 +37,25 @@ public class Address {
     public void setStreet(String street) {
         this.street = street;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Address address = (Address) o;
+
+        if (!getCountry().equals(address.getCountry())) return false;
+        if (!getCity().equals(address.getCity())) return false;
+        return getStreet().equals(address.getStreet());
+
+    }
+
+    @Override
+    public int hashCode() {
+        int result = getCountry().hashCode();
+        result = 31 * result + getCity().hashCode();
+        result = 31 * result + getStreet().hashCode();
+        return result;
+    }
 }

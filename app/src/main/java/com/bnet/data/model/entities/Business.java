@@ -1,16 +1,20 @@
 package com.bnet.data.model.entities;
 
 import android.content.ContentValues;
+import android.database.Cursor;
+import android.view.ContextThemeWrapper;
 
 import com.bnet.data.model.ContentValuesConverter;
 import com.bnet.data.model.backend.Providable;
 import com.bnet.data.model.backend.ProvidableRepository;
 import com.bnet.data.model.backend.RepositoriesFactory;
 
+import java.text.ParseException;
+
 public class Business implements Providable<Business> {
     private int id = -1;
     private String name;
-    private Address address;
+    private Address address = new Address();
     private String phone;
     private String email;
     private String linkToWebsite;
@@ -56,6 +60,10 @@ public class Business implements Providable<Business> {
         }
     }
 
+    @Override
+    public ContentValues toContentValues(Business item) {
+        return ContentValuesConverter.businessToContentValues(item);
+    }
 
     public String getName() {
         return name;
@@ -95,5 +103,33 @@ public class Business implements Providable<Business> {
 
     public void setLinkToWebsite(String linkToWebsite) {
         this.linkToWebsite = linkToWebsite;
+    }
+
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Business business = (Business) o;
+
+        if (getId() != business.getId()) return false;
+        if (!getName().equals(business.getName())) return false;
+        if (!getAddress().equals(business.getAddress())) return false;
+        if (!getPhone().equals(business.getPhone())) return false;
+        if (!getEmail().equals(business.getEmail())) return false;
+        return getLinkToWebsite().equals(business.getLinkToWebsite());
+
+    }
+
+    @Override
+    public int hashCode() {
+        int result = getId();
+        result = 31 * result + getName().hashCode();
+        result = 31 * result + getAddress().hashCode();
+        result = 31 * result + getPhone().hashCode();
+        result = 31 * result + getEmail().hashCode();
+        result = 31 * result + getLinkToWebsite().hashCode();
+        return result;
     }
 }

@@ -1,7 +1,11 @@
 package com.bnet.data.model;
 import android.content.ContentUris;
 import android.content.ContentValues;
+import android.database.Cursor;
 import android.net.Uri;
+
+import com.bnet.data.model.backend.Providable;
+import com.bnet.data.model.backend.RepositoriesFactory;
 import com.bnet.data.model.entities.Activity;
 import com.bnet.data.model.entities.Business;
 import com.bnet.data.model.entities.EntitiesSamples;
@@ -21,6 +25,8 @@ public class DataProviderTest {
     @Before
     public void setUp() throws Exception {
         provider = new DataProvider();
+        RepositoriesFactory.getActivitiesRepository().clear();
+        RepositoriesFactory.getBusinessesRepository().clear();
     }
 
     @Test
@@ -42,7 +48,36 @@ public class DataProviderTest {
     }
 
     @Test
-    public void query() throws Exception {
+    public void queryActivity() throws Exception {
+        Activity activity = EntitiesSamples.getActivity();
+        activity.getRepository().addAndReturnAssignedId(activity);
 
+        Cursor cursor = provider.query(Uri.parse(URI_PREFIX + ACTIVITIES_POSTFIX), null, null, null, null);
+        cursor.moveToFirst();
+
+        Activity result = (Activity) fromMatrixRow(activity, cursor);
+
+        assertEquals(activity, result);
+    }
+
+    @Test
+    public void queryBusiness() throws Exception {
+        Business business = EntitiesSamples.getBusiness();
+        business.getRepository().addAndReturnAssignedId(business);
+
+        Cursor cursor = provider.query(Uri.parse(URI_PREFIX + BUSINESSES_POSTFIX), null, null, null, null);
+        cursor.moveToFirst();
+
+        Business result = (Business) fromMatrixRow(business, cursor);
+
+        assertEquals(business, result);
+    }
+    public Providable fromMatrixRow(Providable match, Cursor cursor) throws Exception {
+        ContentValues values = new ContentValues();
+
+        for (int i = 0; i < cursor.getColumnCount(); i++)
+            values.put(cursor.getColumnName(i), cursor.getString(i));
+
+        return match.fromContentValues(values);
     }
 }

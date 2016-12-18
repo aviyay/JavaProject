@@ -27,7 +27,7 @@ public class ContentValuesConverter {
     private static final String ACTIVITY_END = "end";
     private static final String ACTIVITY_TYPE = "type";
 
-    static ContentValues businessToContentValues(Business business) {
+    public static ContentValues businessToContentValues(Business business) {
         ContentValues result = new ContentValues();
 
         result.put(BUSINESS_ID,business.getId());
@@ -59,7 +59,7 @@ public class ContentValuesConverter {
         return result;
     }
 
-    static ContentValues activityToContentValues(Activity activity) {
+    public static ContentValues activityToContentValues(Activity activity) {
         ContentValues result = new ContentValues();
 
         result.put(ACTIVITY_ID, activity.getId());

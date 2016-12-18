@@ -1,18 +1,21 @@
 package com.bnet.data.model.entities;
 
 import android.content.ContentValues;
+import android.database.Cursor;
 
 import com.bnet.data.model.ContentValuesConverter;
 import com.bnet.data.model.backend.Providable;
 import com.bnet.data.model.backend.ProvidableRepository;
 import com.bnet.data.model.backend.RepositoriesFactory;
 
+import java.text.ParseException;
+
 public class Activity implements Providable<Activity> {
     private int id = -1;
     private ActivityType activityType;
     private String country;
-    private DateTime start;
-    private DateTime end;
+    private DateTime start = new DateTime();
+    private DateTime end = new DateTime();
     private double price;
     private String description;
     private int businessId;
@@ -44,6 +47,11 @@ public class Activity implements Providable<Activity> {
         } catch (Exception e) {
             throw new IllegalArgumentException("This contentValues is not a valid activity");
         }
+    }
+
+    @Override
+    public ContentValues toContentValues(Activity item) {
+        return ContentValuesConverter.activityToContentValues(item);
     }
 
 
@@ -101,5 +109,39 @@ public class Activity implements Providable<Activity> {
 
     public void setBusinessId(int businessId) {
         this.businessId = businessId;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Activity activity = (Activity) o;
+
+        if (getId() != activity.getId()) return false;
+        if (Double.compare(activity.getPrice(), getPrice()) != 0) return false;
+        if (getBusinessId() != activity.getBusinessId()) return false;
+        if (activityType != activity.activityType) return false;
+        if (!getCountry().equals(activity.getCountry())) return false;
+        if (!getStart().equals(activity.getStart())) return false;
+        if (!getEnd().equals(activity.getEnd())) return false;
+        return getDescription().equals(activity.getDescription());
+
+    }
+
+    @Override
+    public int hashCode() {
+        int result;
+        long temp;
+        result = getId();
+        result = 31 * result + activityType.hashCode();
+        result = 31 * result + getCountry().hashCode();
+        result = 31 * result + getStart().hashCode();
+        result = 31 * result + getEnd().hashCode();
+        temp = Double.doubleToLongBits(getPrice());
+        result = 31 * result + (int) (temp ^ (temp >>> 32));
+        result = 31 * result + getDescription().hashCode();
+        result = 31 * result + getBusinessId();
+        return result;
     }
 }

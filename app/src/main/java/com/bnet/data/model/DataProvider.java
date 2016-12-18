@@ -19,13 +19,9 @@ import java.util.List;
 import static com.bnet.data.model.DataProvider.registerProvidable;
 
 public class DataProvider extends ContentProvider {
-    private static final Database db = DatabaseFactory.getDatabase();
     public static final String AUTHORITY = "com.bnet.provider";
     private static final ArrayList<Providable> providableList = new ArrayList<>();
     private static final UriMatcher uriMatcher = new UriMatcher(UriMatcher.NO_MATCH);
-
-    private static final int ACTIVITIES = 0;
-    private static final int BUSINESSES = 1;
 
     public static void registerProvidable(Providable providable) {
         providableList.add(providable);
@@ -46,7 +42,7 @@ public class DataProvider extends ContentProvider {
     public Uri insert(Uri uri, ContentValues values) {
         int id;
 
-        Providable match = providableList.get(uriMatcher.match(uri));
+        Providable match = matchProvidable(uri);
         Providable item = match.fromContentValues(values);
         id = match.getRepository().addAndReturnAssignedId(item);
 
@@ -56,14 +52,36 @@ public class DataProvider extends ContentProvider {
     @Override
     public Cursor query(Uri uri, String[] projection, String selection,
                         String[] selectionArgs, String sortOrder) {
-        switch (uriMatcher.match(uri)) {
-            case ACTIVITIES:
-                return activitiesToCursor();
-            case BUSINESSES:
-                return businessesToCursor();
-            default:
-                throw new IllegalArgumentException("No Such Entity");
+        Providable match = matchProvidable(uri);
+
+        String[] columns = getMatrixColumns(match);
+        Object[] row = new Object[columns.length];
+        MatrixCursor matrixCursor = new MatrixCursor(columns);
+
+        for (Object item : match.getRepository().getAll()) {
+            ContentValues values = match.toContentValues((Providable) item);
+
+            for (int i = 0; i < row.length; i++)
+                row[i] = values.get(columns[i]);
+
+            matrixCursor.addRow(row);
         }
+
+        return matrixCursor;
+    }
+
+    private Providable matchProvidable(Uri uri) {
+        if (uriMatcher.match(uri) >= providableList.size())
+            throw new IllegalArgumentException("No Such Entity");
+
+        return providableList.get(uriMatcher.match(uri));
+    }
+
+    public String[] getMatrixColumns(Providable providable) {
+        ContentValues values = providable.toContentValues(providable);
+        String [] columns = new String[values.size()];
+        values.keySet().toArray(columns);
+        return columns;
     }
 
     @Override
@@ -80,33 +98,5 @@ public class DataProvider extends ContentProvider {
     @Override
     public String getType(Uri uri) {
         throw new UnsupportedOperationException("Not yet implemented");
-    }
-
-    private Cursor activitiesToCursor() {
-        String[] columns = {"_id", "business_id", "country", "description", "price", "start", "end", "type"};
-
-        MatrixCursor matrixCursor = new MatrixCursor(columns);
-
-        for (Activity a : db.getAllActivities()) {
-            matrixCursor.addRow(new Object[]{
-                    a.getId(), a.getBusinessId(), a.getCountry(), a.getDescription(),
-                    a.getPrice(), a.getStart(), a.getEnd(), a.getType()});
-        }
-
-        return matrixCursor;
-    }
-
-    private Cursor businessesToCursor() {
-        String[] columns = {"_id", "name", "address", "email", "phone", "link"};
-
-        MatrixCursor matrixCursor = new MatrixCursor(columns);
-
-        for (Business b : db.getAllBusinesses()) {
-            matrixCursor.addRow(new Object[]{
-                    b.getId(), b.getName(), b.getAddress(), b.getEmail(),
-                    b.getPhone(), b.getLinkToWebsite()});
-        }
-
-        return matrixCursor;
     }
 }
