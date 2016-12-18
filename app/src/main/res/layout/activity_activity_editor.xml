@@ -38,30 +38,26 @@
 
     <EditText
         android:id="@+id/startDateField"
-        android:hint="Start Date"
+        android:hint="Start Date(dd/mm/yy)"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:inputType="date"
         android:layout_below="@id/countryField"/>
     <EditText
         android:id="@+id/startTimeField"
-        android:hint="Start Time"
-        android:inputType="time"
+        android:hint="Start Time(hh:mm)"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/countryField"
         android:layout_toRightOf="@id/startDateField"/>
     <EditText
         android:id="@+id/endDateField"
-        android:hint="End Date"
+        android:hint="End Date(dd/mm/yy)"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:inputType="date"
         android:layout_below="@id/startDateField"/>
     <EditText
         android:id="@+id/endTimeField"
-        android:hint="End Time"
-        android:inputType="time"
+        android:hint="End Time(hh:mm)"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/startTimeField"
@@ -71,7 +67,7 @@
         android:hint="Price($)"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:inputType="number"
+        android:inputType="numberDecimal"
         android:layout_below="@id/endDateField"/>
     <EditText
         android:id="@+id/descriptionField"
