@@ -20,6 +20,7 @@ import java.util.TimerTask;
  */
 public class Updater extends IntentService {
     private static List<ProvidableRepository> repositories = new ArrayList<>();
+    private static final String UPDATE_ACTION = "com.bnet.action.UPDATE";
 
     public Updater() {
         super("Updater");
@@ -43,13 +44,18 @@ public class Updater extends IntentService {
 
     private void runCheck() {
         //Log.d("Updater", "Run checks");
-        for (int i = 0; i < repositories.size(); i++)
+        boolean shouldUpdate = false;
+
+        for (int i = 0; i < repositories.size() && !shouldUpdate; i++)
             if (repositories.get(i).isSomethingNew())
-                updateReceivers();
+                shouldUpdate = true;
+
+        if (shouldUpdate)
+            updateReceivers();
     }
 
     private void updateReceivers() {
-
+        sendBroadcast(new Intent(UPDATE_ACTION));
     }
 }
 

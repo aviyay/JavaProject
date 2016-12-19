@@ -5,6 +5,7 @@ import android.database.Cursor;
 import android.net.Uri;
 
 import com.bnet.shared.model.ContentValuesConverter;
+import com.bnet.shared.model.CursorUtils;
 import com.bnet.shared.model.backend.Providable;
 import com.bnet.data.model.backend.RepositoriesFactory;
 import com.bnet.shared.model.entities.Activity;
@@ -57,7 +58,7 @@ public class DataProviderTest {
         assertNotNull(cursor);
         cursor.moveToFirst();
 
-        Activity result = (Activity) fromMatrixRow(activity, cursor);
+        Activity result = CursorUtils.fromMatrixRow(activity, cursor);
 
         assertEquals(activity, result);
     }
@@ -71,16 +72,8 @@ public class DataProviderTest {
         assertNotNull(cursor);
         cursor.moveToFirst();
 
-        Business result = (Business) fromMatrixRow(business, cursor);
+        Business result = CursorUtils.fromMatrixRow(business, cursor);
 
         assertEquals(business, result);
-    }
-    private Providable fromMatrixRow(Providable match, Cursor cursor) throws Exception {
-        ContentValues values = new ContentValues();
-
-        for (int i = 0; i < cursor.getColumnCount(); i++)
-            values.put(cursor.getColumnName(i), cursor.getString(i));
-
-        return match.fromContentValues(values);
     }
 }

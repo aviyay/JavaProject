@@ -8,6 +8,7 @@ import android.database.MatrixCursor;
 import android.net.Uri;
 import android.support.annotation.NonNull;
 
+import com.bnet.shared.model.CursorUtils;
 import com.bnet.shared.model.backend.Providable;
 import com.bnet.shared.model.entities.Activity;
 import com.bnet.shared.model.entities.Business;
@@ -50,17 +51,11 @@ public class DataProvider extends ContentProvider {
                         String[] selectionArgs, String sortOrder) {
         Providable match = matchProvidable(uri);
 
-        String[] columns = getMatrixColumns(match);
-        Object[] row = new Object[columns.length];
+        String[] columns = CursorUtils.getMatrixColumns(match);
         MatrixCursor matrixCursor = new MatrixCursor(columns);
 
         for (Object item : match.getRepository().getAll()) {
-            ContentValues values = match.toContentValues((Providable) item);
-
-            for (int i = 0; i < row.length; i++)
-                row[i] = values.get(columns[i]);
-
-            matrixCursor.addRow(row);
+            matrixCursor.addRow(CursorUtils.ProvidableToObjectArray((Providable) item));
         }
 
         return matrixCursor;
@@ -71,13 +66,6 @@ public class DataProvider extends ContentProvider {
             throw new IllegalArgumentException("No Such Entity");
 
         return providableList.get(uriMatcher.match(uri));
-    }
-
-    public String[] getMatrixColumns(Providable providable) {
-        ContentValues values = providable.toContentValues(providable);
-        String [] columns = new String[values.size()];
-        values.keySet().toArray(columns);
-        return columns;
     }
 
     @Override
