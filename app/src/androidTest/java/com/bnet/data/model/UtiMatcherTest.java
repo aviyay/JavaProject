@@ -3,8 +3,6 @@ package com.bnet.data.model;
 import android.content.UriMatcher;
 import android.net.Uri;
 
-import com.bnet.data.model.backend.Database;
-
 import org.junit.Before;
 import org.junit.Test;
 

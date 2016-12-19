@@ -7,16 +7,11 @@ import android.database.Cursor;
 import android.database.MatrixCursor;
 import android.net.Uri;
 
-import com.bnet.data.model.backend.Database;
-import com.bnet.data.model.backend.DatabaseFactory;
 import com.bnet.data.model.backend.Providable;
 import com.bnet.data.model.entities.Activity;
 import com.bnet.data.model.entities.Business;
 
 import java.util.ArrayList;
-import java.util.List;
-
-import static com.bnet.data.model.DataProvider.registerProvidable;
 
 public class DataProvider extends ContentProvider {
     public static final String AUTHORITY = "com.bnet.provider";

@@ -11,7 +11,8 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.bnet.data.R;
-import com.bnet.data.model.backend.DatabaseFactory;
+import com.bnet.data.model.backend.AccountsRepository;
+import com.bnet.data.model.backend.RepositoriesFactory;
 import com.bnet.data.model.entities.Account;
 
 public class MainActivity extends Activity {
@@ -34,13 +35,15 @@ public class MainActivity extends Activity {
             public void onClick(View v) {
                 if(!validateFields())
                     return;
-                for (Account item : DatabaseFactory.getDatabase().getAllAccounts()) {
-                    if (item.getUsername().equals(usernameField.getText().toString())) {
-                        Toast.makeText(getApplicationContext(), R.string.username_is_taken_msg, Toast.LENGTH_SHORT).show();
-                        return;
-                    }
+
+                AccountsRepository repository = RepositoriesFactory.getAccountsRepository();
+
+                if (repository.getOrNull(usernameField.getText().toString()) != null){
+                    Toast.makeText(getApplicationContext(), R.string.username_is_taken_msg, Toast.LENGTH_SHORT).show();
+                    return;
                 }
-                DatabaseFactory.getDatabase().addAccount(new Account(usernameField.getText().toString(), passwordField.getText().toString()));
+
+                repository.add(new Account(usernameField.getText().toString(), passwordField.getText().toString()));
                 Toast.makeText(getApplicationContext(), "TEMP: Acoount registerd - "+ usernameField.getText().toString(), Toast.LENGTH_SHORT).show();
 
             }
@@ -53,13 +56,13 @@ public class MainActivity extends Activity {
             public void onClick(View v) {
                 if(!validateFields())
                     return;
-                for (Account item: DatabaseFactory.getDatabase().getAllAccounts()) {
-                    if(item.getUsername().equals(usernameField.getText().toString()))
-                        if(item.getPassword().equals(passwordField.getText().toString())) {
-                            doSignIn(item);
-                            return;
-                        }
-                }
+                Account account = RepositoriesFactory.getAccountsRepository().getOrNull(usernameField.getText().toString());
+                if (account != null)
+                    if (account.getPassword().equals(passwordField.getText().toString())) {
+                        doSignIn(account);
+                        return;
+                    }
+
                 Toast.makeText(getApplicationContext(), R.string.password_or_username_incorrect,Toast.LENGTH_SHORT).show();
             }
         });
