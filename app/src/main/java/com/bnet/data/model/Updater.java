@@ -2,9 +2,8 @@ package com.bnet.data.model;
 
 import android.app.IntentService;
 import android.content.Intent;
-import android.util.Log;
 
-import com.bnet.data.model.backend.ProvidableRepository;
+import com.bnet.shared.model.backend.ProvidableRepository;
 import com.bnet.data.model.backend.RepositoriesFactory;
 
 import java.util.ArrayList;

@@ -1,15 +1,11 @@
-package com.bnet.data.model.entities;
+package com.bnet.shared.model.entities;
 
 import android.content.ContentValues;
-import android.database.Cursor;
-import android.view.ContextThemeWrapper;
 
-import com.bnet.data.model.ContentValuesConverter;
-import com.bnet.data.model.backend.Providable;
-import com.bnet.data.model.backend.ProvidableRepository;
-import com.bnet.data.model.backend.RepositoriesFactory;
-
-import java.text.ParseException;
+import com.bnet.shared.model.ContentValuesConverter;
+import com.bnet.shared.model.backend.Providable;
+import com.bnet.shared.model.backend.ProvidableRepository;
+import com.bnet.shared.model.backend.RepositoriesFactory;
 
 public class Business implements Providable<Business> {
     private int id = -1;
@@ -113,12 +109,12 @@ public class Business implements Providable<Business> {
 
         Business business = (Business) o;
 
-        if (getId() != business.getId()) return false;
-        if (!getName().equals(business.getName())) return false;
-        if (!getAddress().equals(business.getAddress())) return false;
-        if (!getPhone().equals(business.getPhone())) return false;
-        if (!getEmail().equals(business.getEmail())) return false;
-        return getLinkToWebsite().equals(business.getLinkToWebsite());
+        return getId() == business.getId()
+                && getName().equals(business.getName())
+                && getAddress().equals(business.getAddress())
+                && getPhone().equals(business.getPhone())
+                && getEmail().equals(business.getEmail())
+                && getLinkToWebsite().equals(business.getLinkToWebsite());
 
     }
 

@@ -1,4 +1,4 @@
-package com.bnet.data.model.entities;
+package com.bnet.shared.model.entities;
 
 import org.junit.Test;
 

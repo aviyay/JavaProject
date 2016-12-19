@@ -1,4 +1,4 @@
-package com.bnet.data.model.backend;
+package com.bnet.shared.model.backend;
 
 import java.util.List;
 

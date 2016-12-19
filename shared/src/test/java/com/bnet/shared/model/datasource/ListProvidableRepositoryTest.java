@@ -1,7 +1,6 @@
-package com.bnet.data.model.datasource;
+package com.bnet.shared.model.datasource;
 
-import com.bnet.data.model.backend.ProvidableRepository;
-import com.bnet.data.model.entities.Business;
+import com.bnet.shared.model.entities.Business;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -11,12 +10,12 @@ import java.util.List;
 import static org.junit.Assert.*;
 
 public class ListProvidableRepositoryTest {
-    ProvidableRepository<Business> repository;
-    Business business;
+    private ListProvidableRepository<Business> repository;
+    private Business business;
 
     @Before
     public void setUpAndAddProvidable() throws Exception {
-        repository = new ListProvidableRepository();
+        repository = new ListProvidableRepository<>();
         business = new Business();
         repository.addAndReturnAssignedId(business);
     }

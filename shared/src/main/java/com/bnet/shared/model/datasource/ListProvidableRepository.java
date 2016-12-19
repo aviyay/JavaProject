@@ -1,7 +1,7 @@
-package com.bnet.data.model.datasource;
+package com.bnet.shared.model.datasource;
 
-import com.bnet.data.model.backend.Providable;
-import com.bnet.data.model.backend.ProvidableRepository;
+import com.bnet.shared.model.backend.Providable;
+import com.bnet.shared.model.backend.ProvidableRepository;
 
 import java.util.ArrayList;
 import java.util.List;

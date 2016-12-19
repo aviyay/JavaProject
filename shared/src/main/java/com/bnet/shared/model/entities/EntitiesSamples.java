@@ -1,4 +1,10 @@
-package com.bnet.data.model.entities;
+package com.bnet.shared.model.entities;
+
+import com.bnet.shared.model.entities.Activity;
+import com.bnet.shared.model.entities.ActivityType;
+import com.bnet.shared.model.entities.Address;
+import com.bnet.shared.model.entities.Business;
+import com.bnet.shared.model.entities.DateTime;
 
 import java.text.ParseException;
 

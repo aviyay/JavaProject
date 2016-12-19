@@ -1,13 +1,10 @@
 package com.bnet.data.controller;
 
-import android.app.DatePickerDialog;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.app.Activity;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.text.style.ForegroundColorSpan;
-import android.view.KeyEvent;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -17,10 +14,10 @@ import android.widget.Toast;
 
 import com.bnet.data.R;
 import com.bnet.data.model.backend.RepositoriesFactory;
-import com.bnet.data.model.entities.ActivityType;
+import com.bnet.shared.model.entities.ActivityType;
 
-import com.bnet.data.model.entities.Business;
-import com.bnet.data.model.entities.DateTime;
+import com.bnet.shared.model.entities.Business;
+import com.bnet.shared.model.entities.DateTime;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -62,7 +59,7 @@ public class ActivityEditor extends Activity {
      */
     private void findViews() {
         typeSpinner = (Spinner)findViewById( R.id.typeSpinner );
-        typeSpinner.setAdapter(new ArrayAdapter<ActivityType>(this, android.R.layout.simple_spinner_item, ActivityType.values()));
+        typeSpinner.setAdapter(new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, ActivityType.values()));
         countryField = (EditText)findViewById( R.id.countryField );
         startDay=(EditText)findViewById( R.id.startDay );
         startMonth=(EditText)findViewById( R.id.startMonth );
@@ -116,12 +113,12 @@ public class ActivityEditor extends Activity {
 
             @Override
             protected void onPostExecute(List<Business> businesses) {
-                ArrayList<String> st=new ArrayList<String>();
+                ArrayList<String> st= new ArrayList<>();
                 st.add(getString(R.string.select_business));
                 for(Business item : businesses)
                     st.add(item.getName()+"("+item.getId()+")");
                 if(st.size()>1) {
-                    businessIDSpinner.setAdapter(new ArrayAdapter<String>(getBaseContext(), android.R.layout.simple_spinner_item, st));
+                    businessIDSpinner.setAdapter(new ArrayAdapter<>(getBaseContext(), android.R.layout.simple_spinner_item, st));
                     businessIDSpinner.setVisibility(View.VISIBLE);
                     businessIDSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                         @Override
@@ -148,7 +145,7 @@ public class ActivityEditor extends Activity {
             @Override
             public void onClick(View v) {
                 try {
-                    com.bnet.data.model.entities.Activity acti=new com.bnet.data.model.entities.Activity();
+                    com.bnet.shared.model.entities.Activity acti=new com.bnet.shared.model.entities.Activity();
                             acti.setType(ActivityType.valueOf(typeSpinner.getSelectedItem().toString()));
                     acti.setCountry(getText(countryField));
                     acti.setStart(DateTime.parse(String.format("%s:%s %s/%s/%s", getText(startHour), getText(startMinute), getText(startDay), getText(startMonth), getText(startYear))));
@@ -156,7 +153,7 @@ public class ActivityEditor extends Activity {
                     acti.setPrice(Double.parseDouble(getText(priceField)));
                     acti.setDescription(getText(descriptionField));
                     acti.setBusinessId(Integer.parseInt(getText(businessIDField)));
-                    new AsyncTask<com.bnet.data.model.entities.Activity,Void,Void>()
+                    new AsyncTask<com.bnet.shared.model.entities.Activity,Void,Void>()
                     {
                         @Override
                         protected void onPreExecute() {
@@ -165,7 +162,7 @@ public class ActivityEditor extends Activity {
                         }
 
                         @Override
-                        protected Void doInBackground(com.bnet.data.model.entities.Activity... params) {
+                        protected Void doInBackground(com.bnet.shared.model.entities.Activity... params) {
                             RepositoriesFactory.getActivitiesRepository().addAndReturnAssignedId(params[0]);
                             return null;
 

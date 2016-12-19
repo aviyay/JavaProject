@@ -9,8 +9,8 @@ import android.widget.Toast;
 
 import com.bnet.data.R;
 import com.bnet.data.model.backend.RepositoriesFactory;
-import com.bnet.data.model.entities.Address;
-import com.bnet.data.model.entities.Business;
+import com.bnet.shared.model.entities.Address;
+import com.bnet.shared.model.entities.Business;
 
 public class BusinessEditor extends Activity {
 

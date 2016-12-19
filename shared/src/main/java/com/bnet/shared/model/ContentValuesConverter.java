@@ -1,12 +1,12 @@
-package com.bnet.data.model;
+package com.bnet.shared.model;
 
 import android.content.ContentValues;
 
-import com.bnet.data.model.entities.Activity;
-import com.bnet.data.model.entities.ActivityType;
-import com.bnet.data.model.entities.Address;
-import com.bnet.data.model.entities.Business;
-import com.bnet.data.model.entities.DateTime;
+import com.bnet.shared.model.entities.Activity;
+import com.bnet.shared.model.entities.ActivityType;
+import com.bnet.shared.model.entities.Address;
+import com.bnet.shared.model.entities.Business;
+import com.bnet.shared.model.entities.DateTime;
 
 public class ContentValuesConverter {
 

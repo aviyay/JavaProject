@@ -1,24 +1,11 @@
 package com.bnet.data.model.backend;
 
-import com.bnet.data.model.datasource.ListProvidableRepository;
-import com.bnet.data.model.entities.Activity;
-import com.bnet.data.model.entities.Business;
+import com.bnet.data.model.datasource.ListAccountsRepository;
 
-public class RepositoriesFactory {
-    private static AccountsRepository accountsRepository;
-
-    private static ProvidableRepository<Activity> activitiesRepository = new ListProvidableRepository<>();
-    private static ProvidableRepository<Business> businessesRepository = new ListProvidableRepository<>();
+public class RepositoriesFactory extends com.bnet.shared.model.backend.RepositoriesFactory{
+    private static AccountsRepository accountsRepository = new ListAccountsRepository();
 
     public static AccountsRepository getAccountsRepository() {
         return accountsRepository;
-    }
-
-    public static ProvidableRepository<Activity> getActivitiesRepository() {
-        return activitiesRepository;
-    }
-
-    public static ProvidableRepository<Business> getBusinessesRepository() {
-        return businessesRepository;
     }
 }

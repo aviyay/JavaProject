@@ -1,4 +1,4 @@
-package com.bnet.data.model.entities;
+package com.bnet.shared.model.entities;
 
 import java.text.ParseException;
 import java.util.Locale;

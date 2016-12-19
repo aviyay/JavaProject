@@ -1,4 +1,4 @@
-package com.bnet.data.model.entities;
+package com.bnet.shared.model.entities;
 
 public class Address {
     private String country;
@@ -45,9 +45,9 @@ public class Address {
 
         Address address = (Address) o;
 
-        if (!getCountry().equals(address.getCountry())) return false;
-        if (!getCity().equals(address.getCity())) return false;
-        return getStreet().equals(address.getStreet());
+        return getCountry().equals(address.getCountry())
+                && getCity().equals(address.getCity())
+                && getStreet().equals(address.getStreet());
 
     }
 

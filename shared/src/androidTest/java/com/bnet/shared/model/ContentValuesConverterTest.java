@@ -1,14 +1,14 @@
-package com.bnet.data.model;
+package com.bnet.shared.model;
 
 import android.content.ContentValues;
 
-import com.bnet.data.model.entities.Activity;
-import com.bnet.data.model.entities.Business;
-import com.bnet.data.model.entities.EntitiesSamples;
+import com.bnet.shared.model.entities.Activity;
+import com.bnet.shared.model.entities.Business;
+import com.bnet.shared.model.entities.EntitiesSamples;
 
 import org.junit.Test;
-
 import static org.junit.Assert.*;
+
 
 public class ContentValuesConverterTest {
     @Test

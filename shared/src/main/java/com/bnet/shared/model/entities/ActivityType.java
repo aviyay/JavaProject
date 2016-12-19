@@ -1,4 +1,4 @@
-package com.bnet.data.model.entities;
+package com.bnet.shared.model.entities;
 
 public enum ActivityType {
     HOTEL,

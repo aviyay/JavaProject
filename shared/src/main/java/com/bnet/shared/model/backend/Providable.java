@@ -1,10 +1,6 @@
-package com.bnet.data.model.backend;
+package com.bnet.shared.model.backend;
 
 import android.content.ContentValues;
-import android.database.Cursor;
-
-import java.text.ParseException;
-import java.util.List;
 
 public interface Providable<T extends Providable> {
     int getId();

@@ -1,14 +1,11 @@
-package com.bnet.data.model.entities;
+package com.bnet.shared.model.entities;
 
 import android.content.ContentValues;
-import android.database.Cursor;
 
-import com.bnet.data.model.ContentValuesConverter;
-import com.bnet.data.model.backend.Providable;
-import com.bnet.data.model.backend.ProvidableRepository;
-import com.bnet.data.model.backend.RepositoriesFactory;
-
-import java.text.ParseException;
+import com.bnet.shared.model.ContentValuesConverter;
+import com.bnet.shared.model.backend.Providable;
+import com.bnet.shared.model.backend.ProvidableRepository;
+import com.bnet.shared.model.backend.RepositoriesFactory;
 
 public class Activity implements Providable<Activity> {
     private int id = -1;
@@ -118,14 +115,14 @@ public class Activity implements Providable<Activity> {
 
         Activity activity = (Activity) o;
 
-        if (getId() != activity.getId()) return false;
-        if (Double.compare(activity.getPrice(), getPrice()) != 0) return false;
-        if (getBusinessId() != activity.getBusinessId()) return false;
-        if (activityType != activity.activityType) return false;
-        if (!getCountry().equals(activity.getCountry())) return false;
-        if (!getStart().equals(activity.getStart())) return false;
-        if (!getEnd().equals(activity.getEnd())) return false;
-        return getDescription().equals(activity.getDescription());
+        return getId() == activity.getId()
+                && Double.compare(activity.getPrice(), getPrice()) == 0
+                && getBusinessId() == activity.getBusinessId()
+                && activityType == activity.activityType
+                && getCountry().equals(activity.getCountry())
+                && getStart().equals(activity.getStart())
+                && getEnd().equals(activity.getEnd())
+                && getDescription().equals(activity.getDescription());
 
     }
 

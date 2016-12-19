@@ -4,11 +4,12 @@ import android.content.ContentValues;
 import android.database.Cursor;
 import android.net.Uri;
 
-import com.bnet.data.model.backend.Providable;
+import com.bnet.shared.model.ContentValuesConverter;
+import com.bnet.shared.model.backend.Providable;
 import com.bnet.data.model.backend.RepositoriesFactory;
-import com.bnet.data.model.entities.Activity;
-import com.bnet.data.model.entities.Business;
-import com.bnet.data.model.entities.EntitiesSamples;
+import com.bnet.shared.model.entities.Activity;
+import com.bnet.shared.model.entities.Business;
+import com.bnet.shared.model.entities.EntitiesSamples;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -16,7 +17,7 @@ import org.junit.Test;
 import static org.junit.Assert.*;
 
 public class DataProviderTest {
-    DataProvider provider;
+    private DataProvider provider;
 
     private static final String URI_PREFIX = "content://" + DataProvider.AUTHORITY + "/";
     private static final String ACTIVITIES_POSTFIX = "activities";
@@ -53,6 +54,7 @@ public class DataProviderTest {
         activity.getRepository().addAndReturnAssignedId(activity);
 
         Cursor cursor = provider.query(Uri.parse(URI_PREFIX + ACTIVITIES_POSTFIX), null, null, null, null);
+        assertNotNull(cursor);
         cursor.moveToFirst();
 
         Activity result = (Activity) fromMatrixRow(activity, cursor);
@@ -66,13 +68,14 @@ public class DataProviderTest {
         business.getRepository().addAndReturnAssignedId(business);
 
         Cursor cursor = provider.query(Uri.parse(URI_PREFIX + BUSINESSES_POSTFIX), null, null, null, null);
+        assertNotNull(cursor);
         cursor.moveToFirst();
 
         Business result = (Business) fromMatrixRow(business, cursor);
 
         assertEquals(business, result);
     }
-    public Providable fromMatrixRow(Providable match, Cursor cursor) throws Exception {
+    private Providable fromMatrixRow(Providable match, Cursor cursor) throws Exception {
         ContentValues values = new ContentValues();
 
         for (int i = 0; i < cursor.getColumnCount(); i++)

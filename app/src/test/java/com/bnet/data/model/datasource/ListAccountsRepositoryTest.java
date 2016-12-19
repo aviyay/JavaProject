@@ -5,14 +5,15 @@ import com.bnet.data.model.entities.Account;
 import org.junit.Before;
 import org.junit.Test;
 
-import java.net.ResponseCache;
 import java.util.List;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertTrue;
 
 public class ListAccountsRepositoryTest {
-    ListAccountsRepository repository;
-    Account account;
+    private ListAccountsRepository repository;
+    private Account account;
     @Before
     public void setUpAndAddAccount() throws Exception {
         repository = new ListAccountsRepository();
