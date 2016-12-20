@@ -9,11 +9,11 @@ import com.bnet.shared.model.backend.RepositoriesFactory;
 
 public class Business implements Providable<Business> {
     private int id = -1;
-    private String name;
+    private String name = "";
     private Address address = new Address();
-    private String phone;
-    private String email;
-    private String linkToWebsite;
+    private String phone = "";
+    private String email = "";
+    private String linkToWebsite = "";
 
     public Business(String name, Address address, String phone, String email, String linkToWebsite) {
         this.name = name;
@@ -109,8 +109,7 @@ public class Business implements Providable<Business> {
 
         Business business = (Business) o;
 
-        return getId() == business.getId()
-                && getName().equals(business.getName())
+        return getName().equals(business.getName())
                 && getAddress().equals(business.getAddress())
                 && getPhone().equals(business.getPhone())
                 && getEmail().equals(business.getEmail())
@@ -120,8 +119,7 @@ public class Business implements Providable<Business> {
 
     @Override
     public int hashCode() {
-        int result = getId();
-        result = 31 * result + getName().hashCode();
+        int result = getName().hashCode();
         result = 31 * result + getAddress().hashCode();
         result = 31 * result + getPhone().hashCode();
         result = 31 * result + getEmail().hashCode();

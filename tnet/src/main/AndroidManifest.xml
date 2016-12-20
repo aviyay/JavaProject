@@ -19,7 +19,11 @@
         <receiver
             android:name=".model.UpdatesReceiver"
             android:enabled="true"
-            android:exported="false"></receiver>
+            android:exported="false">
+            <intent-filter>
+                <action android:name="com.bnet.action.UPDATE" />
+            </intent-filter>
+        </receiver>
     </application>
 
 </manifest>

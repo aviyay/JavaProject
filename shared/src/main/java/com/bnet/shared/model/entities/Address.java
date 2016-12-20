@@ -1,9 +1,9 @@
 package com.bnet.shared.model.entities;
 
 public class Address {
-    private String country;
-    private String city;
-    private String street;
+    private String country = "";
+    private String city = "";
+    private String street = "";
 
     public Address(String country, String city, String street) {
         this.country = country;

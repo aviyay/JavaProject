@@ -9,12 +9,12 @@ import com.bnet.shared.model.backend.RepositoriesFactory;
 
 public class Activity implements Providable<Activity> {
     private int id = -1;
-    private ActivityType activityType;
-    private String country;
+    private ActivityType activityType = ActivityType.TRAVEL;
+    private String country = "";
     private DateTime start = new DateTime();
     private DateTime end = new DateTime();
     private double price;
-    private String description;
+    private String description = "";
     private int businessId;
 
     @Override
@@ -115,8 +115,7 @@ public class Activity implements Providable<Activity> {
 
         Activity activity = (Activity) o;
 
-        return getId() == activity.getId()
-                && Double.compare(activity.getPrice(), getPrice()) == 0
+        return Double.compare(activity.getPrice(), getPrice()) == 0
                 && getBusinessId() == activity.getBusinessId()
                 && activityType == activity.activityType
                 && getCountry().equals(activity.getCountry())
@@ -130,8 +129,7 @@ public class Activity implements Providable<Activity> {
     public int hashCode() {
         int result;
         long temp;
-        result = getId();
-        result = 31 * result + activityType.hashCode();
+        result = activityType.hashCode();
         result = 31 * result + getCountry().hashCode();
         result = 31 * result + getStart().hashCode();
         result = 31 * result + getEnd().hashCode();

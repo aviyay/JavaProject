@@ -1,10 +1,8 @@
 package com.bnet.tnet.model;
 
+import android.content.ContentProvider;
 import android.content.ContentResolver;
-import android.content.ContentUris;
-import android.content.Context;
 import android.content.Intent;
-import android.content.UriMatcher;
 import android.database.Cursor;
 import android.database.MatrixCursor;
 import android.net.Uri;
@@ -13,8 +11,6 @@ import android.test.mock.MockContentResolver;
 import android.test.mock.MockContext;
 
 import com.bnet.shared.model.CursorUtils;
-import com.bnet.shared.model.backend.Providable;
-import com.bnet.shared.model.backend.ProvidableRepository;
 import com.bnet.shared.model.backend.RepositoriesFactory;
 import com.bnet.shared.model.entities.Activity;
 import com.bnet.shared.model.entities.Business;
@@ -22,26 +18,25 @@ import com.bnet.shared.model.entities.Business;
 import org.junit.Before;
 import org.junit.Test;
 
-import java.util.ArrayList;
 import java.util.List;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 public class UpdatesReceiverTest {
     UpdatesReceiver updatesReceiver;
     TestContext context;
+    MatrixCursor businesses;
+    MatrixCursor activities;
 
-    private class TestContext extends MockContext
-    {
+    private class TestContext extends MockContext {
         MockContentResolver resolver;
-        List<Activity> activities;
-        List<Business> businesses;
+        private ContentProvider provider;
 
-        public TestContext(List<Activity> activities, List<Business> businesses) {
-            this.activities = activities;
-            this.businesses = businesses;
+        public TestContext() {
+
+            provider = new StubQueryProvider();
             resolver = new MockContentResolver();
-            resolver.addProvider(UpdatesReceiver.PROVIDER_URI, new StubProvider());
+            resolver.addProvider(UpdatesReceiver.PROVIDER_URI, provider);
         }
 
         @Override
@@ -49,21 +44,17 @@ public class UpdatesReceiverTest {
             return resolver;
         }
 
-        private class StubProvider extends MockContentProvider {
+        private class StubQueryProvider extends MockContentProvider {
             @Override
             public Cursor query(Uri uri, String[] projection, String selection, String[] selectionArgs, String sortOrder) {
-                List<Providable> providables = getAppropriateProvidables(uri);
+                String path = uri.getPath();
+                if (path.equals(UpdatesReceiver.ACTIVITIES_POSTFIX))
+                    return activities;
 
-                MatrixCursor matrixCursor = new MatrixCursor(CursorUtils.getMatrixColumns(providables.get(0)));
+                if (path.equals(UpdatesReceiver.Businesses_POSTFIX))
+                    return businesses;
 
-                for (Providable p : providables)
-                    matrixCursor.addRow(CursorUtils.ProvidableToObjectArray(p));
-
-                return matrixCursor;
-            }
-
-            private List<Providable> getAppropriateProvidables(Uri uri) {
-                return null;    //TODO: implement this
+                return null;
             }
         }
     }
@@ -71,23 +62,49 @@ public class UpdatesReceiverTest {
     @Before
     public void setUp() throws Exception {
         updatesReceiver = new UpdatesReceiver();
+        RepositoriesFactory.getActivitiesRepository().reset();
+        RepositoriesFactory.getBusinessesRepository().reset();
+        initializeCursors();
+    }
+
+    private void initializeCursors() {
+        businesses = new MatrixCursor(CursorUtils.getMatrixColumns(new Business()));
+        activities = new MatrixCursor(CursorUtils.getMatrixColumns(new Activity()));
     }
 
     private static final String UPDATE_ACTION = "com.bnet.action.UPDATE";   //TODO: Move shared constant to Shared module
 
     @Test
     public void testUpdateOneActivity() throws Exception {
-        List<Activity> activities = new ArrayList<>();
-        Activity activity = new Activity();
-        activities.add(activity);
+        List<Activity> repoActivities = RepositoriesFactory.getActivitiesRepository().getAll();
+        assertEquals(0, repoActivities.size());
 
-        context = new TestContext(activities, new ArrayList<Business>());
+        Activity activity = new Activity();
+        activities.addRow(CursorUtils.ProvidableToObjectArray(activity));
+
+        context = new TestContext();
 
         updatesReceiver.onReceive(context, new Intent(UPDATE_ACTION));
 
-        List<Activity> repoActivities = RepositoriesFactory.getActivitiesRepository().getAll();
-
+        repoActivities = RepositoriesFactory.getActivitiesRepository().getAll();
         assertEquals(1, repoActivities.size());
         assertEquals(activity, repoActivities.get(0));
+    }
+
+    @Test
+    public void testUpdateOneBusiness() throws Exception {
+        List<Business> repoBusinesses = RepositoriesFactory.getBusinessesRepository().getAll();
+        assertEquals(0, repoBusinesses.size());
+
+        Business business = new Business();
+        businesses.addRow(CursorUtils.ProvidableToObjectArray(business));
+
+        context = new TestContext();
+
+        updatesReceiver.onReceive(context, new Intent(UPDATE_ACTION));
+
+        repoBusinesses = RepositoriesFactory.getBusinessesRepository().getAll();
+        assertEquals(1, repoBusinesses.size());
+        assertEquals(business, repoBusinesses.get(0));
     }
 }

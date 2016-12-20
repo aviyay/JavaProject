@@ -12,9 +12,9 @@ import com.bnet.shared.model.entities.Activity;
 import com.bnet.shared.model.entities.Business;
 
 public class UpdatesReceiver extends BroadcastReceiver {
-    public static final String PROVIDER_URI = "content://com.bnet.provider/";
-    public static final String ACTIVITIES_POSTFIX = "activities";
-    public static final String Businesses_POSTFIX = "businesses";
+    public static final String PROVIDER_URI = "com.bnet.provider";
+    public static final String ACTIVITIES_POSTFIX = "/activities";
+    public static final String Businesses_POSTFIX = "/businesses";
 
     public UpdatesReceiver() {
     }
@@ -23,10 +23,10 @@ public class UpdatesReceiver extends BroadcastReceiver {
     public void onReceive(Context context, Intent intent) {
         Cursor cursor;
 
-        cursor = context.getContentResolver().query(Uri.parse(PROVIDER_URI+ACTIVITIES_POSTFIX), null, null, null, null);
+        cursor = context.getContentResolver().query(Uri.parse("content://" + PROVIDER_URI+ACTIVITIES_POSTFIX), null, null, null, null);
 
         if (cursor != null) {
-            Activity activity = null;
+            Activity activity = new Activity();
             cursor.moveToFirst();
 
             while (!cursor.isAfterLast()) {
@@ -36,13 +36,15 @@ public class UpdatesReceiver extends BroadcastReceiver {
 
                 if (activity != null)
                     RepositoriesFactory.getActivitiesRepository().addAndReturnAssignedId(activity);
+
+                cursor.moveToNext();
             }
         }
 
-        cursor = context.getContentResolver().query(Uri.parse(PROVIDER_URI+Businesses_POSTFIX), null, null, null, null);
+        cursor = context.getContentResolver().query(Uri.parse("content://"+PROVIDER_URI+Businesses_POSTFIX), null, null, null, null);
 
         if (cursor != null) {
-            Business business = null;
+            Business business = new Business();
             cursor.moveToFirst();
 
             while (!cursor.isAfterLast()) {
@@ -52,6 +54,8 @@ public class UpdatesReceiver extends BroadcastReceiver {
 
                 if (business != null)
                     RepositoriesFactory.getBusinessesRepository().addAndReturnAssignedId(business);
+
+                cursor.moveToNext();
             }
         }
     }
