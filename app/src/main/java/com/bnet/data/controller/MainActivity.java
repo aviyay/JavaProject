@@ -3,6 +3,7 @@ package com.bnet.data.controller;
 import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.view.View;
@@ -14,6 +15,8 @@ import com.bnet.data.R;
 import com.bnet.data.model.backend.AccountsRepository;
 import com.bnet.data.model.backend.RepositoriesFactory;
 import com.bnet.data.model.entities.Account;
+import com.bnet.shared.model.datasource.PhpBusinessProvidableRepository;
+import com.bnet.shared.model.entities.Business;
 
 public class MainActivity extends Activity {
 
@@ -80,6 +83,15 @@ public class MainActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+new AsyncTask<Void,Void,Void>()
+{
+    @Override
+    protected Void doInBackground(Void... params) {
+        new PhpBusinessProvidableRepository().getAll();
+        return null;
+    }
+}.execute();
+
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
         SharedPreferences.Editor editor =  sharedPreferences.edit();
         if(sharedPreferences.getBoolean("isLogIn",false))
