@@ -3,6 +3,8 @@ package com.bnet.data.model;
 import android.content.UriMatcher;
 import android.net.Uri;
 
+import com.bnet.shared.model.Constants;
+
 import org.junit.Before;
 import org.junit.Test;
 
@@ -17,20 +19,20 @@ public class UtiMatcherTest {
     @Before
     public void setUp() throws Exception {
         uriMatcher = new UriMatcher(UriMatcher.NO_MATCH);
-        uriMatcher.addURI(DataProvider.AUTHORITY, "activities", ACTIVITIES);
-        uriMatcher.addURI(DataProvider.AUTHORITY, "businesses", BUSINESSES);
+        uriMatcher.addURI(Constants.PROVIDER_AUTHORITY, Constants.ACTIVITIES_URI_PATH, ACTIVITIES);
+        uriMatcher.addURI(Constants.PROVIDER_AUTHORITY, Constants.BUSINESSES_URI_PATH, BUSINESSES);
     }
 
     @Test
     public void testMatchActivities() throws Exception {
-        Uri uri = Uri.parse("content://"+DataProvider.AUTHORITY + "/activities");
+        Uri uri = Uri.parse("content://"+Constants.PROVIDER_AUTHORITY + "/" + Constants.ACTIVITIES_URI_PATH);
 
         assertEquals(ACTIVITIES, uriMatcher.match(uri));
     }
 
     @Test
     public void testMatchBusinesses() throws Exception {
-        Uri uri = Uri.parse("content://"+DataProvider.AUTHORITY + "/businesses");
+        Uri uri = Uri.parse("content://"+Constants.PROVIDER_AUTHORITY + "/" + Constants.BUSINESSES_URI_PATH);
 
         assertEquals(BUSINESSES, uriMatcher.match(uri));
     }

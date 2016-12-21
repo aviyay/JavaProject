@@ -10,6 +10,7 @@ import android.test.mock.MockContentProvider;
 import android.test.mock.MockContentResolver;
 import android.test.mock.MockContext;
 
+import com.bnet.shared.model.Constants;
 import com.bnet.shared.model.CursorUtils;
 import com.bnet.shared.model.backend.RepositoriesFactory;
 import com.bnet.shared.model.entities.Activity;
@@ -36,7 +37,7 @@ public class UpdatesReceiverTest {
 
             provider = new StubQueryProvider();
             resolver = new MockContentResolver();
-            resolver.addProvider(UpdatesReceiver.PROVIDER_URI, provider);
+            resolver.addProvider(Constants.PROVIDER_AUTHORITY, provider);
         }
 
         @Override
@@ -48,10 +49,10 @@ public class UpdatesReceiverTest {
             @Override
             public Cursor query(Uri uri, String[] projection, String selection, String[] selectionArgs, String sortOrder) {
                 String path = uri.getPath();
-                if (path.equals(UpdatesReceiver.ACTIVITIES_POSTFIX))
+                if (path.equals("/"+ Constants.ACTIVITIES_URI_PATH))
                     return activities;
 
-                if (path.equals(UpdatesReceiver.Businesses_POSTFIX))
+                if (path.equals("/"+ Constants.BUSINESSES_URI_PATH))
                     return businesses;
 
                 return null;
@@ -72,8 +73,6 @@ public class UpdatesReceiverTest {
         activities = new MatrixCursor(CursorUtils.getMatrixColumns(new Activity()));
     }
 
-    private static final String UPDATE_ACTION = "com.bnet.action.UPDATE";   //TODO: Move shared constant to Shared module
-
     @Test
     public void testUpdateOneActivity() throws Exception {
         List<Activity> repoActivities = RepositoriesFactory.getActivitiesRepository().getAll();
@@ -84,7 +83,7 @@ public class UpdatesReceiverTest {
 
         context = new TestContext();
 
-        updatesReceiver.onReceive(context, new Intent(UPDATE_ACTION));
+        updatesReceiver.onReceive(context, new Intent(Constants.UPDATE_ACTION));
 
         repoActivities = RepositoriesFactory.getActivitiesRepository().getAll();
         assertEquals(1, repoActivities.size());
@@ -101,7 +100,7 @@ public class UpdatesReceiverTest {
 
         context = new TestContext();
 
-        updatesReceiver.onReceive(context, new Intent(UPDATE_ACTION));
+        updatesReceiver.onReceive(context, new Intent(Constants.UPDATE_ACTION));
 
         repoBusinesses = RepositoriesFactory.getBusinessesRepository().getAll();
         assertEquals(1, repoBusinesses.size());

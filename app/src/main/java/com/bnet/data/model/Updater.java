@@ -3,6 +3,7 @@ package com.bnet.data.model;
 import android.app.IntentService;
 import android.content.Intent;
 
+import com.bnet.shared.model.Constants;
 import com.bnet.shared.model.backend.ProvidableRepository;
 import com.bnet.data.model.backend.RepositoriesFactory;
 
@@ -20,7 +21,6 @@ import java.util.TimerTask;
  */
 public class Updater extends IntentService {
     private static List<ProvidableRepository> repositories = new ArrayList<>();
-    private static final String UPDATE_ACTION = "com.bnet.action.UPDATE";
 
     public Updater() {
         super("Updater");
@@ -55,7 +55,7 @@ public class Updater extends IntentService {
     }
 
     private void updateReceivers() {
-        sendBroadcast(new Intent(UPDATE_ACTION));
+        sendBroadcast(new Intent(Constants.UPDATE_ACTION));
     }
 }
 

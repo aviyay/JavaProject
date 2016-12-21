@@ -2,6 +2,7 @@ package com.bnet.shared.model.entities;
 
 import android.content.ContentValues;
 
+import com.bnet.shared.model.Constants;
 import com.bnet.shared.model.ContentValuesConverter;
 import com.bnet.shared.model.backend.Providable;
 import com.bnet.shared.model.backend.ProvidableRepository;
@@ -39,7 +40,7 @@ public class Business implements Providable<Business> {
 
     @Override
     public String getURIPath() {
-        return "businesses";
+        return Constants.BUSINESSES_URI_PATH;
     }
 
     @Override

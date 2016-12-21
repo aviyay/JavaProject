@@ -8,6 +8,7 @@ import android.database.MatrixCursor;
 import android.net.Uri;
 import android.support.annotation.NonNull;
 
+import com.bnet.shared.model.Constants;
 import com.bnet.shared.model.CursorUtils;
 import com.bnet.shared.model.backend.Providable;
 import com.bnet.shared.model.entities.Activity;
@@ -16,13 +17,12 @@ import com.bnet.shared.model.entities.Business;
 import java.util.ArrayList;
 
 public class DataProvider extends ContentProvider {
-    public static final String AUTHORITY = "com.bnet.provider";
     private static final ArrayList<Providable> providableList = new ArrayList<>();
     private static final UriMatcher uriMatcher = new UriMatcher(UriMatcher.NO_MATCH);
 
     public static void registerProvidable(Providable providable) {
         providableList.add(providable);
-        uriMatcher.addURI(AUTHORITY, providable.getURIPath(), providableList.indexOf(providable));
+        uriMatcher.addURI(Constants.PROVIDER_AUTHORITY, providable.getURIPath(), providableList.indexOf(providable));
     }
 
     @Override
