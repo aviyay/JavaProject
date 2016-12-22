@@ -168,15 +168,7 @@
                 android:id="@+id/businessSpinner"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/descriptionField"
-                android:visibility="gone"/>
-            <EditText
-                android:id="@+id/businessIDField"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:hint="@string/business_id"
-                android:layout_below="@id/businessSpinner"/>
-
+                android:layout_below="@id/descriptionField"/>
             <Button
                 android:text="@string/submit_button_string"
                 android:layout_width="wrap_content"
@@ -184,7 +176,7 @@
                 android:layout_alignParentBottom="true"
                 android:layout_alignParentRight="true"
                 android:layout_alignParentEnd="true"
-                android:layout_below="@id/businessIDField"
+                android:layout_below="@id/businessSpinner"
                 android:id="@+id/submitBtn" />
         </RelativeLayout>
     </ScrollView>

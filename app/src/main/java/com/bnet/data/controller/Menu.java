@@ -44,7 +44,8 @@ public class Menu extends Activity {
             public void onClick(View v) {
                 SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
                 SharedPreferences.Editor editor =  sharedPreferences.edit();
-                editor.remove("isLogIn");
+                editor.remove("userLogIn");
+                editor.commit();
                 finish();
             }
         });

@@ -10,7 +10,7 @@ import com.bnet.shared.model.entities.DateTime;
 
 public class ContentValuesConverter {
 
-    private static final String BUSINESS_ID = "business_id";
+    private static final String BUSINESS_ID = "_id";
     private static final String BUSINESS_NAME = "name";
     private static final String BUSINESS_EMAIL = "email";
     private static final String BUSINESS_PHONE = "phone";
@@ -20,7 +20,7 @@ public class ContentValuesConverter {
     private static final String ADDRESS_CITY = "city";
     private static final String ADDRESS_STREET = "street";
 
-    private static final String ACTIVITY_ID = "activity_id";
+    private static final String ACTIVITY_ID = "_id";
     private static final String ACTIVITY_DESCRIPTION = "description";
     private static final String ACTIVITY_PRICE = "price";
     private static final String ACTIVITY_START = "start";

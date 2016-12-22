@@ -38,7 +38,6 @@ public class ActivityEditor extends Activity {
     private EditText endMinute;
     private EditText priceField;
     private EditText descriptionField;
-    private EditText businessIDField;
     private Spinner businessIDSpinner;
     private boolean isEmpty(EditText etText) {
         return etText.getText().toString().trim().length() == 0;
@@ -77,31 +76,6 @@ public class ActivityEditor extends Activity {
     }
 
     private void initializeBusinessId() {
-        businessIDField = (EditText)findViewById( R.id.businessIDField );
-        businessIDField.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-                if(businessIDSpinner.getVisibility()== View.VISIBLE) {
-                    if(businessIDSpinner.getSelectedItem()!=null) {
-                        String item = businessIDSpinner.getSelectedItem().toString();
-                        if (item.substring(item.indexOf('(') + 1).replace(")", "").equals(s.toString()))
-                            return;
-                    }
-
-                        businessIDSpinner.setSelection(0);
-                }
-            }
-        });
         businessIDSpinner=((Spinner) findViewById(R.id.businessSpinner));
         new AsyncTask<Void,Void,List<Business>>()
         {
@@ -114,27 +88,19 @@ public class ActivityEditor extends Activity {
             @Override
             protected void onPostExecute(List<Business> businesses) {
                 ArrayList<String> st= new ArrayList<>();
-                st.add(getString(R.string.select_business));
-                for(Business item : businesses)
-                    st.add(item.getName()+"("+item.getId()+")");
-                if(st.size()>1) {
+
+                if(!businesses.isEmpty()) {
+                    st.add(getString(R.string.select_business));
+                    for(Business item : businesses)
+                        st.add(item.getName()+"("+item.getId()+")");
                     businessIDSpinner.setAdapter(new ArrayAdapter<>(getBaseContext(), android.R.layout.simple_spinner_item, st));
-                    businessIDSpinner.setVisibility(View.VISIBLE);
-                    businessIDSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-                        @Override
-                        public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                            if(position==0)
-                                return;
-                            String item=businessIDSpinner.getSelectedItem().toString();
-                            businessIDField.setText(item.substring(item.indexOf('(')+1).replace(")",""));
-                        }
-
-                        @Override
-                        public void onNothingSelected(AdapterView<?> parent) {
-
-                        }
-                    });
                 }
+                else
+                {
+                    Toast.makeText(getApplicationContext(),"The server is unavailable at this time",Toast.LENGTH_SHORT);
+                    finish();
+                }
+
             }
         }.execute();
     }
@@ -152,7 +118,8 @@ public class ActivityEditor extends Activity {
                     acti.setEnd(DateTime.parse(String.format("%s:%s %s/%s/%s", getText(endHour), getText(endMinute), getText(endDay), getText(endMonth), getText(endYear))));
                     acti.setPrice(Double.parseDouble(getText(priceField)));
                     acti.setDescription(getText(descriptionField));
-                    acti.setBusinessId(Integer.parseInt(getText(businessIDField)));
+                    String item=(String)businessIDSpinner.getSelectedItem();
+                    acti.setBusinessId(Integer.parseInt(item.substring(item.lastIndexOf('(')+1).replace(")","")));
                     new AsyncTask<com.bnet.shared.model.entities.Activity,Void,Void>()
                     {
                         @Override
