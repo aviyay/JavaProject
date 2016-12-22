@@ -1,0 +1,45 @@
+package com.bnet.tnet.controller;
+
+import android.support.v7.widget.RecyclerView;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.TextView;
+
+import com.bnet.shared.model.backend.RepositoriesFactory;
+import com.bnet.shared.model.entities.Business;
+import com.bnet.tnet.R;
+
+class AgenciesAdapter extends RecyclerView.Adapter<AgenciesAdapter.AgencyViewHolder> {
+
+     class AgencyViewHolder extends RecyclerView.ViewHolder{
+
+        TextView temp;
+
+        AgencyViewHolder(View itemView) {
+            super(itemView);
+
+            temp = (TextView) itemView.findViewById(R.id.temp);
+        }
+    }
+
+    @Override
+    public AgencyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        View view = LayoutInflater.from(parent.getContext())
+                .inflate(R.layout.agency_list_row, parent, false);
+
+        return new AgencyViewHolder(view);
+    }
+
+    @Override
+    public void onBindViewHolder(AgencyViewHolder holder, int position) {
+        Business agency = RepositoriesFactory.getBusinessesRepository().getAll().get(position);
+
+        holder.temp.setText(agency.getName());
+    }
+
+    @Override
+    public int getItemCount() {
+        return RepositoriesFactory.getBusinessesRepository().getAll().size();
+    }
+}

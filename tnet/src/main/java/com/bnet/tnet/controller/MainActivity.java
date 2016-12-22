@@ -85,14 +85,14 @@ public class MainActivity extends AppCompatActivity {
     Fragment getAppropriateFragment(MenuItem menuItem) {
         Fragment result;
         switch (menuItem.getItemId()) {
-            case R.id.fragment_test:
-                result = new TestFragment();
+            case R.id.nav_fragment_agencies:
+                result = new AgenciesFragment();
                 break;
             case R.id.fragment_test2:
                 result = new Test2Fragment();
                 break;
             default:
-                result = new TestFragment();
+                result = new AgenciesFragment();
         }
         return result;
     }
