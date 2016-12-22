@@ -4,23 +4,15 @@ import android.content.ContentValues;
 import android.support.annotation.NonNull;
 
 import com.bnet.shared.model.ContentValuesConverter;
+import com.bnet.shared.model.PhpHelper;
 import com.bnet.shared.model.backend.ProvidableRepository;
 import com.bnet.shared.model.entities.Activity;
 import com.bnet.shared.model.entities.ActivityType;
-import com.bnet.shared.model.entities.Address;
-import com.bnet.shared.model.entities.Business;
 import com.bnet.shared.model.entities.DateTime;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.OutputStream;
-import java.net.HttpURLConnection;
-import java.net.URL;
-import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -44,17 +36,17 @@ public class PhpActivityProvideableRepository implements ProvidableRepository<Ac
             params.put("end", bis.getAsString("end"));
             params.put("type", bis.getAsString("type"));
             params.put("business_id", bis.getAsString("business_id"));
-            String results = POST(WEB_URL + "activity_add.php", params);
+            String results = PhpHelper.POST(WEB_URL + "activity_add.php", params);
             if(results.equals("")){
                 throw new Exception("An error occurred on the server's side");
             }
             if (results.substring(0, 5).equalsIgnoreCase("error")) {
                 throw new Exception(results.substring(5));
             }
+            return Integer.parseInt(results);
         } catch (Exception e) {
             throw new IllegalArgumentException(e.getMessage());
         }
-        return -1;
     }
 
     @Override
@@ -69,11 +61,11 @@ public class PhpActivityProvideableRepository implements ProvidableRepository<Ac
         List<Activity> list=new ArrayList<Activity>();
         Activity temp;
         try {
-            array =new JSONObject(GET(link)).getJSONArray("activities");
+            array =new JSONObject(PhpHelper.GET(link)).getJSONArray("activities");
             for (int i=0;i<array.length();i++) {
                 obj=array.getJSONObject(i);
                 temp=new Activity();
-                temp.setId(obj.getInt("activity_id"));
+                temp.setId(obj.getInt("_id"));
                 temp.setDescription(obj.getString("description"));
                 temp.setCountry(obj.getString("country"));
                 temp.setPrice(obj.getDouble("price"));
@@ -103,59 +95,5 @@ public class PhpActivityProvideableRepository implements ProvidableRepository<Ac
     @Override
     public void reset() {
         throw new UnsupportedOperationException();
-    }
-    private static String GET(String url) throws Exception {
-        URL obj = new URL(url);
-        HttpURLConnection con = (HttpURLConnection) obj.openConnection();
-        con.setRequestMethod("GET");
-        if (con.getResponseCode() == HttpURLConnection.HTTP_OK) { // success
-            BufferedReader in = new BufferedReader(new InputStreamReader(
-                    con.getInputStream()));
-            String inputLine;
-            StringBuffer response = new StringBuffer();
-            while ((inputLine = in.readLine()) != null) {
-                response.append(inputLine);
-            }
-            in.close();
-            // print result
-            return response.toString();
-        } else {
-            return "";
-        }
-    }
-    private static String POST(String url, Map<String,Object> params) throws
-            IOException {
-        //Convert Map<String,Object> into key=value&key=value pairs.
-        StringBuilder postData = new StringBuilder();
-        for (Map.Entry<String,Object> param : params.entrySet()) {
-            if (postData.length() != 0) postData.append('&');
-            postData.append(URLEncoder.encode(param.getKey(), "UTF-8"));
-            postData.append('=');
-            postData.append(URLEncoder.encode(String.valueOf(param.getValue()),"UTF-8"));
-        }
-        URL obj = new URL(url);
-        HttpURLConnection con = (HttpURLConnection) obj.openConnection();
-        con.setRequestMethod("POST");
-        // For POST only - START
-        con.setDoOutput(true);
-        OutputStream os = con.getOutputStream();
-        os.write(postData.toString().getBytes("UTF-8"));
-        os.flush();
-        os.close();
-        // For POST only - END
-        int responseCode = con.getResponseCode();
-        System.out.println("POST Response Code :: " + responseCode);
-        if (responseCode == HttpURLConnection.HTTP_OK) { //success
-            BufferedReader in = new BufferedReader(new InputStreamReader(
-                    con.getInputStream()));
-            String inputLine;
-            StringBuffer response = new StringBuffer();
-            while ((inputLine = in.readLine()) != null) {
-                response.append(inputLine);
-            }
-            in.close();
-            return response.toString();
-        }
-        else return "";
     }
 }

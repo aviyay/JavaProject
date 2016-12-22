@@ -15,8 +15,6 @@ import com.bnet.data.R;
 import com.bnet.data.model.backend.AccountsRepository;
 import com.bnet.data.model.backend.RepositoriesFactory;
 import com.bnet.data.model.entities.Account;
-import com.bnet.shared.model.datasource.PhpBusinessProvidableRepository;
-import com.bnet.shared.model.entities.Business;
 
 public class MainActivity extends Activity {
 
@@ -38,16 +36,26 @@ public class MainActivity extends Activity {
             public void onClick(View v) {
                 if(!validateFields())
                     return;
+                new AsyncTask<String,Void,Boolean>()
+                {
+                    @Override
+                    protected void onPostExecute(Boolean aBoolean) {
+                        super.onPostExecute(aBoolean);
+                        if(aBoolean)
+                            Toast.makeText(getApplicationContext(), "TEMP: Account registered successfully", Toast.LENGTH_SHORT).show();
+                        else
+                            Toast.makeText(getApplicationContext(), R.string.username_is_taken_msg, Toast.LENGTH_SHORT).show();
+                    }
+                    @Override
+                    protected Boolean doInBackground(String... params) {
+                        AccountsRepository repository = RepositoriesFactory.getAccountsRepository();
+                        if(repository.getOrNull(params[0])!=null)
+                            return false;
+                        repository.add(new Account(params[0].toString(), params[1]));
+                        return true;
+                    }
 
-                AccountsRepository repository = RepositoriesFactory.getAccountsRepository();
-
-                if (repository.getOrNull(usernameField.getText().toString()) != null){
-                    Toast.makeText(getApplicationContext(), R.string.username_is_taken_msg, Toast.LENGTH_SHORT).show();
-                    return;
-                }
-
-                repository.add(new Account(usernameField.getText().toString(), passwordField.getText().toString()));
-                Toast.makeText(getApplicationContext(), "TEMP: Acoount registerd - "+ usernameField.getText().toString(), Toast.LENGTH_SHORT).show();
+                }.execute(usernameField.getText().toString(),passwordField.getText().toString());
 
             }
         });
@@ -59,14 +67,28 @@ public class MainActivity extends Activity {
             public void onClick(View v) {
                 if(!validateFields())
                     return;
-                Account account = RepositoriesFactory.getAccountsRepository().getOrNull(usernameField.getText().toString());
-                if (account != null)
-                    if (account.getPassword().equals(passwordField.getText().toString())) {
-                        doSignIn(account);
-                        return;
+                new AsyncTask<String,Void,Account>()
+                {
+                    @Override
+                    protected Account doInBackground(String... params) {
+                        Account account = RepositoriesFactory.getAccountsRepository().getOrNull(params[0]);
+                        if (account != null)
+                            if (account.getPassword().equals(params[1])) {
+                                return account;
+                            }
+                        return null;
                     }
 
-                Toast.makeText(getApplicationContext(), R.string.password_or_username_incorrect,Toast.LENGTH_SHORT).show();
+                    @Override
+                    protected void onPostExecute(Account account) {
+                        super.onPostExecute(account);
+                        if(account!=null)
+                            doSignIn(account);
+                        else
+                            Toast.makeText(getApplicationContext(), R.string.password_or_username_incorrect,Toast.LENGTH_SHORT).show();
+
+                    }
+                }.execute(usernameField.getText().toString(),passwordField.getText().toString());
             }
         });
     }
@@ -83,18 +105,9 @@ public class MainActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-new AsyncTask<Void,Void,Void>()
-{
-    @Override
-    protected Void doInBackground(Void... params) {
-        new PhpBusinessProvidableRepository().getAll();
-        return null;
-    }
-}.execute();
-
-        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
         SharedPreferences.Editor editor =  sharedPreferences.edit();
-        if(sharedPreferences.getBoolean("isLogIn",false))
+        if(!sharedPreferences.getString("userLogIn","").equals(""))
             goToMenu();
         usernameField=(EditText)findViewById(R.id.usernameField);
         passwordField=(EditText)findViewById(R.id.passwordField);
@@ -110,7 +123,7 @@ new AsyncTask<Void,Void,Void>()
         if(((CheckBox)findViewById(R.id.checkBox)).isChecked()) {
             SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
             SharedPreferences.Editor editor = sharedPreferences.edit();
-            editor.putBoolean("isLogIn", true);
+            editor.putString("userLogIn", item.getUsername());
             editor.commit();
         }
             Toast.makeText(getApplicationContext(), "TEMP: Signed in - "+ item.getUsername(), Toast.LENGTH_SHORT).show();
