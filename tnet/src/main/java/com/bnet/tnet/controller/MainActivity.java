@@ -1,12 +1,11 @@
 package com.bnet.tnet.controller;
 
-import android.app.Activity;
 import android.content.res.Configuration;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
-import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
@@ -27,22 +26,24 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        initializeComponents();
+
         // Set a Toolbar to replace the ActionBar.
-        toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        // Find our drawer view
-        mDrawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        // Setup Toggle icon (the animation of 3 lines to an arrow)
         drawerToggle = setupDrawerToggle();
 
         // Tie DrawerLayout events to the ActionBarToggle
         mDrawer.addDrawerListener(drawerToggle);
 
-        // Find our drawer view
-        nvDrawer = (NavigationView) findViewById(R.id.nvView);
+        registerItemsSwitcher(nvDrawer);
+    }
 
-        // Setup drawer view
-        setupDrawerContent(nvDrawer);
+    private void initializeComponents() {
+        toolbar = (Toolbar) findViewById(R.id.toolbar);
+        mDrawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        nvDrawer = (NavigationView) findViewById(R.id.nvView);
     }
 
     private ActionBarDrawerToggle setupDrawerToggle() {
@@ -51,7 +52,7 @@ public class MainActivity extends AppCompatActivity {
         return new ActionBarDrawerToggle(this, mDrawer, toolbar, R.string.drawer_open,  R.string.drawer_close);
     }
 
-    private void setupDrawerContent(NavigationView navigationView) {
+    private void registerItemsSwitcher(NavigationView navigationView) {
         navigationView.setNavigationItemSelectedListener(
                 new NavigationView.OnNavigationItemSelectedListener() {
                     @Override
@@ -63,28 +64,14 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void selectDrawerItem(MenuItem menuItem) {
-        // Create a new fragment and specify the fragment to show based on nav item clicked
-        Fragment fragment = null;
-        Class fragmentClass;
-        switch (menuItem.getItemId()) {
-            case R.id.fragment_test:
-                fragmentClass = TestFragment.class;
-                break;
-            case R.id.fragment_test2:
-                fragmentClass = Test2Fragment.class;
-                break;
-            default:
-                fragmentClass = TestFragment.class;
-        }
-        try {
-            fragment = (Fragment) fragmentClass.newInstance();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        Fragment fragment = getAppropriateFragment(menuItem);
 
         // Insert the fragment by replacing any existing fragment
         FragmentManager fragmentManager = getSupportFragmentManager();
-        fragmentManager.beginTransaction().replace(R.id.flContent, fragment).commit();
+        fragmentManager
+                .beginTransaction()
+                .replace(R.id.Content, fragment)
+                .commit();
 
         // Highlight the selected item has been done by NavigationView
         menuItem.setChecked(true);
@@ -92,6 +79,22 @@ public class MainActivity extends AppCompatActivity {
         setTitle(menuItem.getTitle());
         // Close the navigation drawer
         mDrawer.closeDrawers();
+    }
+
+    @NonNull
+    Fragment getAppropriateFragment(MenuItem menuItem) {
+        Fragment result;
+        switch (menuItem.getItemId()) {
+            case R.id.fragment_test:
+                result = new TestFragment();
+                break;
+            case R.id.fragment_test2:
+                result = new Test2Fragment();
+                break;
+            default:
+                result = new TestFragment();
+        }
+        return result;
     }
 
     @Override
