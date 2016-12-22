@@ -9,6 +9,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 
@@ -83,16 +84,16 @@ public class MainActivity extends AppCompatActivity {
 
     @NonNull
     Fragment getAppropriateFragment(MenuItem menuItem) {
-        Fragment result;
+        RecyclerViewFragment result = new RecyclerViewFragment();
+
         switch (menuItem.getItemId()) {
-            case R.id.nav_fragment_agencies:
-                result = new AgenciesFragment();
+            case R.id.nav_agencies:
+                result.setAdapter(new AgenciesAdapter());
                 break;
             case R.id.fragment_test2:
-                result = new Test2Fragment();
-                break;
+                return new Test2Fragment();
             default:
-                result = new AgenciesFragment();
+                result.setAdapter(new AgenciesAdapter());
         }
         return result;
     }

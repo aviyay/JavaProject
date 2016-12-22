@@ -6,13 +6,22 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.bnet.shared.model.backend.ProvidableRepository;
 import com.bnet.shared.model.backend.RepositoriesFactory;
 import com.bnet.shared.model.entities.Business;
+import com.bnet.shared.model.entities.EntitiesSamples;
 import com.bnet.tnet.R;
 
 class AgenciesAdapter extends RecyclerView.Adapter<AgenciesAdapter.AgencyViewHolder> {
 
-     class AgencyViewHolder extends RecyclerView.ViewHolder{
+    static {
+        ProvidableRepository repository = RepositoriesFactory.getBusinessesRepository();
+        repository.addAndReturnAssignedId(EntitiesSamples.getBusiness());
+        repository.addAndReturnAssignedId(EntitiesSamples.getBusiness2());
+        repository.addAndReturnAssignedId(EntitiesSamples.getBusiness3());
+    }
+
+    class AgencyViewHolder extends RecyclerView.ViewHolder{
 
         TextView temp;
 
