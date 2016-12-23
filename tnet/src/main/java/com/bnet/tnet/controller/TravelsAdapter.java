@@ -1,5 +1,6 @@
 package com.bnet.tnet.controller;
 
+import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
@@ -17,7 +18,7 @@ import com.bnet.tnet.R;
 class TravelsAdapter extends RecyclerView.Adapter<TravelsAdapter.TravelViewHolder> {
 
     static {
-        ProvidableRepository repository = RepositoriesFactory.getActivitiesRepository();
+        ProvidableRepository<Activity> repository = RepositoriesFactory.getActivitiesRepository();
         repository.addAndReturnAssignedId(EntitiesSamples.getActivity());
         repository.addAndReturnAssignedId(EntitiesSamples.getActivity2());
         repository.addAndReturnAssignedId(EntitiesSamples.getActivity3());
@@ -25,7 +26,8 @@ class TravelsAdapter extends RecyclerView.Adapter<TravelsAdapter.TravelViewHolde
 
     class TravelViewHolder extends RecyclerView.ViewHolder{
 
-        TextView temp;
+        private Activity travel;
+        private TextView temp;
 
         TravelViewHolder(View itemView) {
             super(itemView);
@@ -40,10 +42,22 @@ class TravelsAdapter extends RecyclerView.Adapter<TravelsAdapter.TravelViewHolde
 
                 Intent travelDetails = new Intent(context, TravelDetails.class);
 
+                ContentValues values = travel.toContentValues(travel);
+
+                for (String key : values.keySet()) {
+                    travelDetails.putExtra(key, values.getAsString(key));
+                }
+
                 context.startActivity(travelDetails);
             }
 
         };
+
+        public void bind(Activity travel) {
+            this.travel = travel;
+
+            temp.setText(travel.getDescription());
+        }
     }
 
     @Override
@@ -57,8 +71,7 @@ class TravelsAdapter extends RecyclerView.Adapter<TravelsAdapter.TravelViewHolde
     @Override
     public void onBindViewHolder(TravelViewHolder holder, int position) {
         Activity travel = RepositoriesFactory.getActivitiesRepository().getAll().get(position);
-
-        holder.temp.setText(travel.getDescription());
+        holder.bind(travel);
     }
 
     @Override

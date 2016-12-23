@@ -114,7 +114,7 @@ public class EntitiesSamples {
         activity2.setBusinessId(1);
         activity2.setCountry("Israel");
         activity2.setPrice(53.5);
-        activity2.setDescription("Test activity3");
+        activity2.setDescription("Test activity2");
         activity2.setType(ActivityType.TRAVEL);
         activity2.setStart(start);
         activity2.setEnd(end);

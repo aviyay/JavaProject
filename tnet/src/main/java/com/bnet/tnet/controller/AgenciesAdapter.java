@@ -1,5 +1,6 @@
 package com.bnet.tnet.controller;
 
+import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
@@ -17,15 +18,15 @@ import com.bnet.tnet.R;
 class AgenciesAdapter extends RecyclerView.Adapter<AgenciesAdapter.AgencyViewHolder> {
 
     static {
-        ProvidableRepository repository = RepositoriesFactory.getBusinessesRepository();
+        ProvidableRepository<Business> repository = RepositoriesFactory.getBusinessesRepository();
         repository.addAndReturnAssignedId(EntitiesSamples.getBusiness());
         repository.addAndReturnAssignedId(EntitiesSamples.getBusiness2());
         repository.addAndReturnAssignedId(EntitiesSamples.getBusiness3());
     }
 
     class AgencyViewHolder extends RecyclerView.ViewHolder{
-
-        TextView temp;
+        private Business agency;
+        private TextView temp;
 
         AgencyViewHolder(View itemView) {
             super(itemView);
@@ -40,10 +41,21 @@ class AgenciesAdapter extends RecyclerView.Adapter<AgenciesAdapter.AgencyViewHol
 
                 Intent agencyDetails = new Intent(context, AgencyDetails.class);
 
+                ContentValues values = agency.toContentValues(agency);
+
+                for (String key : values.keySet()) {
+                    agencyDetails.putExtra(key, values.getAsString(key));
+                }
+
                 context.startActivity(agencyDetails);
             }
-
         };
+
+        void bind(Business agency) {
+            this.agency = agency;
+
+            temp.setText(agency.getName());
+        }
     }
 
     @Override
@@ -57,8 +69,7 @@ class AgenciesAdapter extends RecyclerView.Adapter<AgenciesAdapter.AgencyViewHol
     @Override
     public void onBindViewHolder(AgencyViewHolder holder, int position) {
         Business agency = RepositoriesFactory.getBusinessesRepository().getAll().get(position);
-
-        holder.temp.setText(agency.getName());
+        holder.bind(agency);
     }
 
     @Override
