@@ -5,7 +5,7 @@
             android:id="@+id/nav_agencies"
             android:title="Agencies" />
         <item
-            android:id="@+id/fragment_test2"
-            android:title="Second" />
+            android:id="@+id/nav_travels"
+            android:title="Travels" />
     </group>
 </menu>

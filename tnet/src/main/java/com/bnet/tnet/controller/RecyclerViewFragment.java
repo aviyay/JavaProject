@@ -11,7 +11,7 @@ import android.view.ViewGroup;
 import com.bnet.tnet.R;
 
 public class RecyclerViewFragment extends Fragment {
-    private RecyclerView recyclerView;
+    private RecyclerView recyclerView = null;
     private RecyclerView.Adapter adapter = null;
 
     public RecyclerViewFragment() {
@@ -20,6 +20,9 @@ public class RecyclerViewFragment extends Fragment {
 
     public void setAdapter(RecyclerView.Adapter adapter) {
         this.adapter = adapter;
+
+        if (recyclerView != null)
+            recyclerView.setAdapter(adapter);
     }
 
     @Override
@@ -29,7 +32,6 @@ public class RecyclerViewFragment extends Fragment {
         View result = inflater.inflate(R.layout.fragment_recycler_view, container, false);
         recyclerView = (RecyclerView) result.findViewById(R.id.recycler_view);
 
-        adapter = new AgenciesAdapter();
         recyclerView.setAdapter(adapter);
 
         return result;
