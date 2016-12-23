@@ -8,6 +8,7 @@ import com.bnet.shared.model.Constants;
 import com.bnet.shared.model.ContentValuesConverter;
 import com.bnet.shared.model.CursorUtils;
 import com.bnet.data.model.backend.RepositoriesFactory;
+import com.bnet.shared.model.ProvidableUtils;
 import com.bnet.shared.model.entities.Activity;
 import com.bnet.shared.model.entities.Business;
 import com.bnet.shared.model.entities.EntitiesSamples;
@@ -50,7 +51,7 @@ public class DataProviderTest {
     @Test
     public void queryActivity() throws Exception {
         Activity activity = EntitiesSamples.getActivity();
-        activity.getRepository().addAndReturnAssignedId(activity);
+        ProvidableUtils.getRepository(activity).addAndReturnAssignedId(activity);
 
         Cursor cursor = provider.query(Uri.parse(URI_PREFIX + Constants.ACTIVITIES_URI_PATH), null, null, null, null);
         assertNotNull(cursor);
@@ -64,7 +65,7 @@ public class DataProviderTest {
     @Test
     public void queryBusiness() throws Exception {
         Business business = EntitiesSamples.getBusiness();
-        business.getRepository().addAndReturnAssignedId(business);
+        ProvidableUtils.getRepository(business).addAndReturnAssignedId(business);
 
         Cursor cursor = provider.query(Uri.parse(URI_PREFIX + Constants.BUSINESSES_URI_PATH), null, null, null, null);
         assertNotNull(cursor);

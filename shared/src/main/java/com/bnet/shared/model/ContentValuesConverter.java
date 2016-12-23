@@ -10,7 +10,7 @@ import com.bnet.shared.model.entities.DateTime;
 
 public class ContentValuesConverter {
 
-    private static final String BUSINESS_ID = "_id";
+    private static final String BUSINESS_ID = "business_id";
     private static final String BUSINESS_NAME = "name";
     private static final String BUSINESS_EMAIL = "email";
     private static final String BUSINESS_PHONE = "phone";

@@ -8,6 +8,7 @@ import android.net.Uri;
 
 import com.bnet.shared.model.Constants;
 import com.bnet.shared.model.CursorUtils;
+import com.bnet.shared.model.ProvidableUtils;
 import com.bnet.shared.model.backend.Providable;
 import com.bnet.shared.model.entities.Activity;
 import com.bnet.shared.model.entities.Business;
@@ -33,7 +34,7 @@ public class UpdatesReceiver extends BroadcastReceiver {
         Cursor cursor;
 
         for(Providable p : providableList) {
-            String uri = "content://" + Constants.PROVIDER_AUTHORITY + "/" + p.getURIPath();
+            String uri = "content://" + Constants.PROVIDER_AUTHORITY + "/" + ProvidableUtils.getURIPath(p);
             cursor = context.getContentResolver().query(Uri.parse(uri), null, null, null, null);
 
             if (cursor != null) {
@@ -48,7 +49,7 @@ public class UpdatesReceiver extends BroadcastReceiver {
                     }
 
                     if (temp != null)
-                        p.getRepository().addAndReturnAssignedId(temp);
+                        ProvidableUtils.getRepository(p).addAndReturnAssignedId(temp);
 
                     cursor.moveToNext();
                 }

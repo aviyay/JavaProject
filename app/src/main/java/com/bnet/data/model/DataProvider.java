@@ -10,6 +10,7 @@ import android.support.annotation.NonNull;
 
 import com.bnet.shared.model.Constants;
 import com.bnet.shared.model.CursorUtils;
+import com.bnet.shared.model.ProvidableUtils;
 import com.bnet.shared.model.backend.Providable;
 import com.bnet.shared.model.entities.Activity;
 import com.bnet.shared.model.entities.Business;
@@ -22,7 +23,7 @@ public class DataProvider extends ContentProvider {
 
     public static void registerProvidable(Providable providable) {
         providableList.add(providable);
-        uriMatcher.addURI(Constants.PROVIDER_AUTHORITY, providable.getURIPath(), providableList.indexOf(providable));
+        uriMatcher.addURI(Constants.PROVIDER_AUTHORITY, ProvidableUtils.getURIPath(providable), providableList.indexOf(providable));
     }
 
     @Override
@@ -41,7 +42,7 @@ public class DataProvider extends ContentProvider {
 
         Providable match = matchProvidable(uri);
         Providable item = match.fromContentValues(values);
-        id = match.getRepository().addAndReturnAssignedId(item);
+        id = ProvidableUtils.getRepository(match).addAndReturnAssignedId(item);
 
         return Uri.withAppendedPath(uri, "" + id);
     }
@@ -54,7 +55,7 @@ public class DataProvider extends ContentProvider {
         String[] columns = CursorUtils.getMatrixColumns(match);
         MatrixCursor matrixCursor = new MatrixCursor(columns);
 
-        for (Object item : match.getRepository().getAll()) {
+        for (Object item : ProvidableUtils.getRepository(match).getAll()) {
             matrixCursor.addRow(CursorUtils.ProvidableToObjectArray((Providable) item));
         }
 

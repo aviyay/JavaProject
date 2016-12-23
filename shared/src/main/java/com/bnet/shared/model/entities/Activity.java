@@ -28,15 +28,6 @@ public class Activity implements Providable<Activity> {
         this.id = id;
     }
 
-    @Override
-    public String getURIPath() {
-        return Constants.ACTIVITIES_URI_PATH;
-    }
-
-    @Override
-    public ProvidableRepository<Activity> getRepository() {
-        return RepositoriesFactory.getActivitiesRepository();
-    }
 
     @Override
     public Activity fromContentValues(ContentValues contentValues) {

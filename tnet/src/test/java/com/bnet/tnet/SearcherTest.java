@@ -28,7 +28,7 @@ public class SearcherTest {
         Activity activity=EntitiesSamples.getActivity();
         assertEquals(true, Searcher.Search(activity,"israel"));
         assertEquals(true, Searcher.Search(activity,"test"));
-        assertEquals(true, Searcher.Search(activity,"air"));
+        assertEquals(true, Searcher.Search(activity,"travel"));
         assertEquals(true, Searcher.Search(activity,"21:00"));
         assertEquals(true, Searcher.Search(activity,"07/08"));
         assertEquals(true, Searcher.Search(activity,"53"));

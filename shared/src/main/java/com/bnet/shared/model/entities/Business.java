@@ -39,16 +39,6 @@ public class Business implements Providable<Business> {
     }
 
     @Override
-    public String getURIPath() {
-        return Constants.BUSINESSES_URI_PATH;
-    }
-
-    @Override
-    public ProvidableRepository<Business> getRepository() {
-        return RepositoriesFactory.getBusinessesRepository();
-    }
-
-    @Override
     public Business fromContentValues(ContentValues contentValues) {
         try {
             return ContentValuesConverter.contentValuesToBusiness(contentValues);
