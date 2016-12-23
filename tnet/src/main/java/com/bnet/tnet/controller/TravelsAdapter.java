@@ -1,5 +1,7 @@
 package com.bnet.tnet.controller;
 
+import android.content.Context;
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -27,9 +29,21 @@ class TravelsAdapter extends RecyclerView.Adapter<TravelsAdapter.TravelViewHolde
 
         TravelViewHolder(View itemView) {
             super(itemView);
-
+            itemView.setOnClickListener(clickListener);
             temp = (TextView) itemView.findViewById(R.id.temp2);
         }
+
+        private View.OnClickListener clickListener = new View.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+                Context context = v.getContext();
+
+                Intent travelDetails = new Intent(context, TravelDetails.class);
+
+                context.startActivity(travelDetails);
+            }
+
+        };
     }
 
     @Override

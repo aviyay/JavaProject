@@ -1,5 +1,7 @@
 package com.bnet.tnet.controller;
 
+import android.content.Context;
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -27,9 +29,21 @@ class AgenciesAdapter extends RecyclerView.Adapter<AgenciesAdapter.AgencyViewHol
 
         AgencyViewHolder(View itemView) {
             super(itemView);
-
+            itemView.setOnClickListener(clickListener);
             temp = (TextView) itemView.findViewById(R.id.temp);
         }
+
+        private View.OnClickListener clickListener = new View.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+                Context context = v.getContext();
+
+                Intent agencyDetails = new Intent(context, AgencyDetails.class);
+
+                context.startActivity(agencyDetails);
+            }
+
+        };
     }
 
     @Override
