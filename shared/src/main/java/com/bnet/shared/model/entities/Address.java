@@ -58,4 +58,8 @@ public class Address {
         result = 31 * result + getStreet().hashCode();
         return result;
     }
+    @Override
+    public String toString() {
+        return getStreet()+"," + getCity() + ","+ getCountry();
+    }
 }

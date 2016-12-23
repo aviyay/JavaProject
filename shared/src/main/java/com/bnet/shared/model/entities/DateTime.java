@@ -53,7 +53,7 @@ public class DateTime {
     }
 
     public String format() {
-        return String.format(Locale.US, "%d:%d %s/%s/%s", getHour(), getMinute(), getDay(), getMonth(), getYear());
+        return String.format(Locale.US, "%02d:%02d %02d/%02d/%02d", getHour(), getMinute(), getDay(), getMonth(), getYear());
     }
 
     public static DateTime parse (String formattedDateTime) throws ParseException{
@@ -91,5 +91,10 @@ public class DateTime {
     @Override
     public int hashCode() {
         return format().hashCode();
+    }
+
+    @Override
+    public String toString() {
+        return format();
     }
 }
