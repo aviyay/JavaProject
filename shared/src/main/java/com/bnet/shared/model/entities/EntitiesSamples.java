@@ -1,5 +1,6 @@
 package com.bnet.shared.model.entities;
 
+import com.bnet.shared.model.backend.Providable;
 import com.bnet.shared.model.entities.Activity;
 import com.bnet.shared.model.entities.ActivityType;
 import com.bnet.shared.model.entities.Address;
@@ -13,6 +14,8 @@ public class EntitiesSamples {
     private static Business business2;
     private static Business business3;
     private static Activity activity;
+    private static Activity activity2;
+    private static Activity activity3;
 
     static {
         initializeBusiness();
@@ -20,29 +23,9 @@ public class EntitiesSamples {
         initializeBusiness3();
 
         initializeActivity();
+        initializeActivity2();
+        initializeActivity3();
 
-    }
-
-    private static void initializeActivity() {
-        activity = new Activity();
-
-        DateTime start = null;
-        DateTime end = null;
-
-        try {
-            start = DateTime.parse("8:15 7/8/2016");
-            end = DateTime.parse("21:00 7/8/2016");
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-
-        activity.setBusinessId(1);
-        activity.setCountry("Israel");
-        activity.setPrice(53.5);
-        activity.setDescription("Test activity");
-        activity.setType(ActivityType.AIRLINE);
-        activity.setStart(start);
-        activity.setEnd(end);
     }
 
     private static void initializeBusiness() {
@@ -93,6 +76,72 @@ public class EntitiesSamples {
         business3.setAddress(address);
     }
 
+    private static void initializeActivity() {
+        activity = new Activity();
+
+        DateTime start = null;
+        DateTime end = null;
+
+        try {
+            start = DateTime.parse("8:15 7/8/2016");
+            end = DateTime.parse("21:00 7/8/2016");
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
+        activity.setBusinessId(1);
+        activity.setCountry("Israel");
+        activity.setPrice(53.5);
+        activity.setDescription("Test activity");
+        activity.setType(ActivityType.TRAVEL);
+        activity.setStart(start);
+        activity.setEnd(end);
+    }
+
+    private static void initializeActivity2() {
+        activity2 = new Activity();
+
+        DateTime start = null;
+        DateTime end = null;
+
+        try {
+            start = DateTime.parse("8:15 7/8/2016");
+            end = DateTime.parse("21:00 7/8/2016");
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
+        activity2.setBusinessId(1);
+        activity2.setCountry("Israel");
+        activity2.setPrice(53.5);
+        activity2.setDescription("Test activity3");
+        activity2.setType(ActivityType.TRAVEL);
+        activity2.setStart(start);
+        activity2.setEnd(end);
+    }
+
+    private static void initializeActivity3() {
+        activity3 = new Activity();
+
+        DateTime start = null;
+        DateTime end = null;
+
+        try {
+            start = DateTime.parse("8:15 7/8/2016");
+            end = DateTime.parse("21:00 7/8/2016");
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
+        activity3.setBusinessId(1);
+        activity3.setCountry("Israel");
+        activity3.setPrice(53.5);
+        activity3.setDescription("Test activity3");
+        activity3.setType(ActivityType.TRAVEL);
+        activity3.setStart(start);
+        activity3.setEnd(end);
+    }
+
     public static Business getBusiness() {
         return business;
     }
@@ -104,4 +153,11 @@ public class EntitiesSamples {
     public static Activity getActivity() {
         return activity;
     }
+    public static Activity getActivity2() {
+        return activity2;
+    }
+    public static Activity getActivity3() {
+        return activity3;
+    }
+
 }

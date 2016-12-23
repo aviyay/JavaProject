@@ -4,11 +4,11 @@ import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
-import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 
@@ -18,15 +18,18 @@ public class MainActivity extends AppCompatActivity {
     private DrawerLayout mDrawer;
     private Toolbar toolbar;
     private NavigationView nvDrawer;
-
     private ActionBarDrawerToggle drawerToggle;
+
+    private RecyclerViewFragment recyclerViewFragment = new RecyclerViewFragment();
+    private AgenciesAdapter agenciesAdapter = new AgenciesAdapter();
+    private TravelsAdapter travelsAdapter = new TravelsAdapter();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        initializeComponents();
+        findViewComponents();
 
         // Set a Toolbar to replace the ActionBar.
         setSupportActionBar(toolbar);
@@ -37,41 +40,38 @@ public class MainActivity extends AppCompatActivity {
         // Tie DrawerLayout events to the ActionBarToggle
         mDrawer.addDrawerListener(drawerToggle);
 
-        registerItemsSwitcher(nvDrawer);
+        registerItemsSelector(nvDrawer);
+
+        loadRecyclerViewFragment();
+
+        selectDrawerItem(nvDrawer.getMenu().findItem(R.id.nav_agencies));
     }
 
-    private void initializeComponents() {
+    private void findViewComponents() {
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         mDrawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         nvDrawer = (NavigationView) findViewById(R.id.nvView);
     }
 
     private ActionBarDrawerToggle setupDrawerToggle() {
-        // NOTE: Make sure you pass in a valid toolbar reference.  ActionBarDrawToggle() does not require it
-        // and will not render the hamburger icon without it.
-        return new ActionBarDrawerToggle(this, mDrawer, toolbar, R.string.drawer_open,  R.string.drawer_close);
+        return new ActionBarDrawerToggle(this, mDrawer, toolbar, R.string.drawer_open, R.string.drawer_close);
     }
 
-    private void registerItemsSwitcher(NavigationView navigationView) {
+    private void registerItemsSelector(NavigationView navigationView) {
         navigationView.setNavigationItemSelectedListener(
                 new NavigationView.OnNavigationItemSelectedListener() {
                     @Override
-                    public boolean onNavigationItemSelected(MenuItem menuItem) {
+                    public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
                         selectDrawerItem(menuItem);
                         return true;
                     }
                 });
     }
 
-    public void selectDrawerItem(MenuItem menuItem) {
-        Fragment fragment = getAppropriateFragment(menuItem);
 
-        // Insert the fragment by replacing any existing fragment
-        FragmentManager fragmentManager = getSupportFragmentManager();
-        fragmentManager
-                .beginTransaction()
-                .replace(R.id.Content, fragment)
-                .commit();
+    public void selectDrawerItem(MenuItem menuItem) {
+
+        recyclerViewFragment.setAdapter(selectAdapter(menuItem.getItemId()));
 
         // Highlight the selected item has been done by NavigationView
         menuItem.setChecked(true);
@@ -81,20 +81,25 @@ public class MainActivity extends AppCompatActivity {
         mDrawer.closeDrawers();
     }
 
-    @NonNull
-    Fragment getAppropriateFragment(MenuItem menuItem) {
-        Fragment result;
-        switch (menuItem.getItemId()) {
-            case R.id.nav_fragment_agencies:
-                result = new AgenciesFragment();
-                break;
-            case R.id.fragment_test2:
-                result = new Test2Fragment();
-                break;
+    RecyclerView.Adapter selectAdapter(int itemId) {
+        switch (itemId) {
+            case R.id.nav_agencies:
+                return agenciesAdapter;
+            case R.id.nav_travels:
+                return travelsAdapter;
             default:
-                result = new AgenciesFragment();
+                return null;
         }
-        return result;
+    }
+
+    private void loadRecyclerViewFragment() {
+        // Insert the fragment by replacing any existing fragment
+        FragmentManager fragmentManager = getSupportFragmentManager();
+
+        fragmentManager
+                .beginTransaction()
+                .replace(R.id.Content, recyclerViewFragment)
+                .commit();
     }
 
     @Override
