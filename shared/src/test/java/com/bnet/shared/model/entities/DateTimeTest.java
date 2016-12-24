@@ -18,12 +18,12 @@ public class DateTimeTest {
         dateTime.setMinute(30);
 
         String result = dateTime.format();
-        assertEquals("21:30 4/8/2016",result);
+        assertEquals("21:30 04/08/2016",result);
     }
 
     @Test
     public void parseCorrect() throws Exception {
-        DateTime dateTime = DateTime.parse("21:30 4/8/2016");
+        DateTime dateTime = DateTime.parse("21:30 04/08/2016");
 
         assertEquals(2016, dateTime.getYear());
         assertEquals(8, dateTime.getMonth());

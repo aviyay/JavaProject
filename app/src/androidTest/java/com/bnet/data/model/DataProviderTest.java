@@ -5,7 +5,6 @@ import android.database.Cursor;
 import android.net.Uri;
 
 import com.bnet.shared.model.Constants;
-import com.bnet.shared.model.ContentValuesConverter;
 import com.bnet.shared.model.CursorUtils;
 import com.bnet.data.model.backend.RepositoriesFactory;
 import com.bnet.shared.model.ProvidableUtils;
@@ -33,7 +32,7 @@ public class DataProviderTest {
     @Test
     public void insertActivity() throws Exception {
         Activity activity = EntitiesSamples.getActivity();
-        ContentValues values = ContentValuesConverter.activityToContentValues(activity);
+        ContentValues values = ProvidableUtils.contentValuesConvert(activity);
         Uri result = provider.insert(Uri.parse(URI_PREFIX + Constants.ACTIVITIES_URI_PATH), values);
 
         assertEquals(0, ContentUris.parseId(result));
@@ -42,7 +41,7 @@ public class DataProviderTest {
     @Test
     public void insertBusiness() throws Exception {
         Business business = EntitiesSamples.getBusiness();
-        ContentValues values = ContentValuesConverter.businessToContentValues(business);
+        ContentValues values = ProvidableUtils.contentValuesConvert(business);
         Uri result = provider.insert(Uri.parse(URI_PREFIX + Constants.BUSINESSES_URI_PATH), values);
 
         assertEquals(0, ContentUris.parseId(result));

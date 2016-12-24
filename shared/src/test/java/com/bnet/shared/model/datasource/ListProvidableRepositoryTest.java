@@ -1,6 +1,7 @@
 package com.bnet.shared.model.datasource;
 
 import com.bnet.shared.model.entities.Business;
+import com.bnet.shared.model.entities.EntitiesSamples;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -22,7 +23,7 @@ public class ListProvidableRepositoryTest {
 
     @Test
     public void addAndCheckId() throws Exception {
-        Business business2 = new Business();
+        Business business2 = EntitiesSamples.getBusiness2();
 
         assertEquals(-1, business2.getId());
         int id = repository.addAndReturnAssignedId(business2);

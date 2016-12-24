@@ -1,13 +1,8 @@
 package com.bnet.data.model.datasource;
 
-import android.content.ContentValues;
-
 import com.bnet.data.model.backend.AccountsRepository;
 import com.bnet.data.model.entities.Account;
-import com.bnet.shared.model.ContentValuesConverter;
 import com.bnet.shared.model.PhpHelper;
-import com.bnet.shared.model.entities.Address;
-import com.bnet.shared.model.entities.Business;
 
 import org.json.JSONArray;
 import org.json.JSONObject;

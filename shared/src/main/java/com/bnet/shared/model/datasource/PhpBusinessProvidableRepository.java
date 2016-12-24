@@ -3,8 +3,9 @@ package com.bnet.shared.model.datasource;
 import android.content.ContentValues;
 import android.support.annotation.NonNull;
 
-import com.bnet.shared.model.ContentValuesConverter;
+import com.bnet.shared.model.BusinessContentValuesConverter;
 import com.bnet.shared.model.PhpHelper;
+import com.bnet.shared.model.ProvidableUtils;
 import com.bnet.shared.model.backend.ProvidableRepository;
 import com.bnet.shared.model.entities.Address;
 import com.bnet.shared.model.entities.Business;
@@ -17,15 +18,11 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
-/**
- * Created by שי on 21/12/2016.
- */
-
 public class PhpBusinessProvidableRepository implements ProvidableRepository<Business> {
   final String WEB_URL="http://tennenba.vlab.jct.ac.il/";
     @Override
     public int addAndReturnAssignedId(Business item) {
-        ContentValues bis=ContentValuesConverter.businessToContentValues(item);
+        ContentValues bis= ProvidableUtils.contentValuesConvert(item);
         try {
             Map<String, Object> params = new LinkedHashMap<>();
             params.put("name", bis.getAsString("name"));

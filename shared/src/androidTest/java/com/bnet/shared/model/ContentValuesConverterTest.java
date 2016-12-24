@@ -15,8 +15,8 @@ public class ContentValuesConverterTest {
     public void businessToContentValuesAndBack() throws Exception {
         Business business = EntitiesSamples.getBusiness();
 
-        ContentValues contentValues = ContentValuesConverter.businessToContentValues(business);
-        Business result = ContentValuesConverter.contentValuesToBusiness(contentValues);
+        ContentValues contentValues = ProvidableUtils.contentValuesConvert(business);
+        Business result = (Business) ProvidableUtils.contentValuesConvert(Business.class, contentValues);
 
         assertEquals(business.getId(), result.getId());
         assertEquals(business.getName(), result.getName());
@@ -33,8 +33,8 @@ public class ContentValuesConverterTest {
     public void activityToContentValuesAndBack() throws Exception {
         Activity activity = EntitiesSamples.getActivity();
 
-        ContentValues contentValues = ContentValuesConverter.activityToContentValues(activity);
-        Activity result = ContentValuesConverter.contentValuesToActivity(contentValues);
+        ContentValues contentValues = ProvidableUtils.contentValuesConvert(activity);
+        Activity result = (Activity) ProvidableUtils.contentValuesConvert(Activity.class, contentValues);
 
         assertEquals(activity.getId(), result.getId());
         assertEquals(activity.getCountry(), result.getCountry());

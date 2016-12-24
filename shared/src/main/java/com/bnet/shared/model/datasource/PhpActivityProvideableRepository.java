@@ -3,8 +3,9 @@ package com.bnet.shared.model.datasource;
 import android.content.ContentValues;
 import android.support.annotation.NonNull;
 
-import com.bnet.shared.model.ContentValuesConverter;
+import com.bnet.shared.model.ActivityContentValuesConverter;
 import com.bnet.shared.model.PhpHelper;
+import com.bnet.shared.model.ProvidableUtils;
 import com.bnet.shared.model.backend.ProvidableRepository;
 import com.bnet.shared.model.entities.Activity;
 import com.bnet.shared.model.entities.ActivityType;
@@ -18,15 +19,12 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
-/**
- * Created by שי on 22/12/2016.
- */
 
 public class PhpActivityProvideableRepository implements ProvidableRepository<Activity> {
     final String WEB_URL="http://tennenba.vlab.jct.ac.il/";
     @Override
     public int addAndReturnAssignedId(Activity item) {
-        ContentValues bis= ContentValuesConverter.activityToContentValues(item);
+        ContentValues bis= ProvidableUtils.contentValuesConvert(item);
         try {
             Map<String, Object> params = new LinkedHashMap<>();
             params.put("description", bis.getAsString("description"));

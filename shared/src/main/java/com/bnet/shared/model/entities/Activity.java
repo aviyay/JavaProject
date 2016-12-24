@@ -2,11 +2,9 @@ package com.bnet.shared.model.entities;
 
 import android.content.ContentValues;
 
-import com.bnet.shared.model.Constants;
-import com.bnet.shared.model.ContentValuesConverter;
+import com.bnet.shared.model.ActivityContentValuesConverter;
+import com.bnet.shared.model.ProvidableUtils;
 import com.bnet.shared.model.backend.Providable;
-import com.bnet.shared.model.backend.ProvidableRepository;
-import com.bnet.shared.model.backend.RepositoriesFactory;
 
 public class Activity implements Providable<Activity> {
     private int id = -1;
@@ -32,7 +30,7 @@ public class Activity implements Providable<Activity> {
     @Override
     public Activity fromContentValues(ContentValues contentValues) {
         try {
-            return ContentValuesConverter.contentValuesToActivity(contentValues);
+            return (Activity) ProvidableUtils.contentValuesConvert(Activity.class, contentValues);
         } catch (Exception e) {
             throw new IllegalArgumentException("This contentValues is not a valid activity");
         }
@@ -40,7 +38,7 @@ public class Activity implements Providable<Activity> {
 
     @Override
     public ContentValues toContentValues(Activity item) {
-        return ContentValuesConverter.activityToContentValues(item);
+        return ProvidableUtils.contentValuesConvert(item);
     }
 
 
