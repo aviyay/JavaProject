@@ -1,4 +1,4 @@
-package com.bnet.shared.model;
+package com.bnet.shared.model.services.converters.contentvalues;
 
 import android.content.ContentValues;
 
@@ -23,7 +23,7 @@ public class ActivityContentValuesConverter implements ContentValuesConverter<Ac
 
         return result;
     }
-    public Activity convert(ContentValues contentValues) throws Exception{
+    public Activity convert(ContentValues contentValues) {
         Activity result = new Activity();
 
         result.setId(contentValues.getAsInteger(ACTIVITY_ID));

@@ -1,9 +1,5 @@
 package com.bnet.shared.model.entities;
 
-import android.content.ContentValues;
-
-import com.bnet.shared.model.BusinessContentValuesConverter;
-import com.bnet.shared.model.ProvidableUtils;
 import com.bnet.shared.model.backend.Providable;
 
 public class Business implements Providable<Business> {
@@ -34,20 +30,6 @@ public class Business implements Providable<Business> {
     @Override
     public void setId(int id) {
         this.id = id;
-    }
-
-    @Override
-    public Business fromContentValues(ContentValues contentValues) {
-        try {
-            return (Business) ProvidableUtils.contentValuesConvert(Business.class, contentValues);
-        } catch (Exception e) {
-            throw new IllegalArgumentException("This contentValues is not a valid business");
-        }
-    }
-
-    @Override
-    public ContentValues toContentValues(Business item) {
-        return ProvidableUtils.contentValuesConvert(item);
     }
 
     public String getName() {

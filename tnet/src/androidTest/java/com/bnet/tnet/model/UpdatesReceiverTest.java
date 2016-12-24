@@ -11,7 +11,7 @@ import android.test.mock.MockContentResolver;
 import android.test.mock.MockContext;
 
 import com.bnet.shared.model.Constants;
-import com.bnet.shared.model.CursorUtils;
+import com.bnet.shared.model.services.utils.CursorUtils;
 import com.bnet.shared.model.backend.RepositoriesFactory;
 import com.bnet.shared.model.entities.Activity;
 import com.bnet.shared.model.entities.Business;

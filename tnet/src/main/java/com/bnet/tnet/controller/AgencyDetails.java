@@ -1,11 +1,12 @@
 package com.bnet.tnet.controller;
 
 import android.app.Activity;
-import android.content.ContentValues;
 import android.content.Intent;
 import android.os.Bundle;
 import android.widget.TextView;
 
+import com.bnet.shared.model.Constants;
+import com.bnet.shared.model.services.utils.ProvidableUtils;
 import com.bnet.shared.model.entities.Business;
 import com.bnet.tnet.R;
 
@@ -27,14 +28,8 @@ public class AgencyDetails extends Activity {
     }
 
     private void retrieveBusinessFromIntent(Intent intent) {
-        Bundle bundle = intent.getExtras();
+        Bundle bundle = intent.getBundleExtra(Constants.BUSINESSES_URI_PATH);
 
-        ContentValues values = new ContentValues();
-
-        for (String key : bundle.keySet()) {
-            values.put(key, bundle.getString(key));
-        }
-
-        agency = agency.fromContentValues(values);
+        agency = (Business) ProvidableUtils.bundleConvert(Business.class, bundle);
     }
 }

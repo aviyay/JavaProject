@@ -1,6 +1,5 @@
 package com.bnet.tnet.controller;
 
-import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -10,6 +9,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.bnet.shared.model.Constants;
+import com.bnet.shared.model.services.utils.ProvidableUtils;
 import com.bnet.shared.model.backend.ProvidableRepository;
 import com.bnet.shared.model.backend.RepositoriesFactory;
 import com.bnet.shared.model.entities.Business;
@@ -41,12 +42,9 @@ class AgenciesAdapter extends RecyclerView.Adapter<AgenciesAdapter.AgencyViewHol
                 Context context = v.getContext();
 
                 Intent agencyDetails = new Intent(context, AgencyDetails.class);
+                Bundle bundle = ProvidableUtils.bundleConvert(agency);
 
-                ContentValues values = agency.toContentValues(agency);
-
-                for (String key : values.keySet()) {
-                    agencyDetails.putExtra(key, values.getAsString(key));
-                }
+                agencyDetails.putExtra(Constants.BUSINESSES_URI_PATH, bundle);
 
                 context.startActivity(agencyDetails);
             }

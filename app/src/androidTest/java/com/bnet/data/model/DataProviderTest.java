@@ -5,9 +5,9 @@ import android.database.Cursor;
 import android.net.Uri;
 
 import com.bnet.shared.model.Constants;
-import com.bnet.shared.model.CursorUtils;
+import com.bnet.shared.model.services.utils.CursorUtils;
 import com.bnet.data.model.backend.RepositoriesFactory;
-import com.bnet.shared.model.ProvidableUtils;
+import com.bnet.shared.model.services.utils.ProvidableUtils;
 import com.bnet.shared.model.entities.Activity;
 import com.bnet.shared.model.entities.Business;
 import com.bnet.shared.model.entities.EntitiesSamples;

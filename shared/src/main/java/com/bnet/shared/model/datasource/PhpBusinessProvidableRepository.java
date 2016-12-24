@@ -3,9 +3,8 @@ package com.bnet.shared.model.datasource;
 import android.content.ContentValues;
 import android.support.annotation.NonNull;
 
-import com.bnet.shared.model.BusinessContentValuesConverter;
 import com.bnet.shared.model.PhpHelper;
-import com.bnet.shared.model.ProvidableUtils;
+import com.bnet.shared.model.services.utils.ProvidableUtils;
 import com.bnet.shared.model.backend.ProvidableRepository;
 import com.bnet.shared.model.entities.Address;
 import com.bnet.shared.model.entities.Business;

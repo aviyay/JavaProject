@@ -56,7 +56,7 @@ public class DateTime {
         return String.format(Locale.US, "%02d:%02d %02d/%02d/%02d", getHour(), getMinute(), getDay(), getMonth(), getYear());
     }
 
-    public static DateTime parse (String formattedDateTime) throws ParseException{
+    public static DateTime parse (String formattedDateTime) {
         DateTime result = new DateTime();
         Pattern pattern = Pattern.compile("(\\d+):(\\d+) (\\d+)/(\\d+)/(\\d+)");
         Matcher matcher = pattern.matcher(formattedDateTime);
@@ -73,7 +73,7 @@ public class DateTime {
             return result;
         }
         catch (Exception e) {
-            throw new ParseException("Invalid input, should be in the pattern hh:hh dd/MM/yyyy", 0);
+            throw new IllegalArgumentException("Invalid input, should be in the pattern hh:hh dd/MM/yyyy");
         }
     }
 

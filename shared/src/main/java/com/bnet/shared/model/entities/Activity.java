@@ -1,9 +1,5 @@
 package com.bnet.shared.model.entities;
 
-import android.content.ContentValues;
-
-import com.bnet.shared.model.ActivityContentValuesConverter;
-import com.bnet.shared.model.ProvidableUtils;
 import com.bnet.shared.model.backend.Providable;
 
 public class Activity implements Providable<Activity> {
@@ -25,22 +21,6 @@ public class Activity implements Providable<Activity> {
     public void setId(int id) {
         this.id = id;
     }
-
-
-    @Override
-    public Activity fromContentValues(ContentValues contentValues) {
-        try {
-            return (Activity) ProvidableUtils.contentValuesConvert(Activity.class, contentValues);
-        } catch (Exception e) {
-            throw new IllegalArgumentException("This contentValues is not a valid activity");
-        }
-    }
-
-    @Override
-    public ContentValues toContentValues(Activity item) {
-        return ProvidableUtils.contentValuesConvert(item);
-    }
-
 
     public ActivityType getType() {
         return activityType;

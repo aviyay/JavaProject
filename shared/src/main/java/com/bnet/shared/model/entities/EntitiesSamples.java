@@ -82,12 +82,8 @@ public class EntitiesSamples {
         DateTime start = null;
         DateTime end = null;
 
-        try {
-            start = DateTime.parse("8:15 7/8/2016");
-            end = DateTime.parse("21:00 7/8/2016");
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
+        start = DateTime.parse("8:15 7/8/2016");
+        end = DateTime.parse("21:00 7/8/2016");
 
         activity.setBusinessId(1);
         activity.setCountry("Israel");
@@ -104,12 +100,8 @@ public class EntitiesSamples {
         DateTime start = null;
         DateTime end = null;
 
-        try {
-            start = DateTime.parse("8:15 7/8/2016");
-            end = DateTime.parse("21:00 7/8/2016");
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
+        start = DateTime.parse("8:15 7/8/2016");
+        end = DateTime.parse("21:00 7/8/2016");
 
         activity2.setBusinessId(1);
         activity2.setCountry("Israel");
@@ -126,12 +118,8 @@ public class EntitiesSamples {
         DateTime start = null;
         DateTime end = null;
 
-        try {
-            start = DateTime.parse("8:15 7/8/2016");
-            end = DateTime.parse("21:00 7/8/2016");
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
+        start = DateTime.parse("8:15 7/8/2016");
+        end = DateTime.parse("21:00 7/8/2016");
 
         activity3.setBusinessId(1);
         activity3.setCountry("Israel");
@@ -145,7 +133,11 @@ public class EntitiesSamples {
     public static Business getBusiness() {
         return business;
     }
-    public static Business getBusiness2() {return business2; }
+
+    public static Business getBusiness2() {
+        return business2;
+    }
+
     public static Business getBusiness3() {
         return business3;
     }
@@ -153,9 +145,11 @@ public class EntitiesSamples {
     public static Activity getActivity() {
         return activity;
     }
+
     public static Activity getActivity2() {
         return activity2;
     }
+
     public static Activity getActivity3() {
         return activity3;
     }

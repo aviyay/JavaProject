@@ -39,7 +39,7 @@ public class DateTimeTest {
             DateTime.parse("Invalid Input");
             fail();
         }
-        catch (ParseException e) {
+        catch (IllegalArgumentException e) {
             assertEquals("Invalid input, should be in the pattern hh:hh dd/MM/yyyy", e.getMessage());
         }
     }

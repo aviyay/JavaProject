@@ -9,11 +9,9 @@ import android.net.Uri;
 import android.support.annotation.NonNull;
 
 import com.bnet.shared.model.Constants;
-import com.bnet.shared.model.CursorUtils;
-import com.bnet.shared.model.ProvidableUtils;
+import com.bnet.shared.model.services.utils.CursorUtils;
+import com.bnet.shared.model.services.utils.ProvidableUtils;
 import com.bnet.shared.model.backend.Providable;
-import com.bnet.shared.model.entities.Activity;
-import com.bnet.shared.model.entities.Business;
 
 import java.util.ArrayList;
 
@@ -41,7 +39,7 @@ public class DataProvider extends ContentProvider {
         int id;
 
         Providable match = matchProvidable(uri);
-        Providable item = match.fromContentValues(values);
+        Providable item = ProvidableUtils.contentValuesConvert(match.getClass(), values);
         id = ProvidableUtils.getRepository(match).addAndReturnAssignedId(item);
 
         return Uri.withAppendedPath(uri, "" + id);

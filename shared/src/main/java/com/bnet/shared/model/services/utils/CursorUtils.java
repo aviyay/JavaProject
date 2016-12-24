@@ -1,4 +1,4 @@
-package com.bnet.shared.model;
+package com.bnet.shared.model.services.utils;
 
 import android.content.ContentValues;
 import android.database.Cursor;
@@ -12,11 +12,11 @@ public class CursorUtils {
         for (int i = 0; i < cursor.getColumnCount(); i++)
             values.put(cursor.getColumnName(i), cursor.getString(i));
 
-        return (T) match.fromContentValues(values);
+        return (T) ProvidableUtils.contentValuesConvert(match.getClass(), values);
     }
 
     public static String[] getMatrixColumns(Providable providable) {
-        ContentValues values = providable.toContentValues(providable);
+        ContentValues values = ProvidableUtils.contentValuesConvert(providable);
         String [] columns = new String[values.size()];
         values.keySet().toArray(columns);
         return columns;
@@ -24,7 +24,7 @@ public class CursorUtils {
 
     public static Object[] ProvidableToObjectArray(Providable providable) {
         String[] columns = CursorUtils.getMatrixColumns(providable);
-        ContentValues values = providable.toContentValues(providable);
+        ContentValues values = ProvidableUtils.contentValuesConvert(providable);
         Object[] result = new Object[columns.length];
 
         for (int i = 0; i < result.length; i++)

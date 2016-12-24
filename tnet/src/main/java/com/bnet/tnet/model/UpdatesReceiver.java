@@ -7,8 +7,8 @@ import android.database.Cursor;
 import android.net.Uri;
 
 import com.bnet.shared.model.Constants;
-import com.bnet.shared.model.CursorUtils;
-import com.bnet.shared.model.ProvidableUtils;
+import com.bnet.shared.model.services.utils.CursorUtils;
+import com.bnet.shared.model.services.utils.ProvidableUtils;
 import com.bnet.shared.model.backend.Providable;
 
 public class UpdatesReceiver extends BroadcastReceiver {

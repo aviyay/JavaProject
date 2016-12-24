@@ -1,4 +1,4 @@
-package com.bnet.shared.model;
+package com.bnet.shared.model.services.converters.contentvalues;
 
 import android.content.ContentValues;
 
@@ -23,7 +23,7 @@ public class BusinessContentValuesConverter implements ContentValuesConverter<Bu
 
         return result;
     }
-    public Business convert(ContentValues contentValues) throws Exception {
+    public Business convert(ContentValues contentValues) {
         Business result = new Business();
 
         result.setId(contentValues.getAsInteger(BUSINESS_ID));

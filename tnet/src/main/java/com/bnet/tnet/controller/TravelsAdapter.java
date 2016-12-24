@@ -1,14 +1,16 @@
 package com.bnet.tnet.controller;
 
-import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
+import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.bnet.shared.model.Constants;
+import com.bnet.shared.model.services.utils.ProvidableUtils;
 import com.bnet.shared.model.backend.ProvidableRepository;
 import com.bnet.shared.model.backend.RepositoriesFactory;
 import com.bnet.shared.model.entities.Activity;
@@ -42,11 +44,8 @@ class TravelsAdapter extends RecyclerView.Adapter<TravelsAdapter.TravelViewHolde
 
                 Intent travelDetails = new Intent(context, TravelDetails.class);
 
-                ContentValues values = travel.toContentValues(travel);
-
-                for (String key : values.keySet()) {
-                    travelDetails.putExtra(key, values.getAsString(key));
-                }
+                Bundle bundle = ProvidableUtils.bundleConvert(travel);
+                travelDetails.putExtra(Constants.ACTIVITIES_URI_PATH, bundle);
 
                 context.startActivity(travelDetails);
             }
