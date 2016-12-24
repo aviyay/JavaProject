@@ -8,7 +8,9 @@ import com.bnet.shared.model.backend.RepositoriesFactory;
 import com.bnet.shared.model.entities.Activity;
 import com.bnet.shared.model.entities.Business;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class ProvidableUtils {
@@ -56,5 +58,19 @@ public class ProvidableUtils {
     }
     public static Providable contentValuesConvert(Class type, ContentValues contentValues) throws Exception {
         return (Providable) records.get(type).contentValuesConverter.convert(contentValues);
+    }
+
+    public static List<Providable> getAllProvidable() {
+        ArrayList<Providable> result = new ArrayList<>();
+
+        for (Class c : records.keySet()) {
+            try {
+                result.add((Providable) c.newInstance());
+            } catch (InstantiationException e) {
+                e.printStackTrace();
+            } catch (IllegalAccessException e) {}
+        }
+
+        return result;
     }
 }

@@ -29,8 +29,8 @@ public class DataProvider extends ContentProvider {
     @Override
     public boolean onCreate() {
         if (providableList.size() == 0) {
-            registerProvidable(new Activity());
-            registerProvidable(new Business());
+            for (Providable p : ProvidableUtils.getAllProvidable())
+                registerProvidable(p);
         }
 
         return true;
