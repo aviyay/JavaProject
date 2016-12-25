@@ -34,7 +34,7 @@ class TravelsAdapter extends RecyclerView.Adapter<TravelsAdapter.TravelViewHolde
         TravelViewHolder(View itemView) {
             super(itemView);
             itemView.setOnClickListener(clickListener);
-            temp = (TextView) itemView.findViewById(R.id.temp2);
+        //    temp = (TextView) itemView.findViewById(R.id.temp2);
         }
 
         private View.OnClickListener clickListener = new View.OnClickListener(){

@@ -33,7 +33,7 @@ class AgenciesAdapter extends RecyclerView.Adapter<AgenciesAdapter.AgencyViewHol
         AgencyViewHolder(View itemView) {
             super(itemView);
             itemView.setOnClickListener(clickListener);
-            temp = (TextView) itemView.findViewById(R.id.temp);
+           // temp = (TextView) itemView.findViewById(R.id.temp);
         }
 
         private View.OnClickListener clickListener = new View.OnClickListener(){
