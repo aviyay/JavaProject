@@ -58,7 +58,10 @@ public class PhpActivityProvideableRepository implements ProvidableRepository<Ac
         List<Activity> list=new ArrayList<Activity>();
         Activity temp;
         try {
-            array =new JSONObject(PhpHelper.GET(link)).getJSONArray("activities");
+            String result= PhpHelper.GET(link);
+            if(result.equals("0 results"))
+                return new ArrayList<Activity>();
+            array =new JSONObject(result).getJSONArray("activities");
             for (int i=0;i<array.length();i++) {
                 obj=array.getJSONObject(i);
                 temp=new Activity();

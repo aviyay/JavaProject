@@ -57,7 +57,10 @@ public class PhpBusinessProvidableRepository implements ProvidableRepository<Bus
         List<Business> list=new ArrayList<Business>();
         Business temp;
         try {
-            array =new JSONObject(PhpHelper.GET(link)).getJSONArray("business");
+            String result= PhpHelper.GET(link);
+            if(result.equals("0 results"))
+                return new ArrayList<Business>();
+            array =new JSONObject(result).getJSONArray("business");
             for (int i=0;i<array.length();i++) {
                 obj=array.getJSONObject(i);
                 temp=new Business();

@@ -40,22 +40,18 @@ public class PhpAccountsRepository  implements AccountsRepository{
 
     @Override
     public Account getOrNull(String username) {
-        for(Account act:getAll())
-        {
-            if(act.getUsername().equals(username))
-                return act;
-        }
-        return null;
+        List<Account> list=getList(WEB_URL+"account_get.php?username="+username);
+        if(list.isEmpty())
+            return null;
+        return list.get(0);
     }
-
-    @Override
-    public List<Account> getAll() {
+    private List<Account> getList(String link) {
         JSONArray array;
         JSONObject obj;
         List<Account> list=new ArrayList<Account>();
         Account temp;
         try {
-            String result= PhpHelper.GET(WEB_URL+"account_getAll.php");
+            String result= PhpHelper.GET(link);
             if(result.equals("0 results"))
                 return new ArrayList<Account>();
             array =new JSONObject(result).getJSONArray("accounts");
@@ -64,11 +60,15 @@ public class PhpAccountsRepository  implements AccountsRepository{
                 temp=new Account();
                 temp.setUsername(obj.getString("username"));
                 temp.setPassword(obj.getString("password"));
-            list.add(temp);
+                list.add(temp);
             }
         } catch (Exception e) {
             e.printStackTrace();
         }
         return list;
+    }
+    @Override
+    public List<Account> getAll() {
+      return getList(WEB_URL+"account_getAll.php");
     }
 }
