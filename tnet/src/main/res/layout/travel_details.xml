@@ -14,6 +14,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:id="@+id/travel_details_temp"
-        android:text="@string/hello_travel_details"/>
+        android:text="@string/hello_travel_details"
+        android:textSize="30dp"/>
 
 </RelativeLayout>

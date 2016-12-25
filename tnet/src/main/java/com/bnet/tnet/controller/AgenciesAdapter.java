@@ -28,12 +28,16 @@ class AgenciesAdapter extends RecyclerView.Adapter<AgenciesAdapter.AgencyViewHol
 
     class AgencyViewHolder extends RecyclerView.ViewHolder{
         private Business agency;
-        private TextView temp;
+
+        private TextView agencyName;
+        private TextView agencyStreet;
 
         AgencyViewHolder(View itemView) {
             super(itemView);
             itemView.setOnClickListener(clickListener);
-           // temp = (TextView) itemView.findViewById(R.id.temp);
+
+            agencyName = (TextView) itemView.findViewById(R.id.agencyName);
+            agencyStreet = (TextView) itemView.findViewById(R.id.agencyStreet);
         }
 
         private View.OnClickListener clickListener = new View.OnClickListener(){
@@ -53,7 +57,8 @@ class AgenciesAdapter extends RecyclerView.Adapter<AgenciesAdapter.AgencyViewHol
         void bind(Business agency) {
             this.agency = agency;
 
-            temp.setText(agency.getName());
+            agencyName.setText(agency.getName());
+            agencyStreet.setText(agency.getAddress().getCountry());
         }
     }
 

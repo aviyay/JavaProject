@@ -29,12 +29,19 @@ class TravelsAdapter extends RecyclerView.Adapter<TravelsAdapter.TravelViewHolde
     class TravelViewHolder extends RecyclerView.ViewHolder{
 
         private Activity travel;
-        private TextView temp;
+        private TextView travelCountry;
+        private TextView travelDates;
+        private TextView travelAgency;
+        private TextView travelPrice;
 
         TravelViewHolder(View itemView) {
             super(itemView);
             itemView.setOnClickListener(clickListener);
-        //    temp = (TextView) itemView.findViewById(R.id.temp2);
+
+            travelCountry = (TextView) itemView.findViewById(R.id.travelCountry);
+            travelDates = (TextView) itemView.findViewById(R.id.travelDates);
+            travelAgency = (TextView) itemView.findViewById(R.id.travelAgency);
+            travelPrice = (TextView) itemView.findViewById(R.id.travelPrice);
         }
 
         private View.OnClickListener clickListener = new View.OnClickListener(){
@@ -52,10 +59,13 @@ class TravelsAdapter extends RecyclerView.Adapter<TravelsAdapter.TravelViewHolde
 
         };
 
-        public void bind(Activity travel) {
+        void bind(Activity travel) {
             this.travel = travel;
 
-            temp.setText(travel.getDescription());
+            travelCountry.setText(travel.getCountry());
+            travelDates.setText(travel.getStart().format() + " - " + travel.getEnd().format());
+            travelAgency.setText("Temp Agency");
+            travelPrice.setText(String.format("%f",travel.getPrice()));
         }
     }
 
