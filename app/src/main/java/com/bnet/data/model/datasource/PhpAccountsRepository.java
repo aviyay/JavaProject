@@ -2,7 +2,7 @@ package com.bnet.data.model.datasource;
 
 import com.bnet.data.model.backend.AccountsRepository;
 import com.bnet.data.model.entities.Account;
-import com.bnet.shared.model.PhpHelper;
+import com.bnet.shared.model.services.PhpHelper;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -11,10 +11,6 @@ import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
-
-/**
- * Created by shyte on 22/12/2016.
- */
 
 public class PhpAccountsRepository  implements AccountsRepository{
     private static final String WEB_URL ="http://tennenba.vlab.jct.ac.il/" ;
@@ -48,12 +44,12 @@ public class PhpAccountsRepository  implements AccountsRepository{
     private List<Account> getList(String link) {
         JSONArray array;
         JSONObject obj;
-        List<Account> list=new ArrayList<Account>();
+        List<Account> list=new ArrayList<>();
         Account temp;
         try {
             String result= PhpHelper.GET(link);
             if(result.equals("0 results"))
-                return new ArrayList<Account>();
+                return new ArrayList<>();
             array =new JSONObject(result).getJSONArray("accounts");
             for (int i=0;i<array.length();i++) {
                 obj=array.getJSONObject(i);

@@ -1,4 +1,4 @@
-package com.bnet.shared.model;
+package com.bnet.shared.model.services;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -9,9 +9,6 @@ import java.net.URL;
 import java.net.URLEncoder;
 import java.util.Map;
 
-/**
- * Created by shyte on 22/12/2016.
- */
 
 public class PhpHelper {
     public static String GET(String url) throws Exception {
@@ -22,7 +19,7 @@ public class PhpHelper {
             BufferedReader in = new BufferedReader(new InputStreamReader(
                     con.getInputStream()));
             String inputLine;
-            StringBuffer response = new StringBuffer();
+            StringBuilder response = new StringBuilder();
             while ((inputLine = in.readLine()) != null) {
                 response.append(inputLine);
             }
@@ -59,7 +56,7 @@ public class PhpHelper {
             BufferedReader in = new BufferedReader(new InputStreamReader(
                     con.getInputStream()));
             String inputLine;
-            StringBuffer response = new StringBuffer();
+            StringBuilder response = new StringBuilder();
             while ((inputLine = in.readLine()) != null) {
                 response.append(inputLine);
             }

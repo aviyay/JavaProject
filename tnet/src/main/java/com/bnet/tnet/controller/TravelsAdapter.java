@@ -24,6 +24,7 @@ class TravelsAdapter extends RecyclerView.Adapter<TravelsAdapter.TravelViewHolde
     interface OnItemClickListener {
         void onItemClick(Activity travel);
     }
+
     class TravelViewHolder extends RecyclerView.ViewHolder{
 
         private Activity travel;
@@ -59,6 +60,11 @@ class TravelsAdapter extends RecyclerView.Adapter<TravelsAdapter.TravelViewHolde
     }
 
     private TravelsAdapter.OnItemClickListener listener;
+    private ProvidableRepository<Activity> repository;
+
+    TravelsAdapter(ProvidableRepository<Activity> repository) {
+        this.repository = repository;
+    }
 
     void setOnItemClickListener(TravelsAdapter.OnItemClickListener listener) {
         this.listener = listener;
@@ -74,12 +80,12 @@ class TravelsAdapter extends RecyclerView.Adapter<TravelsAdapter.TravelViewHolde
 
     @Override
     public void onBindViewHolder(TravelViewHolder holder, int position) {
-        Activity travel = RepositoriesFactory.getActivitiesRepository().getAll().get(position);
+        Activity travel = repository.getAll().get(position);
         holder.bind(travel);
     }
 
     @Override
     public int getItemCount() {
-        return RepositoriesFactory.getActivitiesRepository().getAll().size();
+        return repository.getAll().size();
     }
 }
