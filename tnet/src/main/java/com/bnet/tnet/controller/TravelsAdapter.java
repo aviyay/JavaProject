@@ -1,16 +1,11 @@
 package com.bnet.tnet.controller;
 
-import android.content.Context;
-import android.content.Intent;
-import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.bnet.shared.model.Constants;
-import com.bnet.shared.model.services.utils.ProvidableUtils;
 import com.bnet.shared.model.backend.ProvidableRepository;
 import com.bnet.shared.model.backend.RepositoriesFactory;
 import com.bnet.shared.model.entities.Activity;
@@ -26,6 +21,9 @@ class TravelsAdapter extends RecyclerView.Adapter<TravelsAdapter.TravelViewHolde
         repository.addAndReturnAssignedId(EntitiesSamples.getActivity3());
     }
 
+    interface OnItemClickListener {
+        void onItemClick(Activity travel);
+    }
     class TravelViewHolder extends RecyclerView.ViewHolder{
 
         private Activity travel;
@@ -36,28 +34,19 @@ class TravelsAdapter extends RecyclerView.Adapter<TravelsAdapter.TravelViewHolde
 
         TravelViewHolder(View itemView) {
             super(itemView);
-            itemView.setOnClickListener(clickListener);
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (listener != null)
+                        listener.onItemClick(travel);
+                }
+            });
 
             travelCountry = (TextView) itemView.findViewById(R.id.travelCountry);
             travelDates = (TextView) itemView.findViewById(R.id.travelDates);
             travelAgency = (TextView) itemView.findViewById(R.id.travelAgency);
             travelPrice = (TextView) itemView.findViewById(R.id.travelPrice);
         }
-
-        private View.OnClickListener clickListener = new View.OnClickListener(){
-            @Override
-            public void onClick(View v) {
-                Context context = v.getContext();
-
-                Intent travelDetails = new Intent(context, TravelDetails.class);
-
-                Bundle bundle = ProvidableUtils.bundleConvert(travel);
-                travelDetails.putExtra(Constants.ACTIVITIES_URI_PATH, bundle);
-
-                context.startActivity(travelDetails);
-            }
-
-        };
 
         void bind(Activity travel) {
             this.travel = travel;
@@ -67,6 +56,12 @@ class TravelsAdapter extends RecyclerView.Adapter<TravelsAdapter.TravelViewHolde
             travelAgency.setText("Temp Agency");
             travelPrice.setText(String.format("%f",travel.getPrice()));
         }
+    }
+
+    private TravelsAdapter.OnItemClickListener listener;
+
+    void setOnItemClickListener(TravelsAdapter.OnItemClickListener listener) {
+        this.listener = listener;
     }
 
     @Override
