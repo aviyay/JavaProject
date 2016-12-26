@@ -13,10 +13,16 @@ import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 
 import com.bnet.shared.model.backend.Providable;
+import com.bnet.shared.model.backend.ProvidableRepository;
+import com.bnet.shared.model.backend.RepositoriesFactory;
 import com.bnet.shared.model.entities.Activity;
 import com.bnet.shared.model.entities.Business;
 import com.bnet.shared.model.services.utils.ProvidableUtils;
 import com.bnet.tnet.R;
+import com.bnet.tnet.model.ActivitySearchFilter;
+import com.bnet.tnet.model.BusinessSearchFilter;
+import com.bnet.tnet.model.FilterDecorator;
+import com.bnet.tnet.model.SearchFilter;
 
 public class MainActivity extends AppCompatActivity {
     private DrawerLayout mDrawer;
@@ -25,8 +31,12 @@ public class MainActivity extends AppCompatActivity {
     private ActionBarDrawerToggle drawerToggle;
     private RecyclerView recyclerView;
 
-    private AgenciesAdapter agenciesAdapter = new AgenciesAdapter();
-    private TravelsAdapter travelsAdapter = new TravelsAdapter();
+    private AgenciesAdapter agenciesAdapter;
+    private TravelsAdapter travelsAdapter;
+
+    private ActivitySearchFilter travelSearchFilter = new ActivitySearchFilter();
+    private BusinessSearchFilter agencySearchFilter = new BusinessSearchFilter();
+    private SearchFilter currentSearchFilter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,7 +54,7 @@ public class MainActivity extends AppCompatActivity {
         // Tie DrawerLayout events to the ActionBarToggle
         mDrawer.addDrawerListener(drawerToggle);
 
-        registerAdaptersListeners();
+        setupAdapters();
 
         registerItemsSelector(nvDrawer);
 
@@ -60,6 +70,19 @@ public class MainActivity extends AppCompatActivity {
 
     private ActionBarDrawerToggle setupDrawerToggle() {
         return new ActionBarDrawerToggle(this, mDrawer, toolbar, R.string.drawer_open, R.string.drawer_close);
+    }
+
+    private void setupAdapters() {
+        ProvidableRepository<Activity> activityRepository = RepositoriesFactory.getActivitiesRepository();
+        ProvidableRepository<Business> businessRepository = RepositoriesFactory.getBusinessesRepository();
+
+        FilterDecorator travelFilterDecorator = new FilterDecorator(activityRepository, travelSearchFilter);
+        FilterDecorator agencyFilterDecorator = new FilterDecorator(businessRepository, agencySearchFilter);
+
+        agenciesAdapter = new AgenciesAdapter(agencyFilterDecorator);
+        travelsAdapter = new TravelsAdapter(travelFilterDecorator);
+
+        registerAdaptersListeners();
     }
 
     private void registerAdaptersListeners() {
@@ -101,7 +124,7 @@ public class MainActivity extends AppCompatActivity {
 
     public void selectDrawerItem(MenuItem menuItem) {
 
-        recyclerView.setAdapter(selectAdapter(menuItem.getItemId()));
+        selectAdapterAndSearchFilter(menuItem.getItemId());
 
         // Highlight the selected item has been done by NavigationView
         menuItem.setChecked(true);
@@ -111,15 +134,29 @@ public class MainActivity extends AppCompatActivity {
         mDrawer.closeDrawers();
     }
 
-    RecyclerView.Adapter selectAdapter(int itemId) {
+    void selectAdapterAndSearchFilter(int itemId) {
+        RecyclerView.Adapter chosen;
+
         switch (itemId) {
             case R.id.nav_agencies:
-                return agenciesAdapter;
+                chosen = agenciesAdapter;
+                currentSearchFilter = agencySearchFilter;
+                break;
             case R.id.nav_travels:
-                return travelsAdapter;
+                chosen = travelsAdapter;
+                currentSearchFilter = travelSearchFilter;
+                break;
             default:
-                return null;
+                chosen = null;
+                currentSearchFilter = null;
+                break;
         }
+
+        recyclerView.setAdapter(chosen);
+    }
+
+    private void setSearchText(String searchText) {
+        currentSearchFilter.setSearchText(searchText);
     }
 
     @Override

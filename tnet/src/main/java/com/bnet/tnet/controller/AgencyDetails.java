@@ -1,6 +1,5 @@
 package com.bnet.tnet.controller;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.BottomSheetBehavior;
@@ -9,11 +8,15 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.bnet.shared.model.Constants;
+import com.bnet.shared.model.backend.RepositoriesFactory;
+import com.bnet.shared.model.entities.Activity;
 import com.bnet.shared.model.services.utils.ProvidableUtils;
 import com.bnet.shared.model.entities.Business;
 import com.bnet.tnet.R;
+import com.bnet.tnet.model.FilterDecorator;
+import com.bnet.tnet.model.SearchFilter;
 
-public class AgencyDetails extends Activity {
+public class AgencyDetails extends android.app.Activity {
     private Business agency = new Business();
 
     private TextView agencyTemp;
@@ -59,10 +62,19 @@ public class AgencyDetails extends Activity {
     }
 
     private void setupTravelsAdapter() {
-        TravelsAdapter adapter = new TravelsAdapter();
+        SearchFilter<Activity> myTravelsFilter = new SearchFilter<Activity>() {
+            @Override
+            public boolean search(Activity item) {
+                return item.getBusinessId() == agency.getId();
+            }
+        };
+
+        FilterDecorator myTravels = new FilterDecorator(RepositoriesFactory.getActivitiesRepository(), myTravelsFilter);
+        TravelsAdapter adapter = new TravelsAdapter(myTravels);
+
         adapter.setOnItemClickListener(new TravelsAdapter.OnItemClickListener() {
             @Override
-            public void onItemClick(com.bnet.shared.model.entities.Activity travel) {
+            public void onItemClick(Activity travel) {
                 bindTravelDetails(travel);
                 showBottomSheet();
             }
@@ -71,7 +83,7 @@ public class AgencyDetails extends Activity {
         recyclerView.setAdapter(adapter);
     }
 
-    private void bindTravelDetails(com.bnet.shared.model.entities.Activity travel) {
+    private void bindTravelDetails(Activity travel) {
         travelTemp.setText(travel.getDescription());
     }
 

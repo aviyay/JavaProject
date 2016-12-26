@@ -6,6 +6,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.bnet.shared.model.backend.Providable;
 import com.bnet.shared.model.backend.ProvidableRepository;
 import com.bnet.shared.model.backend.RepositoriesFactory;
 import com.bnet.shared.model.entities.Business;
@@ -24,7 +25,6 @@ class AgenciesAdapter extends RecyclerView.Adapter<AgenciesAdapter.AgencyViewHol
     interface OnItemClickListener {
         void onItemClick(Business agency);
     }
-    private OnItemClickListener listener;
 
     class AgencyViewHolder extends RecyclerView.ViewHolder{
         private Business agency;
@@ -54,6 +54,12 @@ class AgenciesAdapter extends RecyclerView.Adapter<AgenciesAdapter.AgencyViewHol
         }
     }
 
+    private OnItemClickListener listener;
+    private ProvidableRepository<Business> repository;
+
+    AgenciesAdapter(ProvidableRepository<Business> repository) {
+        this.repository = repository;
+    }
 
     void setOnItemClickListener(OnItemClickListener listener) {
         this.listener = listener;
@@ -69,12 +75,12 @@ class AgenciesAdapter extends RecyclerView.Adapter<AgenciesAdapter.AgencyViewHol
 
     @Override
     public void onBindViewHolder(AgencyViewHolder holder, int position) {
-        Business agency = RepositoriesFactory.getBusinessesRepository().getAll().get(position);
+        Business agency = repository.getAll().get(position);
         holder.bind(agency);
     }
 
     @Override
     public int getItemCount() {
-        return RepositoriesFactory.getBusinessesRepository().getAll().size();
+        return repository.getAll().size();
     }
 }

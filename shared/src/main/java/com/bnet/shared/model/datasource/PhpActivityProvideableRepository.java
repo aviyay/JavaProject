@@ -3,7 +3,7 @@ package com.bnet.shared.model.datasource;
 import android.content.ContentValues;
 import android.support.annotation.NonNull;
 
-import com.bnet.shared.model.PhpHelper;
+import com.bnet.shared.model.services.PhpHelper;
 import com.bnet.shared.model.services.utils.ProvidableUtils;
 import com.bnet.shared.model.backend.ProvidableRepository;
 import com.bnet.shared.model.entities.Activity;
@@ -20,7 +20,7 @@ import java.util.Map;
 
 
 public class PhpActivityProvideableRepository implements ProvidableRepository<Activity> {
-    final String WEB_URL="http://tennenba.vlab.jct.ac.il/";
+    private final String WEB_URL="http://tennenba.vlab.jct.ac.il/";
     @Override
     public int addAndReturnAssignedId(Activity item) {
         ContentValues bis= ProvidableUtils.contentValuesConvert(item);
@@ -55,12 +55,12 @@ public class PhpActivityProvideableRepository implements ProvidableRepository<Ac
     private List<Activity> getList(String link) {
         JSONArray array;
         JSONObject obj;
-        List<Activity> list=new ArrayList<Activity>();
+        List<Activity> list=new ArrayList<>();
         Activity temp;
         try {
             String result= PhpHelper.GET(link);
             if(result.equals("0 results"))
-                return new ArrayList<Activity>();
+                return new ArrayList<>();
             array =new JSONObject(result).getJSONArray("activities");
             for (int i=0;i<array.length();i++) {
                 obj=array.getJSONObject(i);
