@@ -79,13 +79,10 @@ public class EntitiesSamples {
     private static void initializeActivity() {
         activity = new Activity();
 
-        DateTime start = null;
-        DateTime end = null;
+        DateTime start = DateTime.parse("8:15 7/8/2016");
+        DateTime end = DateTime.parse("21:00 7/8/2016");
 
-        start = DateTime.parse("8:15 7/8/2016");
-        end = DateTime.parse("21:00 7/8/2016");
-
-        activity.setBusinessId(1);
+        activity.setBusinessId(0);
         activity.setCountry("Israel");
         activity.setPrice(53.5);
         activity.setDescription("Test activity");
@@ -97,11 +94,8 @@ public class EntitiesSamples {
     private static void initializeActivity2() {
         activity2 = new Activity();
 
-        DateTime start = null;
-        DateTime end = null;
-
-        start = DateTime.parse("8:15 7/8/2016");
-        end = DateTime.parse("21:00 7/8/2016");
+        DateTime start = DateTime.parse("8:15 7/8/2016");
+        DateTime end = DateTime.parse("21:00 7/8/2016");
 
         activity2.setBusinessId(1);
         activity2.setCountry("Israel");
@@ -115,13 +109,10 @@ public class EntitiesSamples {
     private static void initializeActivity3() {
         activity3 = new Activity();
 
-        DateTime start = null;
-        DateTime end = null;
+        DateTime start = DateTime.parse("8:15 7/8/2016");
+        DateTime end = DateTime.parse("21:00 7/8/2016");
 
-        start = DateTime.parse("8:15 7/8/2016");
-        end = DateTime.parse("21:00 7/8/2016");
-
-        activity3.setBusinessId(1);
+        activity3.setBusinessId(2);
         activity3.setCountry("Israel");
         activity3.setPrice(53.5);
         activity3.setDescription("Test activity3");

@@ -8,8 +8,8 @@ import android.widget.TextView;
 
 import com.bnet.shared.model.Constants;
 import com.bnet.shared.model.backend.Providable;
+import com.bnet.shared.model.backend.RepositoriesFactory;
 import com.bnet.shared.model.entities.Business;
-import com.bnet.shared.model.entities.EntitiesSamples;
 import com.bnet.shared.model.services.utils.ProvidableUtils;
 import com.bnet.tnet.R;
 
@@ -41,7 +41,14 @@ public class TravelDetails extends Activity {
     }
 
     private void findAgencyReference() {
-        agencyReference = EntitiesSamples.getBusiness2();
+
+        for (Business business : RepositoriesFactory.getBusinessesRepository().getAll())
+            if (business.getId() == travel.getBusinessId()) {
+                agencyReference = business;
+                return;
+            }
+
+        throw new IllegalStateException(travel.getBusinessId() + " is not a valid business id");
     }
 
     private void findViews() {

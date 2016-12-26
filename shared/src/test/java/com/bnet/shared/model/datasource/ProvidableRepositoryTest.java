@@ -76,5 +76,4 @@ public class ProvidableRepositoryTest {
         assertEquals(1, providableList.size());
         assertTrue(providableList.contains(providable2));
     }
-
 }
