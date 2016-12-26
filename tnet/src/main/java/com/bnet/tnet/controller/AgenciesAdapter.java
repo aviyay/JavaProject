@@ -1,16 +1,11 @@
 package com.bnet.tnet.controller;
 
-import android.content.Context;
-import android.content.Intent;
-import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.bnet.shared.model.Constants;
-import com.bnet.shared.model.services.utils.ProvidableUtils;
 import com.bnet.shared.model.backend.ProvidableRepository;
 import com.bnet.shared.model.backend.RepositoriesFactory;
 import com.bnet.shared.model.entities.Business;
@@ -26,35 +21,42 @@ class AgenciesAdapter extends RecyclerView.Adapter<AgenciesAdapter.AgencyViewHol
         repository.addAndReturnAssignedId(EntitiesSamples.getBusiness3());
     }
 
+    interface OnItemClickListener {
+        void onItemClick(Business agency);
+    }
+    private OnItemClickListener listener;
+
     class AgencyViewHolder extends RecyclerView.ViewHolder{
         private Business agency;
-        private TextView temp;
 
-        AgencyViewHolder(View itemView) {
+        private TextView agencyName;
+        private TextView agencyStreet;
+
+        AgencyViewHolder(final View itemView) {
             super(itemView);
-            itemView.setOnClickListener(clickListener);
-           // temp = (TextView) itemView.findViewById(R.id.temp);
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (listener != null)
+                        listener.onItemClick(agency);
+                }
+            });
+
+            agencyName = (TextView) itemView.findViewById(R.id.agencyName);
+            agencyStreet = (TextView) itemView.findViewById(R.id.agencyStreet);
         }
-
-        private View.OnClickListener clickListener = new View.OnClickListener(){
-            @Override
-            public void onClick(View v) {
-                Context context = v.getContext();
-
-                Intent agencyDetails = new Intent(context, AgencyDetails.class);
-                Bundle bundle = ProvidableUtils.bundleConvert(agency);
-
-                agencyDetails.putExtra(Constants.BUSINESSES_URI_PATH, bundle);
-
-                context.startActivity(agencyDetails);
-            }
-        };
 
         void bind(Business agency) {
             this.agency = agency;
 
-            temp.setText(agency.getName());
+            agencyName.setText(agency.getName());
+            agencyStreet.setText(agency.getAddress().getCountry());
         }
+    }
+
+
+    void setOnItemClickListener(OnItemClickListener listener) {
+        this.listener = listener;
     }
 
     @Override
