@@ -38,6 +38,8 @@ public class MainActivity extends AppCompatActivity {
     private BusinessSearchFilter agencySearchFilter = new BusinessSearchFilter();
     private SearchFilter currentSearchFilter;
 
+    //TODO: add some sort of refreshing mechanism, a push notification, repository listener, or even swipe to refresh
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

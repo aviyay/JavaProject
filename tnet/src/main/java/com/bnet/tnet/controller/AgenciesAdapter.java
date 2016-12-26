@@ -15,12 +15,12 @@ import com.bnet.tnet.R;
 
 class AgenciesAdapter extends RecyclerView.Adapter<AgenciesAdapter.AgencyViewHolder> {
 
-    static {
+   /* static {
         ProvidableRepository<Business> repository = RepositoriesFactory.getBusinessesRepository();
         repository.addAndReturnAssignedId(EntitiesSamples.getBusiness());
         repository.addAndReturnAssignedId(EntitiesSamples.getBusiness2());
         repository.addAndReturnAssignedId(EntitiesSamples.getBusiness3());
-    }
+    }*/
 
     interface OnItemClickListener {
         void onItemClick(Business agency);

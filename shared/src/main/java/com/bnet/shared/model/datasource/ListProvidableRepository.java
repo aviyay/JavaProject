@@ -21,6 +21,7 @@ public class ListProvidableRepository<T extends Providable> implements Providabl
 
     @Override
     public List<T> getAll() {
+        news.clear();
         return items;
     }
 

@@ -2,7 +2,7 @@ package com.bnet.data.model.datasource;
 
 import com.bnet.data.model.backend.AccountsRepository;
 import com.bnet.data.model.entities.Account;
-import com.bnet.shared.model.services.PhpHelper;
+import com.bnet.data.model.PhpHelper;
 
 import org.json.JSONArray;
 import org.json.JSONObject;

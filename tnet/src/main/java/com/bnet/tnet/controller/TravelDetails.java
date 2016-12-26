@@ -20,6 +20,9 @@ public class TravelDetails extends android.app.Activity {
 
     private TextView temp;
 
+    private TextView agencyName;
+    private TextView agencyStreet;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -52,13 +55,24 @@ public class TravelDetails extends android.app.Activity {
 
     private void findViews() {
         temp = (TextView) findViewById(R.id.travel_details_temp);
+
+        agencyName = (TextView) findViewById(R.id.agencyName);
+        agencyStreet = (TextView) findViewById(R.id.agencyStreet);
     }
 
     private void bindTravelDetails() {
         temp.setText(travel.getDescription());
     }
 
-    private void bindAgencyReference() {
+    void bindAgencyReference() {
+        agencyName.setText(agencyReference.getName());
+        agencyStreet.setText(agencyReference.getAddress().getCountry());
+
+        registerAgencyListener();
+    }
+
+    private void registerAgencyListener() {
+
         View agencyListRow = findViewById(R.id.agency_list_row);
         agencyListRow.setOnClickListener(new View.OnClickListener() {
             @Override

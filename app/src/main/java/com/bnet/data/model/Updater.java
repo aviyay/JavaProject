@@ -2,10 +2,13 @@ package com.bnet.data.model;
 
 import android.app.IntentService;
 import android.content.Intent;
+import android.util.Log;
 
 import com.bnet.shared.model.Constants;
+import com.bnet.shared.model.backend.Providable;
 import com.bnet.shared.model.backend.ProvidableRepository;
 import com.bnet.data.model.backend.RepositoriesFactory;
+import com.bnet.shared.model.services.utils.ProvidableUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,8 +21,9 @@ public class Updater extends IntentService {
     public Updater() {
         super("Updater");
 
-        repositories.add(RepositoriesFactory.getActivitiesRepository());
-        repositories.add(RepositoriesFactory.getBusinessesRepository());
+        if (repositories.size() == 0)
+            for (Providable p : ProvidableUtils.getAllProvidable())
+                repositories.add(ProvidableUtils.getRepository(p));
     }
 
     @Override
@@ -36,7 +40,8 @@ public class Updater extends IntentService {
 
 
     private void runCheck() {
-        //Log.d("Updater", "Run checks");
+        Log.d("MyCustomTag", "BNet: Run checks");
+
         boolean shouldUpdate = false;
 
         for (int i = 0; i < repositories.size() && !shouldUpdate; i++)
@@ -48,6 +53,7 @@ public class Updater extends IntentService {
     }
 
     private void updateReceivers() {
+        Log.d("MyCustomTag", "BNet: Sending broadcast");
         sendBroadcast(new Intent(Constants.UPDATE_ACTION));
     }
 }

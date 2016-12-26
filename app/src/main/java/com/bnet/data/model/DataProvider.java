@@ -44,7 +44,7 @@ public class DataProvider extends ContentProvider {
 
         return Uri.withAppendedPath(uri, "" + id);
     }
-
+    //TODO: add query for news only
     @Override
     public Cursor query(@NonNull Uri uri, String[] projection, String selection,
                         String[] selectionArgs, String sortOrder) {

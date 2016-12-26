@@ -1,9 +1,9 @@
-package com.bnet.shared.model.datasource;
+package com.bnet.data.model.datasource;
 
 import android.content.ContentValues;
 import android.support.annotation.NonNull;
 
-import com.bnet.shared.model.services.PhpHelper;
+import com.bnet.data.model.PhpHelper;
 import com.bnet.shared.model.services.utils.ProvidableUtils;
 import com.bnet.shared.model.backend.ProvidableRepository;
 import com.bnet.shared.model.entities.Address;

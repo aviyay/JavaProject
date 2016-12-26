@@ -1,4 +1,4 @@
-package com.bnet.shared.model.services;
+package com.bnet.data.model;
 
 import java.io.BufferedReader;
 import java.io.IOException;

@@ -12,6 +12,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.bnet.data.R;
+import com.bnet.data.model.Updater;
 import com.bnet.data.model.backend.AccountsRepository;
 import com.bnet.data.model.backend.RepositoriesFactory;
 import com.bnet.data.model.entities.Account;
@@ -20,6 +21,13 @@ public class MainActivity extends Activity {
 
     EditText usernameField;
     EditText passwordField;
+
+    @Override
+    protected void onPostCreate(Bundle savedInstanceState) {
+        super.onPostCreate(savedInstanceState);
+
+        startService(new Intent(this, Updater.class));
+    }
 
     private boolean isEmpty(EditText etText) {
         return etText.getText().toString().trim().length() == 0;

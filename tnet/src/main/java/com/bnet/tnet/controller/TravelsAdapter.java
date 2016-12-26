@@ -16,12 +16,12 @@ import com.bnet.tnet.R;
 
 class TravelsAdapter extends RecyclerView.Adapter<TravelsAdapter.TravelViewHolder> {
 
-    static {
+   /* static {
         ProvidableRepository<Activity> repository = RepositoriesFactory.getActivitiesRepository();
         repository.addAndReturnAssignedId(EntitiesSamples.getActivity());
         repository.addAndReturnAssignedId(EntitiesSamples.getActivity2());
         repository.addAndReturnAssignedId(EntitiesSamples.getActivity3());
-    }
+    }*/
 
     interface OnItemClickListener {
         void onItemClick(Activity travel);
