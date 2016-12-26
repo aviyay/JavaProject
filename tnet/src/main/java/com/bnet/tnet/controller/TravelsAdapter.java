@@ -9,6 +9,8 @@ import android.widget.TextView;
 import com.bnet.shared.model.backend.ProvidableRepository;
 import com.bnet.shared.model.backend.RepositoriesFactory;
 import com.bnet.shared.model.entities.Activity;
+import com.bnet.shared.model.entities.Business;
+import com.bnet.shared.model.entities.DateTime;
 import com.bnet.shared.model.entities.EntitiesSamples;
 import com.bnet.tnet.R;
 
@@ -53,9 +55,19 @@ class TravelsAdapter extends RecyclerView.Adapter<TravelsAdapter.TravelViewHolde
             this.travel = travel;
 
             travelCountry.setText(travel.getCountry());
-            travelDates.setText(travel.getStart().format() + " - " + travel.getEnd().format());
-            travelAgency.setText("Temp Agency");
-            travelPrice.setText(String.format("%f",travel.getPrice()));
+            travelDates.setText(travel.getStart().formatDate() + " - " + travel.getEnd().formatDate());
+            travelAgency.setText(findAgencyReference(travel.getBusinessId()).getName());
+            travelPrice.setText(String.format("%.2f",travel.getPrice()));
+        }
+
+        private Business findAgencyReference(int businessId) {
+
+            for (Business business : RepositoriesFactory.getBusinessesRepository().getAll())
+                if (business.getId() == businessId) {
+                    return business;
+                }
+
+            return null;
         }
     }
 

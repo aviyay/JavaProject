@@ -1,6 +1,5 @@
 package com.bnet.tnet.controller;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -9,13 +8,14 @@ import android.widget.TextView;
 import com.bnet.shared.model.Constants;
 import com.bnet.shared.model.backend.Providable;
 import com.bnet.shared.model.backend.RepositoriesFactory;
+import com.bnet.shared.model.entities.Activity;
 import com.bnet.shared.model.entities.Business;
 import com.bnet.shared.model.services.utils.ProvidableUtils;
 import com.bnet.tnet.R;
 
 
-public class TravelDetails extends Activity {
-    private com.bnet.shared.model.entities.Activity travel = new com.bnet.shared.model.entities.Activity();
+public class TravelDetails extends android.app.Activity {
+    private Activity travel = new Activity();
     private Business agencyReference;
 
     private TextView temp;
@@ -26,7 +26,7 @@ public class TravelDetails extends Activity {
         setContentView(R.layout.travel_details);
 
         retrieveTravelFromIntent(getIntent());
-        findAgencyReference();
+        agencyReference = findAgencyReference(travel.getBusinessId());
 
         findViews();
 
@@ -37,18 +37,17 @@ public class TravelDetails extends Activity {
     private void retrieveTravelFromIntent(Intent intent) {
         Bundle bundle = intent.getBundleExtra(Constants.ACTIVITIES_URI_PATH);
 
-        travel = (com.bnet.shared.model.entities.Activity) ProvidableUtils.bundleConvert(travel.getClass(), bundle);
+        travel = (Activity) ProvidableUtils.bundleConvert(travel.getClass(), bundle);
     }
 
-    private void findAgencyReference() {
+    private Business findAgencyReference(int businessId) {
 
         for (Business business : RepositoriesFactory.getBusinessesRepository().getAll())
-            if (business.getId() == travel.getBusinessId()) {
-                agencyReference = business;
-                return;
+            if (business.getId() == businessId) {
+                return business;
             }
 
-        throw new IllegalStateException(travel.getBusinessId() + " is not a valid business id");
+        return null;
     }
 
     private void findViews() {

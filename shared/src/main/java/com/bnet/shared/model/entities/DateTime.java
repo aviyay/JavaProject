@@ -1,6 +1,5 @@
 package com.bnet.shared.model.entities;
 
-import java.text.ParseException;
 import java.util.Locale;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -53,7 +52,10 @@ public class DateTime {
     }
 
     public String format() {
-        return String.format(Locale.US, "%02d:%02d %02d/%02d/%02d", getHour(), getMinute(), getDay(), getMonth(), getYear());
+        return String.format(Locale.US, "%02d:%02d %s", getHour(), getMinute(), formatDate());
+    }
+    public String formatDate() {
+        return String.format(Locale.US, "%02d/%02d/%02d", getDay(), getMonth(), getYear());
     }
 
     public static DateTime parse (String formattedDateTime) {
