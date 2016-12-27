@@ -48,7 +48,7 @@ public class SearchFilterTest {
         ArrayList<Business> bis = new ArrayList<>();
         bis.add(EntitiesSamples.getBusiness());
         bis.add(EntitiesSamples.getBusiness2());
-        bis.add(EntitiesSamples.getBusiness3());
+        bis.add(EntitiesSamples.getNonAgencyBusiness());
         searchFilter = new BusinessSearchFilter();
 
         assertEquals(0, searchFilter.filter(bis, "isradel").size());

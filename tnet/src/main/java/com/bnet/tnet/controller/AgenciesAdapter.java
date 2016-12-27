@@ -19,7 +19,7 @@ class AgenciesAdapter extends RecyclerView.Adapter<AgenciesAdapter.AgencyViewHol
         ProvidableRepository<Business> repository = RepositoriesFactory.getBusinessesRepository();
         repository.addAndReturnAssignedId(EntitiesSamples.getBusiness());
         repository.addAndReturnAssignedId(EntitiesSamples.getBusiness2());
-        repository.addAndReturnAssignedId(EntitiesSamples.getBusiness3());
+        repository.addAndReturnAssignedId(EntitiesSamples.getNonAgencyBusiness());
     }*/
 
     interface OnItemClickListener {

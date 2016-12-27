@@ -3,6 +3,7 @@ package com.bnet.shared.model.services.utils;
 import android.content.ContentValues;
 import android.database.Cursor;
 import android.database.MatrixCursor;
+import android.database.MergeCursor;
 
 import com.bnet.shared.model.backend.Providable;
 
@@ -48,5 +49,30 @@ public class CursorUtils {
             matrixCursor.addRow(CursorUtils.providableToObjectArray(item));
 
         return matrixCursor;
+    }
+
+    public static <T extends Providable> List<T> cursorToProvidableList(T match, Cursor cursor) {
+        if (cursor == null)
+            return null;
+
+        List<T> result = new ArrayList<>();
+        T container;
+
+        cursor.moveToFirst();
+
+        while (!cursor.isAfterLast()) {
+            container = CursorUtils.fromMatrixRow(match, cursor);
+
+            if (container != null)
+                result.add(container);
+
+            cursor.moveToNext();
+        }
+        return result;
+    }
+
+    public static Cursor mergeCursors (List<Cursor> cursors) {
+        Cursor[] cursorArray = new Cursor[cursors.size()];
+        return new MergeCursor(cursors.toArray(cursorArray)) ;
     }
 }
