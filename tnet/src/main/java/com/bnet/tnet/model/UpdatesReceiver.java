@@ -45,28 +45,6 @@ public class UpdatesReceiver extends BroadcastReceiver {
         pull(context, NEWS);
     }
 
-    private static ArrayList<Integer> findMissingAgencies(List<Activity> travels) {
-        ArrayList<Integer> result = new ArrayList<>();
-
-        List<Business> allAgencies = RepositoriesFactory.getBusinessesRepository().getAll();
-
-        boolean found;
-        for (Activity travel : travels) {
-            found = false;
-
-            for (Business agency : allAgencies)
-                if (agency.getId() == travel.getBusinessId()) {
-                    found = true;
-                    break;
-                }
-
-            if (!found)
-                result.add(travel.getBusinessId());
-        }
-
-        return result;
-    }
-
     public static void freshStart(Context context) {
         resetRepositories();
         pull(context, null);
@@ -112,6 +90,28 @@ public class UpdatesReceiver extends BroadcastReceiver {
                 travels.add(activity);
 
         return travels;
+    }
+
+    private static ArrayList<Integer> findMissingAgencies(List<Activity> travels) {
+        ArrayList<Integer> result = new ArrayList<>();
+
+        List<Business> allAgencies = RepositoriesFactory.getBusinessesRepository().getAll();
+
+        boolean found;
+        for (Activity travel : travels) {
+            found = false;
+
+            for (Business agency : allAgencies)
+                if (agency.getId() == travel.getBusinessId()) {
+                    found = true;
+                    break;
+                }
+
+            if (!found)
+                result.add(travel.getBusinessId());
+        }
+
+        return result;
     }
 
     private static Uri getAgencyUri(int id) {

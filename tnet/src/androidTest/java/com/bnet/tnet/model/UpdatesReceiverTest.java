@@ -66,7 +66,7 @@ public class UpdatesReceiverTest {
                 if (id != -1)
                     action = "id";
 
-                if (selection.equals("news"))
+                if (selection == "news")
                     action = "news";
 
                 if (path.startsWith("/" + Constants.ACTIVITIES_URI_PATH))
@@ -234,6 +234,28 @@ public class UpdatesReceiverTest {
         assertTrue(curRepoActivities.getAll().contains(activity2));
         assertTrue(curRepoBusinesses.getAll().contains(business));
         assertTrue(curRepoBusinesses.getAll().contains(business2));
+    }
+
+    @Test
+    public void preserveDataEvenWhenBNetIsClosed() throws Exception {
+        Activity activity = EntitiesSamples.getActivity();
+        Business business = EntitiesSamples.getBusiness();
+
+        ProviderRepoActivities.addAndReturnAssignedId(activity);
+        ProviderRepoBusinesses.addAndReturnAssignedId(business);
+
+        runFreshStart();
+
+        ProviderRepoActivities.reset();
+        ProviderRepoBusinesses.reset();
+
+        runRefresh();
+
+        assertEquals(1, curRepoActivities.getAll().size());
+        assertEquals(1, curRepoBusinesses.getAll().size());
+
+        assertEquals(activity, curRepoActivities.getAll().get(0));
+        assertEquals(business, curRepoBusinesses.getAll().get(0));
     }
 
     private void runFreshStart() {

@@ -52,10 +52,11 @@ public class CursorUtils {
     }
 
     public static <T extends Providable> List<T> cursorToProvidableList(T match, Cursor cursor) {
-        if (cursor == null)
-            return null;
-
         List<T> result = new ArrayList<>();
+
+        if (cursor == null)
+            return result;
+
         T container;
 
         cursor.moveToFirst();
