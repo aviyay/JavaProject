@@ -24,10 +24,10 @@ import java.util.List;
 import static org.junit.Assert.assertEquals;
 
 public class UpdatesReceiverTest {
-    UpdatesReceiver updatesReceiver;
-    TestContext context;
-    MatrixCursor businesses;
-    MatrixCursor activities;
+    private UpdatesReceiver updatesReceiver;
+    private TestContext context;
+    private MatrixCursor businesses;
+    private MatrixCursor activities;
 
     private class TestContext extends MockContext {
         MockContentResolver resolver;
@@ -79,7 +79,7 @@ public class UpdatesReceiverTest {
         assertEquals(0, repoActivities.size());
 
         Activity activity = new Activity();
-        activities.addRow(CursorUtils.ProvidableToObjectArray(activity));
+        activities.addRow(CursorUtils.providableToObjectArray(activity));
 
         context = new TestContext();
 
@@ -96,7 +96,7 @@ public class UpdatesReceiverTest {
         assertEquals(0, repoBusinesses.size());
 
         Business business = new Business();
-        businesses.addRow(CursorUtils.ProvidableToObjectArray(business));
+        businesses.addRow(CursorUtils.providableToObjectArray(business));
 
         context = new TestContext();
 

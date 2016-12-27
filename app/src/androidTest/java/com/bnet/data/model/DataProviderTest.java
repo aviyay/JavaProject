@@ -5,6 +5,8 @@ import android.database.Cursor;
 import android.net.Uri;
 
 import com.bnet.shared.model.Constants;
+import com.bnet.shared.model.backend.Providable;
+import com.bnet.shared.model.backend.ProvidableRepository;
 import com.bnet.shared.model.services.utils.CursorUtils;
 import com.bnet.data.model.backend.RepositoriesFactory;
 import com.bnet.shared.model.services.utils.ProvidableUtils;
@@ -53,12 +55,7 @@ public class DataProviderTest {
         ProvidableUtils.getRepository(activity).addAndReturnAssignedId(activity);
 
         Cursor cursor = provider.query(Uri.parse(URI_PREFIX + Constants.ACTIVITIES_URI_PATH), null, null, null, null);
-        assertNotNull(cursor);
-        cursor.moveToFirst();
-
-        Activity result = CursorUtils.fromMatrixRow(activity, cursor);
-
-        assertEquals(activity, result);
+        assertSingle(cursor, activity);
     }
 
     @Test
@@ -67,11 +64,44 @@ public class DataProviderTest {
         ProvidableUtils.getRepository(business).addAndReturnAssignedId(business);
 
         Cursor cursor = provider.query(Uri.parse(URI_PREFIX + Constants.BUSINESSES_URI_PATH), null, null, null, null);
+        assertSingle(cursor, business);
+    }
+
+    @Test
+    public void querySingleRow() throws Exception {
+        int id;
+        Business business = EntitiesSamples.getBusiness();
+        Business business2 = EntitiesSamples.getBusiness2();
+        ProvidableUtils.getRepository(business).addAndReturnAssignedId(business);
+        id = ProvidableUtils.getRepository(business).addAndReturnAssignedId(business2);
+
+        Cursor cursor = provider.query(Uri.parse(URI_PREFIX + Constants.BUSINESSES_URI_PATH + "/" + id), null, null, null, null);
+
+        assertSingle(cursor, business2);
+    }
+
+    @Test
+    public void queryNews() throws Exception {
+        Business business = EntitiesSamples.getBusiness();
+        Business business2 = EntitiesSamples.getBusiness2();
+        ProvidableRepository repository = ProvidableUtils.getRepository(business);
+        repository.addAndReturnAssignedId(business);
+        repository.getAll();
+        repository.addAndReturnAssignedId(business2);
+
+        assertTrue(repository.isSomethingNew());
+
+        Cursor cursor = provider.query(Uri.parse(URI_PREFIX + Constants.BUSINESSES_URI_PATH), null, "news", null, null);
+
+        assertSingle(cursor, business2);
+    }
+
+    private void assertSingle(Cursor cursor, Providable expected) {
         assertNotNull(cursor);
         cursor.moveToFirst();
 
-        Business result = CursorUtils.fromMatrixRow(business, cursor);
+        Providable result = CursorUtils.fromMatrixRow(expected, cursor);
 
-        assertEquals(business, result);
+        assertEquals(expected, result);
     }
 }
