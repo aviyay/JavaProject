@@ -2,10 +2,8 @@ package com.bnet.shared.model.datasource;
 
 import com.bnet.shared.model.backend.Providable;
 import com.bnet.shared.model.backend.ProvidableRepository;
-import com.bnet.shared.model.entities.Business;
 import com.bnet.shared.model.entities.EntitiesSamples;
 
-import org.junit.Before;
 import org.junit.Test;
 
 import java.util.List;
@@ -13,14 +11,18 @@ import java.util.List;
 import static org.junit.Assert.*;
 
 public class ProvidableRepositoryTest {
-    private ProvidableRepository repository;
+    private ProvidableRepository<Providable> repository;
     private Providable providable;
     private Providable providable2;
 
 
     @Test
     public void ListProvidableRepositoryTest() throws Exception {
-        repository = new ListProvidableRepository();
+        runTestsOn(new ListProvidableRepository<>());
+    }
+
+    private void runTestsOn(ProvidableRepository<Providable> repository) throws Exception {
+        this.repository = repository;
         testRepository();
     }
 
@@ -32,50 +34,65 @@ public class ProvidableRepositoryTest {
     }
 
     private void activityConfig() {
-        repository.reset();
-        providable = EntitiesSamples.getActivity();
-        providable2 = EntitiesSamples.getActivity2();
+        providable = EntitiesSamples.makeActivity();
+        providable2 = EntitiesSamples.makeActivity2();
     }
 
     private void businessConfig() throws Exception {
-        repository.reset();
-        providable = EntitiesSamples.getBusiness();
-        providable2 = EntitiesSamples.getBusiness2();
+        providable = EntitiesSamples.makeBusiness();
+        providable2 = EntitiesSamples.makeBusiness2();
     }
 
 
     private void runAllTests() throws Exception {
+        freshStart();
         addAndCheckId();
+
+        freshStart();
         getAll();
+
+        freshStart();
         getAllNews();
     }
 
+    private void freshStart() {
+        repository.reset();
+        providable.setId(-1);
+        providable2.setId(-1);
+    }
 
-    public void addAndCheckId() throws Exception {
+    private void addAndCheckId() throws Exception {
         assertEquals(-1, providable.getId());
+
         int id = repository.addAndReturnAssignedId(providable);
         assertEquals(0, id);
     }
 
-    public void getAll() throws Exception {
-        List<Providable> providableList = repository.getAll();
-        assertEquals(1, providableList.size());
-        assertTrue(providableList.contains(providable));
+    private void getAll() throws Exception {
+        add(providable);
+
+        assertSingle(repository.getAll(), providable);
     }
 
-    public void getAllNews() throws Exception {
-        repository.reset();
+    private void getAllNews() throws Exception {
+        addAndAssertSingleNews(providable);
+
+        assertEquals(0, repository.getAllNews().size());
+
+        addAndAssertSingleNews(providable2);
+    }
+
+    private void addAndAssertSingleNews(Providable providable) {
+        add(providable);
+        assertSingle(repository.getAllNews(), providable);
+    }
+
+    private void add(Providable providable) {
         repository.addAndReturnAssignedId(providable);
-        List<Providable> providableList = repository.getAllNews();
-        assertEquals(1, providableList.size());
-        assertTrue(providableList.contains(providable));
+    }
 
-        providableList = repository.getAllNews();
-        assertEquals(0, providableList.size());
-
-        repository.addAndReturnAssignedId(providable2);
-        providableList = repository.getAllNews();
+    private void assertSingle(List<Providable> providableList, Providable expected) {
         assertEquals(1, providableList.size());
-        assertTrue(providableList.contains(providable2));
+        assertTrue(providableList.contains(expected));
     }
 }

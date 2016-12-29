@@ -18,8 +18,8 @@ class TravelsAdapter extends RecyclerView.Adapter<TravelsAdapter.TravelViewHolde
 
    /* static {
         ProvidableRepository<Activity> repository = RepositoriesFactory.getActivitiesRepository();
-        repository.addAndReturnAssignedId(EntitiesSamples.getActivity());
-        repository.addAndReturnAssignedId(EntitiesSamples.getActivity2());
+        repository.addAndReturnAssignedId(EntitiesSamples.makeActivity());
+        repository.addAndReturnAssignedId(EntitiesSamples.makeActivity2());
         repository.addAndReturnAssignedId(EntitiesSamples.getActivity3());
     }*/
 
@@ -55,7 +55,7 @@ class TravelsAdapter extends RecyclerView.Adapter<TravelsAdapter.TravelViewHolde
             this.travel = travel;
 
             travelCountry.setText(travel.getCountry());
-            travelDates.setText(travel.getStart().formatDate() + " - " + travel.getEnd().formatDate());
+            travelDates.setText(travel.getStart().toDateString() + " - " + travel.getEnd().toDateString());
             travelAgency.setText(findAgencyReference(travel.getBusinessId()).getName());
             travelPrice.setText(String.format("%.2f",travel.getPrice()));
         }

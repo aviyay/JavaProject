@@ -85,7 +85,7 @@ public class UpdatesReceiver extends BroadcastReceiver {
 
         List<Activity> travels = new ArrayList<>();
 
-        for (Activity activity : CursorUtils.cursorToProvidableList(new Activity(), cursor))
+        for (Activity activity : CursorUtils.cursorToProvidableList(Activity.class, cursor))
             if (activity.getType() == ActivityType.TRAVEL)
                 travels.add(activity);
 
@@ -124,7 +124,7 @@ public class UpdatesReceiver extends BroadcastReceiver {
 
         Cursor mergedCursors = CursorUtils.mergeCursors(agenciesRows);
 
-        return CursorUtils.cursorToProvidableList(new Business(), mergedCursors);
+        return CursorUtils.cursorToProvidableList(Business.class, mergedCursors);
     }
 
     private static void fillRepositories(List<Activity> travels, List<Business> agencies) {

@@ -17,6 +17,10 @@ import com.bnet.shared.model.entities.EntitiesSamples;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.lang.reflect.Array;
+import java.util.Arrays;
+import java.util.Collections;
+
 import static org.junit.Assert.*;
 
 public class DataProviderTest {
@@ -33,7 +37,7 @@ public class DataProviderTest {
 
     @Test
     public void insertActivity() throws Exception {
-        Activity activity = EntitiesSamples.getActivity();
+        Activity activity = EntitiesSamples.makeActivity();
         ContentValues values = ProvidableUtils.contentValuesConvert(activity);
         Uri result = provider.insert(Uri.parse(URI_PREFIX + Constants.ACTIVITIES_URI_PATH), values);
 
@@ -42,7 +46,7 @@ public class DataProviderTest {
 
     @Test
     public void insertBusiness() throws Exception {
-        Business business = EntitiesSamples.getBusiness();
+        Business business = EntitiesSamples.makeBusiness();
         ContentValues values = ProvidableUtils.contentValuesConvert(business);
         Uri result = provider.insert(Uri.parse(URI_PREFIX + Constants.BUSINESSES_URI_PATH), values);
 
@@ -51,7 +55,7 @@ public class DataProviderTest {
 
     @Test
     public void queryActivity() throws Exception {
-        Activity activity = EntitiesSamples.getActivity();
+        Activity activity = EntitiesSamples.makeActivity();
         ProvidableUtils.getRepository(activity).addAndReturnAssignedId(activity);
 
         Cursor cursor = provider.query(Uri.parse(URI_PREFIX + Constants.ACTIVITIES_URI_PATH), null, null, null, null);
@@ -60,7 +64,7 @@ public class DataProviderTest {
 
     @Test
     public void queryBusiness() throws Exception {
-        Business business = EntitiesSamples.getBusiness();
+        Business business = EntitiesSamples.makeBusiness();
         ProvidableUtils.getRepository(business).addAndReturnAssignedId(business);
 
         Cursor cursor = provider.query(Uri.parse(URI_PREFIX + Constants.BUSINESSES_URI_PATH), null, null, null, null);
@@ -70,8 +74,8 @@ public class DataProviderTest {
     @Test
     public void querySingleRow() throws Exception {
         int id;
-        Business business = EntitiesSamples.getBusiness();
-        Business business2 = EntitiesSamples.getBusiness2();
+        Business business = EntitiesSamples.makeBusiness();
+        Business business2 = EntitiesSamples.makeBusiness2();
         ProvidableUtils.getRepository(business).addAndReturnAssignedId(business);
         id = ProvidableUtils.getRepository(business).addAndReturnAssignedId(business2);
 
@@ -82,8 +86,8 @@ public class DataProviderTest {
 
     @Test
     public void queryNews() throws Exception {
-        Business business = EntitiesSamples.getBusiness();
-        Business business2 = EntitiesSamples.getBusiness2();
+        Business business = EntitiesSamples.makeBusiness();
+        Business business2 = EntitiesSamples.makeBusiness2();
         ProvidableRepository<Providable> repository = ProvidableUtils.getRepository(business);
 
         repository.addAndReturnAssignedId(business);
@@ -99,9 +103,10 @@ public class DataProviderTest {
 
     private void assertSingle(Cursor cursor, Providable expected) {
         assertNotNull(cursor);
-        cursor.moveToFirst();
+        assertEquals(1,cursor.getCount());
 
-        Providable result = CursorUtils.fromMatrixRow(expected, cursor);
+        cursor.moveToFirst();
+        Providable result = CursorUtils.cursorToProvidableList(expected.getClass(), cursor).get(0);
 
         assertEquals(expected, result);
     }

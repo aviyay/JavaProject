@@ -11,51 +11,44 @@ public class DateTime {
     private int hour;
     private int minute;
 
-    public int getYear() {
+    int getYear() {
         return year;
     }
 
-    public void setYear(int year) {
+    void setYear(int year) {
         this.year = year;
     }
 
-    public int getMonth() {
+    int getMonth() {
         return month;
     }
 
-    public void setMonth(int month) {
+    void setMonth(int month) {
         this.month = month;
     }
 
-    public int getDay() {
+    int getDay() {
         return day;
     }
 
-    public void setDay(int day) {
+    void setDay(int day) {
         this.day = day;
     }
 
-    public int getHour() {
+    int getHour() {
         return hour;
     }
 
-    public void setHour(int hour) {
+    void setHour(int hour) {
         this.hour = hour;
     }
 
-    public int getMinute() {
+    int getMinute() {
         return minute;
     }
 
-    public void setMinute(int minute) {
+    void setMinute(int minute) {
         this.minute = minute;
-    }
-
-    public String format() {
-        return String.format(Locale.US, "%02d:%02d %s", getHour(), getMinute(), formatDate());
-    }
-    public String formatDate() {
-        return String.format(Locale.US, "%02d/%02d/%02d", getDay(), getMonth(), getYear());
     }
 
     public static DateTime parse (String formattedDateTime) {
@@ -64,13 +57,15 @@ public class DateTime {
         Matcher matcher = pattern.matcher(formattedDateTime);
 
         try {
-            matcher.matches();
+            if (!matcher.matches())
+                throw new Exception("invalid format");
+
+            result.setHour(Integer.parseInt(matcher.group(1)));
+            result.setMinute(Integer.parseInt(matcher.group(2)));
 
             result.setYear(Integer.parseInt(matcher.group(5)));
             result.setMonth(Integer.parseInt(matcher.group(4)));
             result.setDay(Integer.parseInt(matcher.group(3)));
-            result.setHour(Integer.parseInt(matcher.group(1)));
-            result.setMinute(Integer.parseInt(matcher.group(2)));
 
             return result;
         }
@@ -80,23 +75,35 @@ public class DateTime {
     }
 
     @Override
-    public boolean equals(Object obj) {
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
 
-        if (!(obj instanceof DateTime))
-            return false;
+        DateTime dateTime = (DateTime) o;
 
-        DateTime other = (DateTime)obj;
-
-        return format().equals(other.format());
+        return year == dateTime.year
+                && month == dateTime.month
+                && day == dateTime.day
+                && hour == dateTime.hour
+                && minute == dateTime.minute;
     }
 
     @Override
     public int hashCode() {
-        return format().hashCode();
+        int result = year;
+        result = 31 * result + month;
+        result = 31 * result + day;
+        result = 31 * result + hour;
+        result = 31 * result + minute;
+        return result;
     }
 
     @Override
     public String toString() {
-        return format();
+        return String.format(Locale.US, "%02d:%02d %s", getHour(), getMinute(), toDateString());
+    }
+
+    public String toDateString() {
+        return String.format(Locale.US, "%02d/%02d/%02d", getDay(), getMonth(), getYear());
     }
 }

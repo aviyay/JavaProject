@@ -4,7 +4,6 @@ import android.content.ContentProvider;
 import android.content.ContentResolver;
 import android.content.ContentUris;
 import android.database.Cursor;
-import android.database.MatrixCursor;
 import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.test.mock.MockContentProvider;
@@ -66,7 +65,7 @@ public class UpdatesReceiverTest {
                 if (id != -1)
                     action = "id";
 
-                if (selection == "news")
+                if ("news".equals(selection))
                     action = "news";
 
                 if (path.startsWith("/" + Constants.ACTIVITIES_URI_PATH))
@@ -111,8 +110,8 @@ public class UpdatesReceiverTest {
 
     @Test
     public void oneAgencyWithOneTravel() throws Exception {
-        Activity activity = EntitiesSamples.getActivity();
-        Business business = EntitiesSamples.getBusiness();
+        Activity activity = EntitiesSamples.makeActivity();
+        Business business = EntitiesSamples.makeBusiness();
 
         ProviderRepoActivities.addAndReturnAssignedId(activity);
         ProviderRepoBusinesses.addAndReturnAssignedId(business);
@@ -128,8 +127,8 @@ public class UpdatesReceiverTest {
 
     @Test
     public void oneNonAgencyWithOneNonTravel() throws Exception {
-        Activity activity = EntitiesSamples.getNonTravelActivity();
-        Business business = EntitiesSamples.getNonAgencyBusiness();
+        Activity activity = EntitiesSamples.makeNonTravelActivity();
+        Business business = EntitiesSamples.makeNonAgencyBusiness();
 
         ProviderRepoActivities.addAndReturnAssignedId(activity);
         ProviderRepoBusinesses.addAndReturnAssignedId(business);
@@ -142,10 +141,10 @@ public class UpdatesReceiverTest {
 
     @Test
     public void mixedAgencyAndTravelWithNonAgencyAndNonTravel() throws Exception {
-        Activity activity1 = EntitiesSamples.getActivity();
-        Activity activity2 = EntitiesSamples.getNonTravelActivity();
-        Business business1 = EntitiesSamples.getBusiness();
-        Business business2 = EntitiesSamples.getNonAgencyBusiness();
+        Activity activity1 = EntitiesSamples.makeActivity();
+        Activity activity2 = EntitiesSamples.makeNonTravelActivity();
+        Business business1 = EntitiesSamples.makeBusiness();
+        Business business2 = EntitiesSamples.makeNonAgencyBusiness();
 
         ProviderRepoActivities.addAndReturnAssignedId(activity1);
         ProviderRepoActivities.addAndReturnAssignedId(activity2);
@@ -163,9 +162,9 @@ public class UpdatesReceiverTest {
 
     @Test
     public void addOneNonTravelAndRefresh() throws Exception {
-        Activity activity = EntitiesSamples.getActivity();
-        Activity activity2 = EntitiesSamples.getNonTravelActivity();
-        Business business = EntitiesSamples.getBusiness();
+        Activity activity = EntitiesSamples.makeActivity();
+        Activity activity2 = EntitiesSamples.makeNonTravelActivity();
+        Business business = EntitiesSamples.makeBusiness();
 
         ProviderRepoActivities.addAndReturnAssignedId(activity);
         ProviderRepoBusinesses.addAndReturnAssignedId(business);
@@ -186,9 +185,9 @@ public class UpdatesReceiverTest {
 
     @Test
     public void addOneTravelThatWeAlreadyHaveItsAgencyAndRefresh() throws Exception {
-        Activity activity = EntitiesSamples.getActivity();
-        Activity activity2 = EntitiesSamples.getActivity2();
-        Business business = EntitiesSamples.getBusiness();
+        Activity activity = EntitiesSamples.makeActivity();
+        Activity activity2 = EntitiesSamples.makeActivity2();
+        Business business = EntitiesSamples.makeBusiness();
 
         ProviderRepoActivities.addAndReturnAssignedId(activity);
         ProviderRepoBusinesses.addAndReturnAssignedId(business);
@@ -210,10 +209,10 @@ public class UpdatesReceiverTest {
 
     @Test
     public void addOneTravelThatWeDoNotHaveItsAgencyAndRefresh() throws Exception {
-        Activity activity = EntitiesSamples.getActivity();
-        Activity activity2 = EntitiesSamples.getActivity2();
-        Business business = EntitiesSamples.getBusiness();
-        Business business2 = EntitiesSamples.getBusiness2();
+        Activity activity = EntitiesSamples.makeActivity();
+        Activity activity2 = EntitiesSamples.makeActivity2();
+        Business business = EntitiesSamples.makeBusiness();
+        Business business2 = EntitiesSamples.makeBusiness2();
 
         ProviderRepoActivities.addAndReturnAssignedId(activity);
         ProviderRepoBusinesses.addAndReturnAssignedId(business);
@@ -238,8 +237,8 @@ public class UpdatesReceiverTest {
 
     @Test
     public void preserveDataEvenWhenBNetIsClosed() throws Exception {
-        Activity activity = EntitiesSamples.getActivity();
-        Business business = EntitiesSamples.getBusiness();
+        Activity activity = EntitiesSamples.makeActivity();
+        Business business = EntitiesSamples.makeBusiness();
 
         ProviderRepoActivities.addAndReturnAssignedId(activity);
         ProviderRepoBusinesses.addAndReturnAssignedId(business);

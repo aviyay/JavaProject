@@ -5,15 +5,15 @@ public class Address {
     private String city = "";
     private String street = "";
 
+    public Address() {
+    }
+
     public Address(String country, String city, String street) {
         this.country = country;
         this.city = city;
         this.street = street;
     }
-    public Address()
-    {
 
-    }
     public String getCountry() {
         return country;
     }
@@ -58,8 +58,9 @@ public class Address {
         result = 31 * result + getStreet().hashCode();
         return result;
     }
+
     @Override
     public String toString() {
-        return getStreet()+"," + getCity() + ","+ getCountry();
+        return getStreet() + "," + getCity() + "," + getCountry();
     }
 }

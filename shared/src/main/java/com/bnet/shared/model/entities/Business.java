@@ -19,7 +19,6 @@ public class Business implements Providable {
     }
 
     public Business() {
-
     }
 
     @Override

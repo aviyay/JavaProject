@@ -4,37 +4,38 @@ import android.os.Bundle;
 
 import com.bnet.shared.model.entities.Address;
 import com.bnet.shared.model.entities.Business;
+import com.bnet.shared.model.services.converters.Converter;
 
-import static com.bnet.shared.model.Constants.*;
+import static com.bnet.shared.model.Constants.BusinessContract.*;
 
-public class BusinessBundleConverter implements BundleConverter<Business>{
+public class BusinessBundleConverter implements Converter<Bundle, Business> {
 
     @Override
     public Bundle convert(Business business) {
         Bundle result = new Bundle();
 
-        result.putInt(BUSINESS_ID,business.getId());
-        result.putString(BUSINESS_NAME,business.getName());
-        result.putString(BUSINESS_EMAIL,business.getEmail());
-        result.putString(BUSINESS_PHONE,business.getPhone());
-        result.putString(BUSINESS_LINK,business.getLinkToWebsite());
+        result.putInt(ID, business.getId());
+        result.putString(NAME, business.getName());
+        result.putString(EMAIL, business.getEmail());
+        result.putString(PHONE, business.getPhone());
+        result.putString(LINK, business.getLinkToWebsite());
 
-        result.putString(ADDRESS_COUNTRY,business.getAddress().getCountry());
-        result.putString(ADDRESS_CITY,business.getAddress().getCity());
-        result.putString(ADDRESS_STREET,business.getAddress().getStreet());
+        result.putString(ADDRESS_COUNTRY, business.getAddress().getCountry());
+        result.putString(ADDRESS_CITY, business.getAddress().getCity());
+        result.putString(ADDRESS_STREET, business.getAddress().getStreet());
 
         return result;
     }
 
     @Override
-    public Business convert(Bundle bundle) {
+    public Business convertBack(Bundle bundle) {
         Business result = new Business();
 
-        result.setId(bundle.getInt(BUSINESS_ID));
-        result.setName(bundle.getString(BUSINESS_NAME));
-        result.setEmail(bundle.getString(BUSINESS_EMAIL));
-        result.setPhone(bundle.getString(BUSINESS_PHONE));
-        result.setLinkToWebsite(bundle.getString(BUSINESS_LINK));
+        result.setId(bundle.getInt(ID));
+        result.setName(bundle.getString(NAME));
+        result.setEmail(bundle.getString(EMAIL));
+        result.setPhone(bundle.getString(PHONE));
+        result.setLinkToWebsite(bundle.getString(LINK));
 
         Address address = new Address();
         address.setCountry(bundle.getString(ADDRESS_COUNTRY));

@@ -1,16 +1,8 @@
 package com.bnet.shared.model.entities;
 
-import com.bnet.shared.model.backend.Providable;
-import com.bnet.shared.model.entities.Activity;
-import com.bnet.shared.model.entities.ActivityType;
-import com.bnet.shared.model.entities.Address;
-import com.bnet.shared.model.entities.Business;
-import com.bnet.shared.model.entities.DateTime;
-
-import java.text.ParseException;
-
 public class EntitiesSamples {
-    private static Business makeBusiness() {
+
+    public static Business makeBusiness() {
         Business business = new Business();
         Address address = new Address();
 
@@ -28,7 +20,7 @@ public class EntitiesSamples {
         return business;
     }
 
-    private static Business makeBusiness2() {
+    public static Business makeBusiness2() {
         Business business = new Business();
         Address address = new Address();
 
@@ -46,7 +38,7 @@ public class EntitiesSamples {
         return business;
     }
 
-    private static Business makeBusiness3() {
+    public static Business makeNonAgencyBusiness() {
         Business business = new Business();
         Address address = new Address();
 
@@ -64,7 +56,7 @@ public class EntitiesSamples {
         return business;
     }
 
-    private static Activity makeActivity() {
+    public static Activity makeActivity() {
         Activity activity = new Activity();
 
         DateTime start = DateTime.parse("8:15 7/8/2016");
@@ -81,7 +73,7 @@ public class EntitiesSamples {
         return activity;
     }
 
-    private static Activity makeActivity2() {
+    public static Activity makeActivity2() {
         Activity activity = new Activity();
 
         DateTime start = DateTime.parse("8:15 7/8/2016");
@@ -98,7 +90,7 @@ public class EntitiesSamples {
         return activity;
     }
 
-    private static Activity makeActivity3() {
+    public static Activity makeNonTravelActivity() {
         Activity activity = new Activity();
 
         DateTime start = DateTime.parse("8:15 7/8/2016");
@@ -113,30 +105,6 @@ public class EntitiesSamples {
         activity.setEnd(end);
 
         return activity;
-    }
-
-    public static Business getBusiness() {
-        return makeBusiness();
-    }
-
-    public static Business getBusiness2() {
-        return makeBusiness2();
-    }
-
-    public static Business getNonAgencyBusiness() {
-        return makeBusiness3();
-    }
-
-    public static Activity getActivity() {
-        return makeActivity();
-    }
-
-    public static Activity getActivity2() {
-        return makeActivity2();
-    }
-
-    public static Activity getNonTravelActivity() {
-        return makeActivity3();
     }
 
 }

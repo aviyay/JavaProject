@@ -15,47 +15,42 @@ import static org.junit.Assert.assertEquals;
 
 
 public class ConverterTest {
-    Converter converter;
 
     @Test
     public void BusinessContentValuesTest() throws Exception {
-        converter = new BusinessContentValuesConverter();
-        businessConvert();
+        businessConvertAndBack(new BusinessContentValuesConverter());
     }
 
     @Test
     public void ActivityContentValuesTest() throws Exception {
-        converter = new ActivityContentValuesConverter();
-        activityConvert();
+        activityConvertAndBack(new ActivityContentValuesConverter());
     }
 
     @Test
     public void BusinessBundleTest() throws Exception {
-        converter = new BusinessBundleConverter();
-        businessConvert();
+        businessConvertAndBack(new BusinessBundleConverter());
     }
 
     @Test
     public void ActivityBundleTest() throws Exception {
-        converter = new ActivityBundleConverter();
-        activityConvert();
+        activityConvertAndBack(new ActivityBundleConverter());
     }
 
-    public void businessConvert() throws Exception {
-        Business business = EntitiesSamples.getBusiness();
+    private <T> void businessConvertAndBack(Converter<T, Business> converter) {
+        Business business = EntitiesSamples.makeBusiness();
 
-        Object converted = converter.convert(business);
-        Business result = (Business) converter.convert(converted);
+        T converted = converter.convert(business);
+        Business result = converter.convertBack(converted);
 
         assertEquals(business.getId(), result.getId());
         assertEquals(business, result);
     }
 
-    public void activityConvert() throws Exception {
-        Activity activity = EntitiesSamples.getActivity();
+    private <T> void activityConvertAndBack(Converter<T, Activity> converter) {
+        Activity activity = EntitiesSamples.makeActivity();
 
-        Object converted = converter.convert(activity);
-        Activity result = (Activity) converter.convert(converted);
+        T converted = converter.convert(activity);
+        Activity result = converter.convertBack(converted);
 
         assertEquals(activity.getId(), result.getId());
         assertEquals(activity,result);
