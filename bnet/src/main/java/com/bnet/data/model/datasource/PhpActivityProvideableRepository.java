@@ -96,4 +96,9 @@ public class PhpActivityProvideableRepository implements ProvidableRepository<Ac
     public void reset() {
         throw new UnsupportedOperationException();
     }
+
+    @Override
+    public Activity getOrNull(long id) {
+        return null;
+    }
 }

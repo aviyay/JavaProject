@@ -2,7 +2,7 @@ package com.bnet.shared.model.entities;
 
 import com.bnet.shared.model.backend.Providable;
 
-public class Activity implements Providable<Activity> {
+public class Activity implements Providable {
     private int id = -1;
     private ActivityType activityType = ActivityType.TRAVEL;
     private String country = "";

@@ -2,7 +2,7 @@ package com.bnet.shared.model.entities;
 
 import com.bnet.shared.model.backend.Providable;
 
-public class Business implements Providable<Business> {
+public class Business implements Providable {
     private int id = -1;
     private String name = "";
     private Address address = new Address();

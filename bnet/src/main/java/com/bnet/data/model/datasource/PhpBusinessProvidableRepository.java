@@ -93,4 +93,9 @@ public class PhpBusinessProvidableRepository implements ProvidableRepository<Bus
     public void reset() {
         throw new UnsupportedOperationException();
     }
+
+    @Override
+    public Business getOrNull(long id) {
+        return null;
+    }
 }

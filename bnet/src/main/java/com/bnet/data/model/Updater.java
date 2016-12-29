@@ -7,7 +7,6 @@ import android.util.Log;
 import com.bnet.shared.model.Constants;
 import com.bnet.shared.model.backend.Providable;
 import com.bnet.shared.model.backend.ProvidableRepository;
-import com.bnet.data.model.backend.RepositoriesFactory;
 import com.bnet.shared.model.services.utils.ProvidableUtils;
 
 import java.util.ArrayList;
@@ -17,12 +16,13 @@ import java.util.TimerTask;
 
 public class Updater extends IntentService {
     private static List<ProvidableRepository> repositories = new ArrayList<>();
+    private static final int INTERVAL = 10000;
 
     public Updater() {
         super("Updater");
 
         if (repositories.size() == 0)
-            for (Providable p : ProvidableUtils.getAllProvidable())
+            for (Class<? extends Providable> p : ProvidableUtils.getAllProvidable())
                 repositories.add(ProvidableUtils.getRepository(p));
     }
 
@@ -35,9 +35,8 @@ public class Updater extends IntentService {
                 runCheck();
             }
         };
-        timer.scheduleAtFixedRate(runCheck, 0, 10000);
+        timer.scheduleAtFixedRate(runCheck, 0, INTERVAL);
     }
-
 
     private void runCheck() {
         Log.d("MyCustomTag", "BNet: Run checks");

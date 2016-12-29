@@ -64,6 +64,8 @@ public class ProvidableRepositoryTest {
     }
 
     public void getAllNews() throws Exception {
+        repository.reset();
+        repository.addAndReturnAssignedId(providable);
         List<Providable> providableList = repository.getAllNews();
         assertEquals(1, providableList.size());
         assertTrue(providableList.contains(providable));

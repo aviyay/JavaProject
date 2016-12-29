@@ -3,7 +3,7 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/JavaProject.iml" filepath="$PROJECT_DIR$/JavaProject.iml" />
-      <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/bnet/bnet.iml" filepath="$PROJECT_DIR$/bnet/bnet.iml" />
       <module fileurl="file://$PROJECT_DIR$/shared/shared.iml" filepath="$PROJECT_DIR$/shared/shared.iml" />
       <module fileurl="file://$PROJECT_DIR$/tnet/tnet.iml" filepath="$PROJECT_DIR$/tnet/tnet.iml" />
     </modules>

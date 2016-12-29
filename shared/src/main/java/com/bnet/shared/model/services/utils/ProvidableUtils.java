@@ -22,7 +22,7 @@ import java.util.List;
 import java.util.Map;
 
 public class ProvidableUtils {
-    private static class ProvidableRecord<T extends Providable<T>> {
+    private static class ProvidableRecord<T extends Providable> {
         ProvidableRepository<T> repository;
         String URIPath;
         ContentValuesConverter<T> contentValuesConverter;
@@ -49,11 +49,11 @@ public class ProvidableUtils {
     }
 
 
-    public static ProvidableRepository getRepository(Providable providable) {
+    public static ProvidableRepository<Providable> getRepository(Providable providable) {
         return getRepository(providable.getClass());
     }
 
-    public static ProvidableRepository getRepository(Class type) {
+    public static ProvidableRepository<Providable> getRepository(Class<? extends Providable> type) {
         return records.get(type).repository;
     }
 
@@ -71,6 +71,10 @@ public class ProvidableUtils {
         return records.get(providable.getClass()).contentValuesConverter.convert(providable);
     }
 
+    public static Providable contentValuesConvert(Providable providable, ContentValues contentValues) {
+        return contentValuesConvert(providable.getClass(), contentValues);
+    }
+
     public static Providable contentValuesConvert(Class type, ContentValues contentValues) {
         return records.get(type).contentValuesConverter.convert(contentValues);
     }
@@ -83,17 +87,11 @@ public class ProvidableUtils {
         return records.get(type).bundleConverter.convert(bundle);
     }
 
-    public static List<Providable> getAllProvidable() {
-        ArrayList<Providable> result = new ArrayList<>();
+    public static List<Class<? extends Providable>> getAllProvidable() {
+        ArrayList<Class<? extends Providable>> result = new ArrayList<>();
 
-        for (Class c : records.keySet()) {
-            try {
-                result.add((Providable) c.newInstance());
-            } catch (InstantiationException e) {
-                e.printStackTrace();
-            } catch (IllegalAccessException e) {
-            }
-        }
+        for (Class<? extends Providable> p : records.keySet())
+            result.add(p);
 
         return result;
     }

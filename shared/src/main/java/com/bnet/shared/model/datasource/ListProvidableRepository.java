@@ -1,5 +1,7 @@
 package com.bnet.shared.model.datasource;
 
+import android.util.Log;
+
 import com.bnet.shared.model.backend.Providable;
 import com.bnet.shared.model.backend.ProvidableRepository;
 
@@ -9,6 +11,16 @@ import java.util.List;
 public class ListProvidableRepository<T extends Providable> implements ProvidableRepository<T> {
     private List<T> items = new ArrayList<>();
     private ArrayList<T> news = new ArrayList<>();
+
+    public ListProvidableRepository() {
+        //Log.d("MyCustomTag", "Shared: ListProvidableRepository " + toString() + " created");
+    }
+
+    @Override
+    protected void finalize() throws Throwable {
+        super.finalize();
+       // Log.d("MyCustomTag", "Shared: ListProvidableRepository " + toString() + " destroyed");
+    }
 
     @Override
     public int addAndReturnAssignedId(T item) {
@@ -36,6 +48,15 @@ public class ListProvidableRepository<T extends Providable> implements Providabl
     public void reset() {
         items.clear();
         news.clear();
+    }
+
+    @Override
+    public T getOrNull(long id) {
+        for (T p : items)
+            if (p.getId() == id)
+                return p;
+
+        return null;
     }
 
     @Override
