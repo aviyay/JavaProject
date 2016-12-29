@@ -84,7 +84,8 @@ public class DataProviderTest {
     public void queryNews() throws Exception {
         Business business = EntitiesSamples.getBusiness();
         Business business2 = EntitiesSamples.getBusiness2();
-        ProvidableRepository repository = ProvidableUtils.getRepository(business);
+        ProvidableRepository<Providable> repository = ProvidableUtils.getRepository(business);
+
         repository.addAndReturnAssignedId(business);
         repository.getAll();
         repository.addAndReturnAssignedId(business2);

@@ -1,12 +1,6 @@
 package com.bnet.data.model;
 
-import android.icu.util.TimeUnit;
-import android.service.chooser.ChooserTargetService;
-
 import org.junit.Before;
-import org.junit.Test;
-
-import static org.junit.Assert.*;
 
 public class UpdaterTest {
     Updater updater;
@@ -14,10 +8,9 @@ public class UpdaterTest {
     @Before
     public void setUp() throws Exception {
         updater = new Updater();
-
     }
 
-    //@Test //need to improve this test to use context
+    //@Test //it's not really a test
     public void runServiceAndWaitForIntent() throws Exception {
         updater.onHandleIntent(null);
         //Thread.sleep(50000);
