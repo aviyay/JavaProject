@@ -14,6 +14,7 @@ import static org.junit.Assert.assertTrue;
 public class ListAccountsRepositoryTest {
     private ListAccountsRepository repository;
     private Account account;
+
     @Before
     public void setUpAndAddAccount() throws Exception {
         repository = new ListAccountsRepository();
