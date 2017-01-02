@@ -25,7 +25,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".controller.AgencyDetails" />
-        <activity android:name=".controller.TravelDetails"></activity>
+        <activity android:name=".controller.TravelDetails" />
     </application>
 
 </manifest>

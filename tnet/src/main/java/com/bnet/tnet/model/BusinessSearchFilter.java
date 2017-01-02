@@ -16,7 +16,7 @@ public class BusinessSearchFilter extends SearchFilter<Business> {
             return true;
         if (item.getName().toLowerCase().contains(searchText))
             return true;
-        if (Integer.toString(item.getId()).contains(searchText))
+        if (Long.toString(item.getId()).contains(searchText))
             return true;
         return false;
     }

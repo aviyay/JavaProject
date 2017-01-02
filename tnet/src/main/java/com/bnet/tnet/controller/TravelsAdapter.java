@@ -13,61 +13,32 @@ import com.bnet.shared.model.entities.Business;
 import com.bnet.shared.model.entities.DateTime;
 import com.bnet.shared.model.entities.EntitiesSamples;
 import com.bnet.tnet.R;
+import com.bnet.tnet.view.TravelListRow;
 
 class TravelsAdapter extends RecyclerView.Adapter<TravelsAdapter.TravelViewHolder> {
-
-   /* static {
-        ProvidableRepository<Activity> repository = RepositoriesFactory.getActivitiesRepository();
-        repository.addAndReturnAssignedId(EntitiesSamples.makeActivity());
-        repository.addAndReturnAssignedId(EntitiesSamples.makeActivity2());
-        repository.addAndReturnAssignedId(EntitiesSamples.getActivity3());
-    }*/
 
     interface OnItemClickListener {
         void onItemClick(Activity travel);
     }
 
-    class TravelViewHolder extends RecyclerView.ViewHolder{
-
-        private Activity travel;
-        private TextView travelCountry;
-        private TextView travelDates;
-        private TextView travelAgency;
-        private TextView travelPrice;
+    class TravelViewHolder extends RecyclerView.ViewHolder {
+        private TravelListRow travelListRow;
 
         TravelViewHolder(View itemView) {
             super(itemView);
-            itemView.setOnClickListener(new View.OnClickListener() {
+            travelListRow = (TravelListRow) itemView;
+
+            travelListRow.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     if (listener != null)
-                        listener.onItemClick(travel);
+                        listener.onItemClick(travelListRow.getTravel());
                 }
             });
-
-            travelCountry = (TextView) itemView.findViewById(R.id.travelCountry);
-            travelDates = (TextView) itemView.findViewById(R.id.travelDates);
-            travelAgency = (TextView) itemView.findViewById(R.id.travelAgency);
-            travelPrice = (TextView) itemView.findViewById(R.id.travelPrice);
         }
 
         void bind(Activity travel) {
-            this.travel = travel;
-
-            travelCountry.setText(travel.getCountry());
-            travelDates.setText(travel.getStart().toDateString() + " - " + travel.getEnd().toDateString());
-            travelAgency.setText(findAgencyReference(travel.getBusinessId()).getName());
-            travelPrice.setText(String.format("%.2f",travel.getPrice()));
-        }
-
-        private Business findAgencyReference(int businessId) {
-
-            for (Business business : RepositoriesFactory.getBusinessesRepository().getAll())
-                if (business.getId() == businessId) {
-                    return business;
-                }
-
-            return null;
+            travelListRow.setTravel(travel);
         }
     }
 
@@ -84,9 +55,7 @@ class TravelsAdapter extends RecyclerView.Adapter<TravelsAdapter.TravelViewHolde
 
     @Override
     public TravelViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.travel_list_row, parent, false);
-
+        View view = new TravelListRow(parent.getContext());
         return new TravelViewHolder(view);
     }
 

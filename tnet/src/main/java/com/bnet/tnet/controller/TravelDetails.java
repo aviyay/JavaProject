@@ -12,14 +12,14 @@ import com.bnet.shared.model.entities.Activity;
 import com.bnet.shared.model.entities.Business;
 import com.bnet.shared.model.services.utils.ProvidableUtils;
 import com.bnet.tnet.R;
+import com.bnet.tnet.view.ShortTravelDetails;
 
 
 public class TravelDetails extends android.app.Activity {
     private Activity travel = new Activity();
     private Business agencyReference;
 
-    private TextView temp;
-
+    private ShortTravelDetails shortTravelDetails;
     private TextView agencyName;
     private TextView agencyStreet;
 
@@ -33,14 +33,14 @@ public class TravelDetails extends android.app.Activity {
 
         findViews();
 
-        bindTravelDetails();
+        bindShortDetails();
         bindAgencyReference();
     }
 
     private void retrieveTravelFromIntent(Intent intent) {
         Bundle bundle = intent.getBundleExtra(Constants.ACTIVITIES_URI_PATH);
 
-        travel = (Activity) ProvidableUtils.bundleConvert(travel.getClass(), bundle);
+        travel = ProvidableUtils.bundleConvert(travel.getClass(), bundle);
     }
 
     private Business findAgencyReference(int businessId) {
@@ -54,14 +54,14 @@ public class TravelDetails extends android.app.Activity {
     }
 
     private void findViews() {
-        temp = (TextView) findViewById(R.id.travel_details_temp);
-
         agencyName = (TextView) findViewById(R.id.agencyName);
         agencyStreet = (TextView) findViewById(R.id.agencyStreet);
+
+        shortTravelDetails = (ShortTravelDetails) findViewById(R.id.short_travel_details);
     }
 
-    private void bindTravelDetails() {
-        temp.setText(travel.getDescription());
+    private void bindShortDetails() {
+        shortTravelDetails.setTravel(travel);
     }
 
     void bindAgencyReference() {

@@ -1,6 +1,6 @@
 package com.bnet.shared.model.backend;
 
 public interface Providable {
-    int getId();
-    void setId(int id);
+    long getId();
+    void setId(long id);
 }

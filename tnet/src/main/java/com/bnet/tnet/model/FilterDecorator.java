@@ -16,7 +16,7 @@ public class FilterDecorator<T extends Providable> implements ProvidableReposito
     }
 
     @Override
-    public int addAndReturnAssignedId(T item) {
+    public long addAndReturnAssignedId(T item) {
         return repository.addAndReturnAssignedId(item);
     }
 

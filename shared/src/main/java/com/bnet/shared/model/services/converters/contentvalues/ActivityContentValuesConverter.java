@@ -28,7 +28,7 @@ public class ActivityContentValuesConverter implements Converter<ContentValues, 
     public Activity convertBack(ContentValues contentValues) {
         Activity result = new Activity();
 
-        result.setId(contentValues.getAsInteger(ID));
+        result.setId(contentValues.getAsLong(ID));
         result.setCountry(contentValues.getAsString(COUNTRY));
         result.setBusinessId(contentValues.getAsInteger(BUSINESS_ID));
         result.setDescription(contentValues.getAsString(DESCRIPTION));

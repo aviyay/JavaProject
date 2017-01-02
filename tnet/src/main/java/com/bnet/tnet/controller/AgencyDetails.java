@@ -15,12 +15,13 @@ import com.bnet.shared.model.entities.Business;
 import com.bnet.tnet.R;
 import com.bnet.tnet.model.FilterDecorator;
 import com.bnet.tnet.model.SearchFilter;
+import com.bnet.tnet.view.ShortTravelDetails;
 
 public class AgencyDetails extends android.app.Activity {
     private Business agency = new Business();
 
     private TextView agencyTemp;
-    private TextView travelTemp;
+    private ShortTravelDetails shortTravelDetails;
 
     private RecyclerView recyclerView;
     private BottomSheetBehavior mBottomSheetBehavior;
@@ -43,14 +44,14 @@ public class AgencyDetails extends android.app.Activity {
     private void retrieveBusinessFromIntent(Intent intent) {
         Bundle bundle = intent.getBundleExtra(Constants.BUSINESSES_URI_PATH);
 
-        agency = (Business) ProvidableUtils.bundleConvert(Business.class, bundle);
+        agency = ProvidableUtils.bundleConvert(Business.class, bundle);
     }
 
     private void findViews() {
         recyclerView = (RecyclerView) findViewById(R.id.recycler_view);
 
         agencyTemp = (TextView) findViewById(R.id.agency_details_temp);
-        travelTemp = (TextView) findViewById(R.id.travel_details_temp);
+        shortTravelDetails = (ShortTravelDetails) findViewById(R.id.short_travel_details);
     }
 
 
@@ -84,7 +85,7 @@ public class AgencyDetails extends android.app.Activity {
     }
 
     private void bindTravelDetails(Activity travel) {
-        travelTemp.setText(travel.getDescription());
+        shortTravelDetails.setTravel(travel);
     }
 
     private void showBottomSheet() {

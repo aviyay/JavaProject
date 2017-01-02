@@ -10,10 +10,10 @@
     tools:context="com.bnet.tnet.controller.TravelDetails"
     android:orientation="vertical">
 
-    <include
-        layout="@layout/short_travel_details"
+    <com.bnet.tnet.view.ShortTravelDetails
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content"
+        android:id="@id/short_travel_details"/>
 
     <include
         android:id="@+id/agency_list_row"

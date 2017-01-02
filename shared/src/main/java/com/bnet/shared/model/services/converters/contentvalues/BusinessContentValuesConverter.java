@@ -28,7 +28,7 @@ public class BusinessContentValuesConverter implements Converter<ContentValues, 
     public Business convertBack(ContentValues contentValues) {
         Business result = new Business();
 
-        result.setId(contentValues.getAsInteger(ID));
+        result.setId(contentValues.getAsLong(ID));
         result.setName(contentValues.getAsString(NAME));
         result.setEmail(contentValues.getAsString(EMAIL));
         result.setPhone(contentValues.getAsString(PHONE));

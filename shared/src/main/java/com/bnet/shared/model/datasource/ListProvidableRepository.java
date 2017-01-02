@@ -15,7 +15,7 @@ public class ListProvidableRepository<T extends Providable> implements Providabl
     }
 
     @Override
-    public int addAndReturnAssignedId(T item) {
+    public long addAndReturnAssignedId(T item) {
         items.add(item);
         news.add(item);
 

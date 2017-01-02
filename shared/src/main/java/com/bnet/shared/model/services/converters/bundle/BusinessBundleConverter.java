@@ -14,7 +14,7 @@ public class BusinessBundleConverter implements Converter<Bundle, Business> {
     public Bundle convert(Business business) {
         Bundle result = new Bundle();
 
-        result.putInt(ID, business.getId());
+        result.putLong(ID, business.getId());
         result.putString(NAME, business.getName());
         result.putString(EMAIL, business.getEmail());
         result.putString(PHONE, business.getPhone());
@@ -31,7 +31,7 @@ public class BusinessBundleConverter implements Converter<Bundle, Business> {
     public Business convertBack(Bundle bundle) {
         Business result = new Business();
 
-        result.setId(bundle.getInt(ID));
+        result.setId(bundle.getLong(ID));
         result.setName(bundle.getString(NAME));
         result.setEmail(bundle.getString(EMAIL));
         result.setPhone(bundle.getString(PHONE));

@@ -19,6 +19,7 @@ import com.bnet.shared.model.backend.ProvidableRepository;
 import com.bnet.shared.model.backend.RepositoriesFactory;
 import com.bnet.shared.model.entities.Activity;
 import com.bnet.shared.model.entities.Business;
+import com.bnet.shared.model.entities.EntitiesSamples;
 import com.bnet.shared.model.services.utils.ProvidableUtils;
 import com.bnet.tnet.R;
 import com.bnet.tnet.model.ActivitySearchFilter;
@@ -42,6 +43,13 @@ public class MainActivity extends AppCompatActivity {
     private BusinessSearchFilter agencySearchFilter = new BusinessSearchFilter();
     private SearchFilter currentSearchFilter;
 
+    static {
+        RepositoriesFactory.getBusinessesRepository().addAndReturnAssignedId(EntitiesSamples.makeBusiness());
+        RepositoriesFactory.getBusinessesRepository().addAndReturnAssignedId(EntitiesSamples.makeBusiness2());
+        RepositoriesFactory.getActivitiesRepository().addAndReturnAssignedId(EntitiesSamples.makeActivity());
+        RepositoriesFactory.getActivitiesRepository().addAndReturnAssignedId(EntitiesSamples.makeActivity2());
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -60,7 +68,7 @@ public class MainActivity extends AppCompatActivity {
 
         setupSwipeRefreshListener();
 
-        UpdatesReceiver.freshStart(this);
+        //UpdatesReceiver.freshStart(this); //TODO: enable this
 
         setupAdapters();
 
