@@ -114,8 +114,8 @@ public class ActivityEditor extends Activity {
                     com.bnet.shared.model.entities.Activity acti=new com.bnet.shared.model.entities.Activity();
                             acti.setType(ActivityType.valueOf(typeSpinner.getSelectedItem().toString()));
                     acti.setCountry(getText(countryField));
-                    acti.setStart(DateTime.parse(String.format("%s:%s %s/%s/%s", getText(startHour), getText(startMinute), getText(startDay), getText(startMonth), getText(startYear))));
-                    acti.setEnd(DateTime.parse(String.format("%s:%s %s/%s/%s", getText(endHour), getText(endMinute), getText(endDay), getText(endMonth), getText(endYear))));
+                    acti.setStart(DateTime.parse(String.format("%02s:%02s %02s/%02s/%02s", getText(startHour), getText(startMinute), getText(startDay), getText(startMonth), getText(startYear))));
+                    acti.setEnd(DateTime.parse(String.format("%02s:%02s %02s/%02s/%02s", getText(endHour), getText(endMinute), getText(endDay), getText(endMonth), getText(endYear))));
                     acti.setPrice(Double.parseDouble(getText(priceField)));
                     acti.setDescription(getText(descriptionField));
                     String item=(String)businessIDSpinner.getSelectedItem();

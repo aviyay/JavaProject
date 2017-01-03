@@ -9,7 +9,12 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="com.bnet.data.controller.BusinessEditor">
-
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
     <TextView
         android:text="Business details"
         android:layout_width="wrap_content"
@@ -64,7 +69,7 @@
         android:hint="@string/business_phone_hint" />
 
     <EditText
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:inputType="textEmailAddress"
 android:layout_below="@id/phoneField"
@@ -82,15 +87,16 @@ android:layout_below="@id/phoneField"
         android:layout_below="@id/emailField"
         android:id="@+id/websiteField"
         android:hint="@string/business_website_hint" />
-
-    <Button
-        android:text="@string/submit_button_string"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true"
-        android:id="@+id/submitBtn" />
+        <Button
+            android:text="@string/submit_button_string"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/websiteField"
+            android:layout_marginTop="30dp"
+            android:layout_alignParentRight="true"
+            android:id="@+id/submitBtn" />
+    </RelativeLayout>
+    </ScrollView>
 
 
 </RelativeLayout>
