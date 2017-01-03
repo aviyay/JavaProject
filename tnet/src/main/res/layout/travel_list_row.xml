@@ -1,8 +1,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="wrap_content"
+    android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="?android:attr/selectableItemBackground"
-    android:layoutDirection="rtl"
     android:textDirection="ltr"
     android:focusable="true">
     <ImageView
@@ -23,34 +22,31 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
             android:textSize="25sp"
-            android:textStyle="bold|italic"
-            android:text="שכשד - שכ"/>
+            android:textStyle="bold|italic"/>
 
         <TextView
             android:id="@+id/travelDates"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="15sp"
-            android:textStyle="bold"
-            android:text="10/2/4 - 11/4/5"/>
+            android:textStyle="bold"/>
 
         <TextView
             android:id="@+id/travelAgency"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="15sp"
-            android:text="Turkey trips"/>
+            android:textSize="15sp"/>
     </LinearLayout>
     <TextView
         android:id="@+id/travelPrice"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="20dp"
         android:layout_marginLeft="20dp"
 android:layout_gravity="bottom"
+        android:gravity="end"
         android:textSize="25sp"
-        android:textStyle="bold"
-        android:text="100$"/>
+        android:textStyle="bold"/>
 
 
 </LinearLayout>
