@@ -12,6 +12,7 @@ import com.bnet.shared.model.backend.RepositoriesFactory;
 import com.bnet.shared.model.entities.Business;
 import com.bnet.shared.model.entities.EntitiesSamples;
 import com.bnet.tnet.R;
+import com.bnet.tnet.view.AgencyListRow;
 
 class AgenciesAdapter extends RecyclerView.Adapter<AgenciesAdapter.AgencyViewHolder> {
 
@@ -20,30 +21,23 @@ class AgenciesAdapter extends RecyclerView.Adapter<AgenciesAdapter.AgencyViewHol
     }
 
     class AgencyViewHolder extends RecyclerView.ViewHolder{
-        private Business agency;
+        private AgencyListRow agencyListRow;
 
-        private TextView agencyName;
-        private TextView agencyStreet;
-
-        AgencyViewHolder(final View itemView) {
+        AgencyViewHolder(View itemView) {
             super(itemView);
-            itemView.setOnClickListener(new View.OnClickListener() {
+            agencyListRow = (AgencyListRow) itemView;
+
+            agencyListRow.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     if (listener != null)
-                        listener.onItemClick(agency);
+                        listener.onItemClick(agencyListRow.getAgency());
                 }
             });
-
-            agencyName = (TextView) itemView.findViewById(R.id.agencyName);
-            agencyStreet = (TextView) itemView.findViewById(R.id.agencyStreet);
         }
 
         void bind(Business agency) {
-            this.agency = agency;
-
-            agencyName.setText(agency.getName());
-            agencyStreet.setText(agency.getAddress().getCountry());
+            agencyListRow.setAgency(agency);
         }
     }
 
@@ -60,9 +54,7 @@ class AgenciesAdapter extends RecyclerView.Adapter<AgenciesAdapter.AgencyViewHol
 
     @Override
     public AgencyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.agency_list_row, parent, false);
-
+        View view = new AgencyListRow(parent.getContext());
         return new AgencyViewHolder(view);
     }
 

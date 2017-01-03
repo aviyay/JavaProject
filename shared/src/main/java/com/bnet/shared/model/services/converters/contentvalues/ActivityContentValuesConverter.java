@@ -30,7 +30,7 @@ public class ActivityContentValuesConverter implements Converter<ContentValues, 
 
         result.setId(contentValues.getAsLong(ID));
         result.setCountry(contentValues.getAsString(COUNTRY));
-        result.setBusinessId(contentValues.getAsInteger(BUSINESS_ID));
+        result.setBusinessId(contentValues.getAsLong(BUSINESS_ID));
         result.setDescription(contentValues.getAsString(DESCRIPTION));
         result.setPrice(contentValues.getAsDouble(PRICE));
         result.setStart(DateTime.parse(contentValues.getAsString(START)));

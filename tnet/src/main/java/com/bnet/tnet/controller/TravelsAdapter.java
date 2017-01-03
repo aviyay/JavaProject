@@ -42,7 +42,7 @@ class TravelsAdapter extends RecyclerView.Adapter<TravelsAdapter.TravelViewHolde
         }
     }
 
-    private TravelsAdapter.OnItemClickListener listener;
+    private OnItemClickListener listener;
     private ProvidableRepository<Activity> repository;
 
     TravelsAdapter(ProvidableRepository<Activity> repository) {

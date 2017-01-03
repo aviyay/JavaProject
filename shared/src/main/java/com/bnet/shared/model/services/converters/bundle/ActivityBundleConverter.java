@@ -16,7 +16,7 @@ public class ActivityBundleConverter implements Converter<Bundle, Activity> {
 
         result.putLong(ID, activity.getId());
         result.putString(COUNTRY, activity.getCountry());
-        result.putInt(BUSINESS_ID, activity.getBusinessId());
+        result.putLong(BUSINESS_ID, activity.getBusinessId());
         result.putString(DESCRIPTION, activity.getDescription());
         result.putDouble(PRICE, activity.getPrice());
         result.putString(START, activity.getStart().toString());
@@ -32,7 +32,7 @@ public class ActivityBundleConverter implements Converter<Bundle, Activity> {
 
         result.setId(bundle.getLong(ID));
         result.setCountry(bundle.getString(COUNTRY));
-        result.setBusinessId(bundle.getInt(BUSINESS_ID));
+        result.setBusinessId(bundle.getLong(BUSINESS_ID));
         result.setDescription(bundle.getString(DESCRIPTION));
         result.setPrice(bundle.getDouble(PRICE));
         result.setStart(DateTime.parse(bundle.getString(START)));

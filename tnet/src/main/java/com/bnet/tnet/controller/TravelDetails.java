@@ -3,7 +3,6 @@ package com.bnet.tnet.controller;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.TextView;
 
 import com.bnet.shared.model.Constants;
 import com.bnet.shared.model.backend.Providable;
@@ -12,74 +11,57 @@ import com.bnet.shared.model.entities.Activity;
 import com.bnet.shared.model.entities.Business;
 import com.bnet.shared.model.services.utils.ProvidableUtils;
 import com.bnet.tnet.R;
+import com.bnet.tnet.view.AgencyListRow;
 import com.bnet.tnet.view.ShortTravelDetails;
 
 
 public class TravelDetails extends android.app.Activity {
-    private Activity travel = new Activity();
-    private Business agencyReference;
-
     private ShortTravelDetails shortTravelDetails;
-    private TextView agencyName;
-    private TextView agencyStreet;
+    private AgencyListRow agencyListRow;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.travel_details);
 
-        retrieveTravelFromIntent(getIntent());
-        agencyReference = findAgencyReference(travel.getBusinessId());
-
         findViews();
 
-        bindShortDetails();
-        bindAgencyReference();
-    }
+        registerAgencyListener();
 
-    private void retrieveTravelFromIntent(Intent intent) {
-        Bundle bundle = intent.getBundleExtra(Constants.ACTIVITIES_URI_PATH);
-
-        travel = ProvidableUtils.bundleConvert(travel.getClass(), bundle);
-    }
-
-    private Business findAgencyReference(int businessId) {
-
-        for (Business business : RepositoriesFactory.getBusinessesRepository().getAll())
-            if (business.getId() == businessId) {
-                return business;
-            }
-
-        return null;
+        bindViews();
     }
 
     private void findViews() {
-        agencyName = (TextView) findViewById(R.id.agencyName);
-        agencyStreet = (TextView) findViewById(R.id.agencyStreet);
-
         shortTravelDetails = (ShortTravelDetails) findViewById(R.id.short_travel_details);
-    }
-
-    private void bindShortDetails() {
-        shortTravelDetails.setTravel(travel);
-    }
-
-    void bindAgencyReference() {
-        agencyName.setText(agencyReference.getName());
-        agencyStreet.setText(agencyReference.getAddress().getCountry());
-
-        registerAgencyListener();
+        agencyListRow = (AgencyListRow) findViewById(R.id.agency_list_row);
     }
 
     private void registerAgencyListener() {
-
-        View agencyListRow = findViewById(R.id.agency_list_row);
         agencyListRow.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(AgencyDetails.class, agencyReference);
+                startActivity(AgencyDetails.class, agencyListRow.getAgency());
             }
         });
+    }
+
+    private void bindViews() {
+        Activity travel = retrieveTravelFromIntent(getIntent());
+        Business agencyReference = getAgencyReference(travel.getBusinessId());
+
+        shortTravelDetails.setTravel(travel);
+        agencyListRow.setAgency(agencyReference);
+    }
+
+    private Activity retrieveTravelFromIntent(Intent intent) {
+        Bundle bundle = intent.getBundleExtra(Constants.ACTIVITIES_URI_PATH);
+        return ProvidableUtils.bundleConvert(Activity.class, bundle);
+    }
+
+    private Business getAgencyReference(long id) {
+        return RepositoriesFactory
+                .getBusinessesRepository()
+                .getOrNull(id);
     }
 
     private void startActivity(Class activity, Providable providable) {

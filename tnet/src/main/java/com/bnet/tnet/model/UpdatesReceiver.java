@@ -61,10 +61,10 @@ public class UpdatesReceiver extends BroadcastReceiver {
         Cursor cursor = runQuery(resolver, activityUri, activityQuerySelection);
         List<Activity> travels = filterTravels(cursor);
 
-        ArrayList<Integer> agenciesToPull = findMissingAgencies(travels);
+        ArrayList<Long> agenciesToPull = findMissingAgencies(travels);
         ArrayList<Cursor> agenciesRows = new ArrayList<>();
 
-        for (int id : agenciesToPull)
+        for (long id : agenciesToPull)
             agenciesRows.add(runQuery(resolver, getAgencyUri(id)));
 
         List<Business> agencies = convertAgencies(agenciesRows);
@@ -92,8 +92,8 @@ public class UpdatesReceiver extends BroadcastReceiver {
         return travels;
     }
 
-    private static ArrayList<Integer> findMissingAgencies(List<Activity> travels) {
-        ArrayList<Integer> result = new ArrayList<>();
+    private static ArrayList<Long> findMissingAgencies(List<Activity> travels) {
+        ArrayList<Long> result = new ArrayList<>();
 
         List<Business> allAgencies = RepositoriesFactory.getBusinessesRepository().getAll();
 
@@ -114,7 +114,7 @@ public class UpdatesReceiver extends BroadcastReceiver {
         return result;
     }
 
-    private static Uri getAgencyUri(int id) {
+    private static Uri getAgencyUri(long id) {
         return ContentUris.withAppendedId(businessUri, id);
     }
 

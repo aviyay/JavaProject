@@ -10,7 +10,7 @@ public class Activity implements Providable {
     private DateTime end = new DateTime();
     private double price;
     private String description = "";
-    private int businessId;
+    private long businessId;
 
     @Override
     public long getId() {
@@ -70,11 +70,11 @@ public class Activity implements Providable {
         this.description = description;
     }
 
-    public int getBusinessId() {
+    public long getBusinessId() {
         return businessId;
     }
 
-    public void setBusinessId(int businessId) {
+    public void setBusinessId(long businessId) {
         this.businessId = businessId;
     }
 
@@ -106,7 +106,6 @@ public class Activity implements Providable {
         temp = Double.doubleToLongBits(getPrice());
         result = 31 * result + (int) (temp ^ (temp >>> 32));
         result = 31 * result + getDescription().hashCode();
-        result = 31 * result + getBusinessId();
         return result;
     }
 }
