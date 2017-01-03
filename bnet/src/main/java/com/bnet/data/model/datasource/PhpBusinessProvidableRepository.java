@@ -86,7 +86,13 @@ public class PhpBusinessProvidableRepository implements ProvidableRepository<Bus
     @Override
     public boolean isSomethingNew() {
 
-        return !getAllNews().isEmpty();
+        try {
+            String result= PhpHelper.GET(WEB_URL+"business_checkNew.php");
+            return Boolean.parseBoolean(result);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return false;
     }
 
     @Override
