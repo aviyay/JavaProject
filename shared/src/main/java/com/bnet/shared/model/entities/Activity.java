@@ -2,23 +2,23 @@ package com.bnet.shared.model.entities;
 
 import com.bnet.shared.model.backend.Providable;
 
-public class Activity implements Providable<Activity> {
-    private int id = -1;
+public class Activity implements Providable {
+    private long id = -1;
     private ActivityType activityType = ActivityType.TRAVEL;
     private String country = "";
     private DateTime start = new DateTime();
     private DateTime end = new DateTime();
     private double price;
     private String description = "";
-    private int businessId;
+    private long businessId;
 
     @Override
-    public int getId() {
+    public long getId() {
         return id;
     }
 
     @Override
-    public void setId(int id) {
+    public void setId(long id) {
         this.id = id;
     }
 
@@ -70,11 +70,11 @@ public class Activity implements Providable<Activity> {
         this.description = description;
     }
 
-    public int getBusinessId() {
+    public long getBusinessId() {
         return businessId;
     }
 
-    public void setBusinessId(int businessId) {
+    public void setBusinessId(long businessId) {
         this.businessId = businessId;
     }
 
@@ -106,7 +106,6 @@ public class Activity implements Providable<Activity> {
         temp = Double.doubleToLongBits(getPrice());
         result = 31 * result + (int) (temp ^ (temp >>> 32));
         result = 31 * result + getDescription().hashCode();
-        result = 31 * result + getBusinessId();
         return result;
     }
 }

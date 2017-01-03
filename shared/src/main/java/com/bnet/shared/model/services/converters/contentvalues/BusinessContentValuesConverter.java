@@ -4,33 +4,35 @@ import android.content.ContentValues;
 
 import com.bnet.shared.model.entities.Address;
 import com.bnet.shared.model.entities.Business;
+import com.bnet.shared.model.services.converters.Converter;
 
-import static com.bnet.shared.model.Constants.*;
+import static com.bnet.shared.model.Constants.BusinessContract.*;
 
-public class BusinessContentValuesConverter implements ContentValuesConverter<Business>{
+public class BusinessContentValuesConverter implements Converter<ContentValues, Business> {
     public ContentValues convert(Business business) {
         ContentValues result = new ContentValues();
 
-        result.put(BUSINESS_ID,business.getId());
-        result.put(BUSINESS_NAME,business.getName());
-        result.put(BUSINESS_EMAIL,business.getEmail());
-        result.put(BUSINESS_PHONE,business.getPhone());
-        result.put(BUSINESS_LINK,business.getLinkToWebsite());
+        result.put(ID, business.getId());
+        result.put(NAME, business.getName());
+        result.put(EMAIL, business.getEmail());
+        result.put(PHONE, business.getPhone());
+        result.put(LINK, business.getLinkToWebsite());
 
-        result.put(ADDRESS_COUNTRY,business.getAddress().getCountry());
-        result.put(ADDRESS_CITY,business.getAddress().getCity());
-        result.put(ADDRESS_STREET,business.getAddress().getStreet());
+        result.put(ADDRESS_COUNTRY, business.getAddress().getCountry());
+        result.put(ADDRESS_CITY, business.getAddress().getCity());
+        result.put(ADDRESS_STREET, business.getAddress().getStreet());
 
         return result;
     }
-    public Business convert(ContentValues contentValues) {
+
+    public Business convertBack(ContentValues contentValues) {
         Business result = new Business();
 
-        result.setId(contentValues.getAsInteger(BUSINESS_ID));
-        result.setName(contentValues.getAsString(BUSINESS_NAME));
-        result.setEmail(contentValues.getAsString(BUSINESS_EMAIL));
-        result.setPhone(contentValues.getAsString(BUSINESS_PHONE));
-        result.setLinkToWebsite(contentValues.getAsString(BUSINESS_LINK));
+        result.setId(contentValues.getAsLong(ID));
+        result.setName(contentValues.getAsString(NAME));
+        result.setEmail(contentValues.getAsString(EMAIL));
+        result.setPhone(contentValues.getAsString(PHONE));
+        result.setLinkToWebsite(contentValues.getAsString(LINK));
 
         Address address = new Address();
         address.setCountry(contentValues.getAsString(ADDRESS_COUNTRY));

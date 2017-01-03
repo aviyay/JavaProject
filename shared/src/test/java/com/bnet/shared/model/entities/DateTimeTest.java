@@ -2,8 +2,6 @@ package com.bnet.shared.model.entities;
 
 import org.junit.Test;
 
-import java.text.ParseException;
-
 import static org.junit.Assert.*;
 
 public class DateTimeTest {
@@ -17,7 +15,7 @@ public class DateTimeTest {
         dateTime.setHour(21);
         dateTime.setMinute(30);
 
-        String result = dateTime.format();
+        String result = dateTime.toString();
         assertEquals("21:30 04/08/2016",result);
     }
 

@@ -2,8 +2,8 @@ package com.bnet.shared.model.entities;
 
 import com.bnet.shared.model.backend.Providable;
 
-public class Business implements Providable<Business> {
-    private int id = -1;
+public class Business implements Providable {
+    private long id = -1;
     private String name = "";
     private Address address = new Address();
     private String phone = "";
@@ -19,16 +19,15 @@ public class Business implements Providable<Business> {
     }
 
     public Business() {
-
     }
 
     @Override
-    public int getId() {
+    public long getId() {
         return id;
     }
 
     @Override
-    public void setId(int id) {
+    public void setId(long id) {
         this.id = id;
     }
 

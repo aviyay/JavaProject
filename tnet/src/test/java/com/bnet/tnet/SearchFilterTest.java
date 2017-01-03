@@ -1,5 +1,6 @@
 package com.bnet.tnet;
 
+import com.bnet.shared.model.backend.Providable;
 import com.bnet.shared.model.entities.Activity;
 import com.bnet.shared.model.entities.Business;
 import com.bnet.shared.model.entities.EntitiesSamples;
@@ -14,12 +15,11 @@ import java.util.ArrayList;
 import static org.junit.Assert.*;
 
 public class SearchFilterTest {
-    private SearchFilter searchFilter;
 
     @Test
-    public void search() throws Exception {
-        Business business = EntitiesSamples.getBusiness();
-        searchFilter = new BusinessSearchFilter();
+    public void searchBusinesss() throws Exception {
+        Business business = EntitiesSamples.makeBusiness();
+        BusinessSearchFilter searchFilter = new BusinessSearchFilter();
 
         assertTrue(searchFilter.search(business, ""));
         assertTrue(searchFilter.search(business, "israel"));
@@ -29,9 +29,12 @@ public class SearchFilterTest {
         assertTrue(searchFilter.search(business, "usalem"));
         assertTrue(searchFilter.search(business, "hale"));
         assertFalse(searchFilter.search(business, "sgasdv"));
+    }
 
-        Activity activity = EntitiesSamples.getActivity();
-        searchFilter = new ActivitySearchFilter();
+    @Test
+    public void searchActivity() throws Exception {
+        Activity activity = EntitiesSamples.makeActivity();
+        ActivitySearchFilter searchFilter = new ActivitySearchFilter();
 
         assertTrue(searchFilter.search(activity, ""));
         assertTrue(searchFilter.search(activity, "israel"));
@@ -44,12 +47,12 @@ public class SearchFilterTest {
     }
 
     @Test
-    public void filterList() throws Exception {
+    public void filterBusinessList() throws Exception {
         ArrayList<Business> bis = new ArrayList<>();
-        bis.add(EntitiesSamples.getBusiness());
-        bis.add(EntitiesSamples.getBusiness2());
-        bis.add(EntitiesSamples.getBusiness3());
-        searchFilter = new BusinessSearchFilter();
+        bis.add(EntitiesSamples.makeBusiness());
+        bis.add(EntitiesSamples.makeBusiness2());
+        bis.add(EntitiesSamples.makeNonAgencyBusiness());
+        BusinessSearchFilter searchFilter = new BusinessSearchFilter();
 
         assertEquals(0, searchFilter.filter(bis, "isradel").size());
         assertEquals(3, searchFilter.filter(bis, "israel").size());

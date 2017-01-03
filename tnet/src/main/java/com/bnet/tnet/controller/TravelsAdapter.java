@@ -9,57 +9,40 @@ import android.widget.TextView;
 import com.bnet.shared.model.backend.ProvidableRepository;
 import com.bnet.shared.model.backend.RepositoriesFactory;
 import com.bnet.shared.model.entities.Activity;
+import com.bnet.shared.model.entities.Business;
+import com.bnet.shared.model.entities.DateTime;
 import com.bnet.shared.model.entities.EntitiesSamples;
 import com.bnet.tnet.R;
+import com.bnet.tnet.view.TravelListRow;
 
 class TravelsAdapter extends RecyclerView.Adapter<TravelsAdapter.TravelViewHolder> {
-
-    static {
-        ProvidableRepository<Activity> repository = RepositoriesFactory.getActivitiesRepository();
-        repository.addAndReturnAssignedId(EntitiesSamples.getActivity());
-        repository.addAndReturnAssignedId(EntitiesSamples.getActivity2());
-        repository.addAndReturnAssignedId(EntitiesSamples.getActivity3());
-    }
 
     interface OnItemClickListener {
         void onItemClick(Activity travel);
     }
 
-    class TravelViewHolder extends RecyclerView.ViewHolder{
-
-        private Activity travel;
-        private TextView travelCountry;
-        private TextView travelDates;
-        private TextView travelAgency;
-        private TextView travelPrice;
+    class TravelViewHolder extends RecyclerView.ViewHolder {
+        private TravelListRow travelListRow;
 
         TravelViewHolder(View itemView) {
             super(itemView);
-            itemView.setOnClickListener(new View.OnClickListener() {
+            travelListRow = (TravelListRow) itemView;
+
+            travelListRow.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     if (listener != null)
-                        listener.onItemClick(travel);
+                        listener.onItemClick(travelListRow.getTravel());
                 }
             });
-
-            travelCountry = (TextView) itemView.findViewById(R.id.travelCountry);
-            travelDates = (TextView) itemView.findViewById(R.id.travelDates);
-            travelAgency = (TextView) itemView.findViewById(R.id.travelAgency);
-            travelPrice = (TextView) itemView.findViewById(R.id.travelPrice);
         }
 
         void bind(Activity travel) {
-            this.travel = travel;
-
-            travelCountry.setText(travel.getCountry());
-            travelDates.setText(travel.getStart().format() + " - " + travel.getEnd().format());
-            travelAgency.setText("Temp Agency");
-            travelPrice.setText(String.format("%f",travel.getPrice()));
+            travelListRow.setTravel(travel);
         }
     }
 
-    private TravelsAdapter.OnItemClickListener listener;
+    private OnItemClickListener listener;
     private ProvidableRepository<Activity> repository;
 
     TravelsAdapter(ProvidableRepository<Activity> repository) {
@@ -72,9 +55,7 @@ class TravelsAdapter extends RecyclerView.Adapter<TravelsAdapter.TravelViewHolde
 
     @Override
     public TravelViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.travel_list_row, parent, false);
-
+        View view = new TravelListRow(parent.getContext());
         return new TravelViewHolder(view);
     }
 

@@ -2,10 +2,12 @@ package com.bnet.tnet.controller;
 
 import android.content.Intent;
 import android.content.res.Configuration;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
 import android.support.v4.widget.DrawerLayout;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
@@ -17,12 +19,14 @@ import com.bnet.shared.model.backend.ProvidableRepository;
 import com.bnet.shared.model.backend.RepositoriesFactory;
 import com.bnet.shared.model.entities.Activity;
 import com.bnet.shared.model.entities.Business;
+import com.bnet.shared.model.entities.EntitiesSamples;
 import com.bnet.shared.model.services.utils.ProvidableUtils;
 import com.bnet.tnet.R;
 import com.bnet.tnet.model.ActivitySearchFilter;
 import com.bnet.tnet.model.BusinessSearchFilter;
 import com.bnet.tnet.model.FilterDecorator;
 import com.bnet.tnet.model.SearchFilter;
+import com.bnet.tnet.model.UpdatesReceiver;
 
 public class MainActivity extends AppCompatActivity {
     private DrawerLayout mDrawer;
@@ -30,6 +34,7 @@ public class MainActivity extends AppCompatActivity {
     private NavigationView nvDrawer;
     private ActionBarDrawerToggle drawerToggle;
     private RecyclerView recyclerView;
+    private SwipeRefreshLayout swipeRefreshLayout;
 
     private AgenciesAdapter agenciesAdapter;
     private TravelsAdapter travelsAdapter;
@@ -37,6 +42,13 @@ public class MainActivity extends AppCompatActivity {
     private ActivitySearchFilter travelSearchFilter = new ActivitySearchFilter();
     private BusinessSearchFilter agencySearchFilter = new BusinessSearchFilter();
     private SearchFilter currentSearchFilter;
+
+    static {
+        RepositoriesFactory.getBusinessesRepository().addAndReturnAssignedId(EntitiesSamples.makeBusiness());
+        RepositoriesFactory.getBusinessesRepository().addAndReturnAssignedId(EntitiesSamples.makeBusiness2());
+        RepositoriesFactory.getActivitiesRepository().addAndReturnAssignedId(EntitiesSamples.makeActivity());
+        RepositoriesFactory.getActivitiesRepository().addAndReturnAssignedId(EntitiesSamples.makeActivity2());
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,6 +66,10 @@ public class MainActivity extends AppCompatActivity {
         // Tie DrawerLayout events to the ActionBarToggle
         mDrawer.addDrawerListener(drawerToggle);
 
+        setupSwipeRefreshListener();
+
+        //UpdatesReceiver.freshStart(this); //TODO: enable this
+
         setupAdapters();
 
         registerItemsSelector(nvDrawer);
@@ -66,10 +82,32 @@ public class MainActivity extends AppCompatActivity {
         mDrawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         nvDrawer = (NavigationView) findViewById(R.id.nvView);
         recyclerView = (RecyclerView) findViewById(R.id.recycler_view);
+        swipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.swipe_refresh);
     }
 
     private ActionBarDrawerToggle setupDrawerToggle() {
         return new ActionBarDrawerToggle(this, mDrawer, toolbar, R.string.drawer_open, R.string.drawer_close);
+    }
+
+    private void setupSwipeRefreshListener() {
+        swipeRefreshLayout.setColorSchemeResources(
+                R.color.swipeRefresh1,
+                R.color.swipeRefresh2,
+                R.color.swipeRefresh3);
+
+        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                runFreshStart();
+                swipeRefreshLayout.setRefreshing(false);
+            }
+        });
+    }
+
+    private void runFreshStart() {
+        UpdatesReceiver.freshStart(this);
+        recyclerView.getAdapter().notifyDataSetChanged();
+        //  swipeRefreshLayout.setRefreshing(false);
     }
 
     private void setupAdapters() {

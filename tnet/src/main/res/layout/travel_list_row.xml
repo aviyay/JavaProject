@@ -1,78 +1,63 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
+    android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:focusable="true"
-    android:paddingLeft="16dp"
-    android:paddingRight="16dp"
-    android:paddingTop="10dp"
-    android:paddingBottom="10dp"
-    android:clickable="true"
+    android:layout_gravity="center"
     android:background="?android:attr/selectableItemBackground"
-    android:orientation="vertical">
+    android:focusable="true">
 
-    <android.support.v7.widget.CardView
-        xmlns:card_view="http://schemas.android.com/apk/res-auto"
-        android:id="@+id/card_view"
-        android:layout_gravity="center"
-        android:layout_width="match_parent"
+    <ImageView
+        android:id="@+id/logoImage"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:src="@drawable/travel" />
+
+    <TextView
+        android:id="@+id/travelCountry"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        card_view:cardCornerRadius="4dp">
+        android:layout_marginLeft="30dp"
+        android:layout_marginStart="30dp"
+        android:layout_marginTop="10dp"
+        android:layout_toEndOf="@id/logoImage"
+        android:layout_toRightOf="@id/logoImage"
+        android:textDirection="ltr"
+        android:textSize="25sp"
+        android:textStyle="bold|italic" />
 
-        <RelativeLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
-            <ImageView
-                android:id="@+id/logoImage"
-                android:layout_width="100dp"
-                android:layout_height="100dp"
-                android:src="@drawable/travel"/>
-            <TextView
-                android:id="@+id/travelCountry"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_toRightOf="@id/logoImage"
-                android:layout_toEndOf="@id/logoImage"
-                android:layout_marginLeft="30dp"
-                android:layout_marginStart="30dp"
-                android:layout_marginTop="10dp"
-                android:textSize="25sp"
-                android:textStyle="bold|italic"
-                android:textDirection="ltr"/>
-            <TextView
-                android:id="@+id/travelDates"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/travelCountry"
-                android:layout_toRightOf="@id/logoImage"
-                android:layout_toEndOf="@id/logoImage"
-                android:layout_marginLeft="30dp"
-                android:layout_marginStart="30dp"
-                android:textSize="15sp"
-                android:textStyle="bold"
-                android:textDirection="ltr"/>
-            <TextView
-                android:id="@+id/travelAgency"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/travelDates"
-                android:layout_toRightOf="@id/logoImage"
-                android:layout_toEndOf="@id/logoImage"
-                android:layout_marginLeft="30dp"
-                android:layout_marginStart="30dp"
-                android:textSize="15sp"/>
-            <TextView
-                android:id="@+id/travelPrice"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textSize="20sp"
-                android:textStyle="bold"
-                android:layout_below="@id/travelAgency"
-                android:layout_marginBottom="10dp"
-                android:layout_alignParentRight="true"
-                android:layout_alignParentEnd="true"
-                android:textDirection="ltr"/>
+    <TextView
+        android:id="@+id/travelDates"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/travelCountry"
+        android:layout_marginLeft="30dp"
+        android:layout_marginStart="30dp"
+        android:layout_toEndOf="@id/logoImage"
+        android:layout_toRightOf="@id/logoImage"
+        android:textDirection="ltr"
+        android:textSize="15sp"
+        android:textStyle="bold" />
 
-        </RelativeLayout>
-    </android.support.v7.widget.CardView>
+    <TextView
+        android:id="@+id/travelAgency"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/travelDates"
+        android:layout_marginLeft="30dp"
+        android:layout_marginStart="30dp"
+        android:layout_toEndOf="@id/logoImage"
+        android:layout_toRightOf="@id/logoImage"
+        android:textSize="15sp" />
+
+    <TextView
+        android:id="@+id/travelPrice"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_below="@id/travelAgency"
+        android:layout_marginBottom="10dp"
+        android:textDirection="ltr"
+        android:textSize="20sp"
+        android:textStyle="bold" />
 
 </RelativeLayout>

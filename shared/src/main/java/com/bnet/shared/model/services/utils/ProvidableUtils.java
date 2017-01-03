@@ -9,12 +9,9 @@ import com.bnet.shared.model.backend.ProvidableRepository;
 import com.bnet.shared.model.backend.RepositoriesFactory;
 import com.bnet.shared.model.entities.Activity;
 import com.bnet.shared.model.entities.Business;
-import com.bnet.shared.model.services.converters.bundle.ActivityBundleConverter;
-import com.bnet.shared.model.services.converters.contentvalues.ActivityContentValuesConverter;
-import com.bnet.shared.model.services.converters.bundle.BundleConverter;
-import com.bnet.shared.model.services.converters.bundle.BusinessBundleConverter;
-import com.bnet.shared.model.services.converters.contentvalues.BusinessContentValuesConverter;
-import com.bnet.shared.model.services.converters.contentvalues.ContentValuesConverter;
+import com.bnet.shared.model.services.converters.Converter;
+import com.bnet.shared.model.services.converters.bundle.*;
+import com.bnet.shared.model.services.converters.contentvalues.*;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -22,39 +19,47 @@ import java.util.List;
 import java.util.Map;
 
 public class ProvidableUtils {
-    private static class ProvidableRecord<T extends Providable<T>> {
+    private static class ProvidableRecord<T extends Providable> {
         ProvidableRepository<T> repository;
         String URIPath;
-        ContentValuesConverter<T> contentValuesConverter;
-        BundleConverter<T> bundleConverter;
+        Converter<ContentValues, T> contentValuesConverter;
+        Converter<Bundle, T> bundleConverter;
     }
 
-    private static Map<Class, ProvidableRecord> records = new HashMap();
+    private static final Map<Class<? extends Providable>, ProvidableRecord<? extends Providable>> records = new HashMap<>();
 
     static {
+        initializeBusinessRecord();
+        initializeActivityRecord();
+    }
+
+    private static void initializeBusinessRecord() {
+        ProvidableRecord<Business> businessRecord = new ProvidableRecord<>();
+        businessRecord.repository = RepositoriesFactory.getBusinessesRepository();
+        businessRecord.URIPath = Constants.BUSINESSES_URI_PATH;
+        businessRecord.contentValuesConverter = new BusinessContentValuesConverter();
+        businessRecord.bundleConverter = new BusinessBundleConverter();
+
+        records.put(Business.class, businessRecord);
+    }
+
+    private static void initializeActivityRecord() {
         ProvidableRecord<Activity> activityRecord = new ProvidableRecord<>();
         activityRecord.repository = RepositoriesFactory.getActivitiesRepository();
         activityRecord.URIPath = Constants.ACTIVITIES_URI_PATH;
         activityRecord.contentValuesConverter = new ActivityContentValuesConverter();
         activityRecord.bundleConverter = new ActivityBundleConverter();
 
-        ProvidableRecord<Business> businessRecord = new ProvidableRecord();
-        businessRecord.repository = RepositoriesFactory.getBusinessesRepository();
-        businessRecord.URIPath = Constants.BUSINESSES_URI_PATH;
-        businessRecord.contentValuesConverter = new BusinessContentValuesConverter();
-        businessRecord.bundleConverter = new BusinessBundleConverter();
-
         records.put(Activity.class, activityRecord);
-        records.put(Business.class, businessRecord);
     }
 
 
-    public static ProvidableRepository getRepository(Providable providable) {
+    public static ProvidableRepository<Providable> getRepository(Providable providable) {
         return getRepository(providable.getClass());
     }
 
-    public static ProvidableRepository getRepository(Class type) {
-        return records.get(type).repository;
+    public static ProvidableRepository<Providable> getRepository(Class<? extends Providable> type) {
+        return (ProvidableRepository<Providable>) records.get(type).repository;
     }
 
 
@@ -62,38 +67,34 @@ public class ProvidableUtils {
         return getURIPath(providable.getClass());
     }
 
-    public static String getURIPath(Class type) {
+    public static String getURIPath(Class<? extends Providable> type) {
         return records.get(type).URIPath;
     }
 
 
-    public static ContentValues contentValuesConvert(Providable providable) {
-        return records.get(providable.getClass()).contentValuesConverter.convert(providable);
+    public static <T extends Providable> ContentValues contentValuesConvert(T providable) {
+        Converter<ContentValues, T> converter = (Converter<ContentValues, T>) records.get(providable.getClass()).contentValuesConverter;
+        return converter.convert(providable);
     }
 
-    public static Providable contentValuesConvert(Class type, ContentValues contentValues) {
-        return records.get(type).contentValuesConverter.convert(contentValues);
+    public static <T extends Providable> T contentValuesConvert(Class<T> type, ContentValues contentValues) {
+        return (T) records.get(type).contentValuesConverter.convertBack(contentValues);
     }
 
-    public static Bundle bundleConvert(Providable providable) {
-        return records.get(providable.getClass()).bundleConverter.convert(providable);
+    public static <T extends Providable> Bundle bundleConvert(T providable) {
+        Converter<Bundle, T> converter = (Converter<Bundle, T>) records.get(providable.getClass()).bundleConverter;
+        return converter.convert(providable);
     }
 
-    public static Providable bundleConvert(Class type, Bundle bundle) {
-        return records.get(type).bundleConverter.convert(bundle);
+    public static <T extends Providable> T bundleConvert(Class<T> type, Bundle bundle) {
+        return (T) records.get(type).bundleConverter.convertBack(bundle);
     }
 
-    public static List<Providable> getAllProvidable() {
-        ArrayList<Providable> result = new ArrayList<>();
+    public static List<Class<? extends Providable>> getAllProvidable() {
+        ArrayList<Class<? extends Providable>> result = new ArrayList<>();
 
-        for (Class c : records.keySet()) {
-            try {
-                result.add((Providable) c.newInstance());
-            } catch (InstantiationException e) {
-                e.printStackTrace();
-            } catch (IllegalAccessException e) {
-            }
-        }
+        for (Class<? extends Providable> p : records.keySet())
+            result.add(p);
 
         return result;
     }

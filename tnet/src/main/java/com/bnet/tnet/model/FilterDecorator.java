@@ -3,6 +3,7 @@ package com.bnet.tnet.model;
 import com.bnet.shared.model.backend.Providable;
 import com.bnet.shared.model.backend.ProvidableRepository;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class FilterDecorator<T extends Providable> implements ProvidableRepository<T> {
@@ -15,7 +16,7 @@ public class FilterDecorator<T extends Providable> implements ProvidableReposito
     }
 
     @Override
-    public int addAndReturnAssignedId(T item) {
+    public long addAndReturnAssignedId(T item) {
         return repository.addAndReturnAssignedId(item);
     }
 
@@ -37,5 +38,14 @@ public class FilterDecorator<T extends Providable> implements ProvidableReposito
     @Override
     public void reset() {
         repository.reset();
+    }
+
+    @Override
+    public T getOrNull(long id) {
+        List<T> temp = new ArrayList<>();
+        temp.add(repository.getOrNull(id));
+        temp = filter.filter(temp);
+
+        return temp.size() == 0? null : temp.get(0);
     }
 }

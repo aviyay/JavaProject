@@ -43,10 +43,10 @@
         app:behavior_hideable="true"
         app:layout_behavior="android.support.design.widget.BottomSheetBehavior">
 
-        <include
-            layout="@layout/short_travel_details"
+        <com.bnet.tnet.view.ShortTravelDetails
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:id="@id/short_travel_details"/>
 
     </android.support.v4.widget.NestedScrollView>
 </android.support.design.widget.CoordinatorLayout>
