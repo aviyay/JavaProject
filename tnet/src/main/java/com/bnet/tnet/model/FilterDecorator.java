@@ -22,12 +22,22 @@ public class FilterDecorator<T extends Providable> implements ProvidableReposito
 
     @Override
     public List<T> getAll() {
-        return filter.filter(repository.getAll());
+        return filterList(repository.getAll());
     }
 
     @Override
     public List<T> getAllNews() {
-        return filter.filter(repository.getAllNews());
+        return filterList(repository.getAllNews());
+    }
+
+    private List<T> filterList(List<T> input) {
+        ArrayList<T> result = new ArrayList<>();
+
+        for (T item : input)
+            if (filter.isPass(item))
+                result.add(item);
+
+        return result;
     }
 
     @Override
@@ -42,10 +52,11 @@ public class FilterDecorator<T extends Providable> implements ProvidableReposito
 
     @Override
     public T getOrNull(long id) {
-        List<T> temp = new ArrayList<>();
-        temp.add(repository.getOrNull(id));
-        temp = filter.filter(temp);
+        T result = repository.getOrNull(id);
 
-        return temp.size() == 0? null : temp.get(0);
+        if (filter.isPass(result))
+            return result;
+
+        return null;
     }
 }

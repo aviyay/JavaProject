@@ -64,7 +64,7 @@ public class ProvidableRepositoryTest {
     private void addAndCheckId() throws Exception {
         assertEquals(-1, providable.getId());
 
-        int id = repository.addAndReturnAssignedId(providable);
+        long id = repository.addAndReturnAssignedId(providable);
         assertEquals(0, id);
     }
 
