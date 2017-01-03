@@ -11,6 +11,7 @@ import com.bnet.shared.model.entities.Activity;
 import com.bnet.shared.model.entities.Business;
 import com.bnet.shared.model.services.utils.ProvidableUtils;
 import com.bnet.tnet.R;
+import com.bnet.tnet.Router;
 import com.bnet.tnet.view.AgencyListRow;
 import com.bnet.tnet.view.ShortTravelDetails;
 
@@ -40,7 +41,7 @@ public class TravelDetails extends android.app.Activity {
         agencyListRow.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(AgencyDetails.class, agencyListRow.getAgency());
+                Router.getInstance().startActivity(v.getContext(), AgencyDetails.class, agencyListRow.getAgency());
             }
         });
     }
@@ -62,14 +63,5 @@ public class TravelDetails extends android.app.Activity {
         return RepositoriesFactory
                 .getBusinessesRepository()
                 .getOrNull(id);
-    }
-
-    private void startActivity(Class activity, Providable providable) {
-        Intent intent = new Intent(this, activity);
-
-        Bundle bundle = ProvidableUtils.bundleConvert(providable);
-        intent.putExtra(ProvidableUtils.getURIPath(providable), bundle);
-
-        startActivity(intent);
     }
 }
