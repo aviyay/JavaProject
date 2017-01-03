@@ -20,7 +20,7 @@ import java.util.Map;
 public class PhpBusinessProvidableRepository implements ProvidableRepository<Business> {
   private final String WEB_URL="http://tennenba.vlab.jct.ac.il/";
     @Override
-    public int addAndReturnAssignedId(Business item) {
+    public long addAndReturnAssignedId(Business item) {
         ContentValues bis= ProvidableUtils.contentValuesConvert(item);
         try {
             Map<String, Object> params = new LinkedHashMap<>();
@@ -39,7 +39,7 @@ public class PhpBusinessProvidableRepository implements ProvidableRepository<Bus
                 if(results.substring(0, 5).equalsIgnoreCase("error")) {
                 throw new Exception(results.substring(5));
             }
-            return Integer.parseInt(results);
+            return Long.parseLong(results);
         } catch (Exception e) {
             throw new IllegalArgumentException(e.getMessage());
         }

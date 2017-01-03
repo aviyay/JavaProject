@@ -73,7 +73,7 @@ public class DataProviderTest {
 
     @Test
     public void querySingleRow() throws Exception {
-        int id;
+        long id;
         Business business = EntitiesSamples.makeBusiness();
         Business business2 = EntitiesSamples.makeBusiness2();
         ProvidableUtils.getRepository(business).addAndReturnAssignedId(business);

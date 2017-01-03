@@ -48,7 +48,7 @@ public class DataProvider extends ContentProvider {
 
     @Override
     public Uri insert(@NonNull Uri uri, ContentValues values) {
-        int id;
+        long id;
 
         Class<? extends Providable> match = matchProvidable(uri);
         Providable item = ProvidableUtils.contentValuesConvert(match, values);
