@@ -2,6 +2,7 @@ package com.bnet.tnet.controller;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.design.widget.BottomSheetBehavior;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -13,6 +14,7 @@ import com.bnet.shared.model.entities.Activity;
 import com.bnet.shared.model.services.utils.ProvidableUtils;
 import com.bnet.shared.model.entities.Business;
 import com.bnet.tnet.R;
+import com.bnet.tnet.model.Filter;
 import com.bnet.tnet.model.FilterDecorator;
 import com.bnet.tnet.model.SearchFilter;
 import com.bnet.tnet.view.ShortTravelDetails;
@@ -21,6 +23,7 @@ public class AgencyDetails extends android.app.Activity {
     private Business agency = new Business();
 
     private TextView agencyTemp;
+
     private ShortTravelDetails shortTravelDetails;
 
     private RecyclerView recyclerView;
@@ -35,25 +38,27 @@ public class AgencyDetails extends android.app.Activity {
 
         findViews();
 
+        bindAgencyDetails();
+
         setupBottomSheetBehavior();
         setupTravelsAdapter();
-
-        bindAgencyDetails();
     }
 
     private void retrieveBusinessFromIntent(Intent intent) {
         Bundle bundle = intent.getBundleExtra(Constants.BUSINESSES_URI_PATH);
-
         agency = ProvidableUtils.bundleConvert(Business.class, bundle);
     }
 
     private void findViews() {
         recyclerView = (RecyclerView) findViewById(R.id.recycler_view);
+        shortTravelDetails = (ShortTravelDetails) findViewById(R.id.short_travel_details);
 
         agencyTemp = (TextView) findViewById(R.id.agency_details_temp);
-        shortTravelDetails = (ShortTravelDetails) findViewById(R.id.short_travel_details);
     }
 
+    private void bindAgencyDetails() {
+        agencyTemp.setText(agency.getName());
+    }
 
     private void setupBottomSheetBehavior() {
         View bottomSheet = findViewById(R.id.bottom_sheet);
@@ -63,14 +68,8 @@ public class AgencyDetails extends android.app.Activity {
     }
 
     private void setupTravelsAdapter() {
-        SearchFilter<Activity> myTravelsFilter = new SearchFilter<Activity>() {
-            @Override
-            public boolean search(Activity item) {
-                return item.getBusinessId() == agency.getId();
-            }
-        };
+        FilterDecorator<Activity> myTravels = getMyTravels();
 
-        FilterDecorator myTravels = new FilterDecorator(RepositoriesFactory.getActivitiesRepository(), myTravelsFilter);
         TravelsAdapter adapter = new TravelsAdapter(myTravels);
 
         adapter.setOnItemClickListener(new TravelsAdapter.OnItemClickListener() {
@@ -84,15 +83,23 @@ public class AgencyDetails extends android.app.Activity {
         recyclerView.setAdapter(adapter);
     }
 
+    @NonNull
+    private FilterDecorator<Activity> getMyTravels() {
+        Filter<Activity> myTravelsFilter = new Filter<Activity>() {
+            @Override
+            public boolean isPass(Activity item) {
+                return item.getBusinessId() == agency.getId();
+            }
+        };
+
+        return new FilterDecorator<>(RepositoriesFactory.getActivitiesRepository(), myTravelsFilter);
+    }
+
     private void bindTravelDetails(Activity travel) {
         shortTravelDetails.setTravel(travel);
     }
 
     private void showBottomSheet() {
         mBottomSheetBehavior.setState(BottomSheetBehavior.STATE_EXPANDED);
-    }
-
-    private void bindAgencyDetails() {
-        agencyTemp.setText(agency.getName());
     }
 }

@@ -1,8 +1,5 @@
 package com.bnet.tnet.model;
 
-import java.util.ArrayList;
-import java.util.List;
-
 public abstract class SearchFilter<T> implements Filter<T> {
     protected String searchText = "";
 
@@ -10,18 +7,9 @@ public abstract class SearchFilter<T> implements Filter<T> {
         this.searchText = searchText.toLowerCase();
     }
 
-    public List<T> filter(List<T> input, String searchText) {
-        setSearchText(searchText);
-        return filter(input);
-    }
-
     @Override
-    public List<T> filter(List<T> input) {
-        ArrayList<T> array = new ArrayList<>();
-        for (T item : input)
-            if (search(item))
-                array.add(item);
-        return array;
+    public boolean isPass(T item) {
+        return search(item);
     }
 
     public abstract boolean search(T item);
