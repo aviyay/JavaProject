@@ -1,9 +1,11 @@
 package com.bnet.tnet.view;
 
 import android.content.Context;
+import android.support.v7.widget.ActionBarOverlayLayout;
 import android.support.v7.widget.CardView;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
+import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.bnet.shared.model.backend.RepositoriesFactory;
@@ -37,7 +39,7 @@ public class    TravelListRow extends CardView {
     private void initializeView(Context context) {
         setClickable(true);
         setRadius(4);
-
+        setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
         inflateViews(context);
         findViews();
     }

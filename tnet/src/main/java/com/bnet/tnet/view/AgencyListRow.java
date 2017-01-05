@@ -4,6 +4,7 @@ import android.content.Context;
 import android.support.v7.widget.CardView;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
+import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.bnet.shared.model.entities.Business;
@@ -33,6 +34,7 @@ public class AgencyListRow extends CardView {
     private void initializeView(Context context) {
         setClickable(true);
         setRadius(4);
+        setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
 
         inflateViews(context);
         findViews();
