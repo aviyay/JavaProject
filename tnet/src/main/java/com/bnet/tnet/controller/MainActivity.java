@@ -6,12 +6,16 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
+import android.support.v4.view.MenuItemCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 
 import com.bnet.shared.model.backend.Providable;
@@ -48,6 +52,28 @@ public class MainActivity extends AppCompatActivity {
         RepositoriesFactory.getBusinessesRepository().addAndReturnAssignedId(EntitiesSamples.makeBusiness2());
         RepositoriesFactory.getActivitiesRepository().addAndReturnAssignedId(EntitiesSamples.makeActivity());
         RepositoriesFactory.getActivitiesRepository().addAndReturnAssignedId(EntitiesSamples.makeActivity2());
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.main_menu, menu);
+        final MenuItem searchItem = menu.findItem(R.id.action_search);
+        final SearchView searchView = (SearchView) searchItem.getActionView();//(SearchView) MenuItemCompat.getActionView(searchItem);
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                setSearchText(newText);
+                recyclerView.getAdapter().notifyDataSetChanged();
+                return false;
+            }
+        });
+        return true;
     }
 
     @Override
@@ -107,7 +133,7 @@ public class MainActivity extends AppCompatActivity {
     private void runFreshStart() {
         UpdatesReceiver.freshStart(this);
         recyclerView.getAdapter().notifyDataSetChanged();
-        //  swipeRefreshLayout.setRefreshing(false);
+         swipeRefreshLayout.setRefreshing(false);
     }
 
     private void setupAdapters() {
@@ -195,6 +221,7 @@ public class MainActivity extends AppCompatActivity {
 
     private void setSearchText(String searchText) {
         currentSearchFilter.setSearchText(searchText);
+
     }
 
     @Override

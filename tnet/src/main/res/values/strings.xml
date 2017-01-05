@@ -5,4 +5,5 @@
     <string name="hello_travel_details">Hello travel details\nHello travel details\nHello travel details</string>
     <string name="drawer_open">Open navigation drawer</string>
     <string name="drawer_close">Close navigation drawer</string>
+    <string name="search_title">action_search</string>
 </resources>
