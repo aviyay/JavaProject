@@ -6,4 +6,8 @@
     <string name="drawer_open">Open navigation drawer</string>
     <string name="drawer_close">Close navigation drawer</string>
     <string name="search_title">action_search</string>
+    <string name="website">Website:</string>
+    <string name="email">Email:</string>
+    <string name="phone">Phone:</string>
+    <string name="address">Address:</string>
 </resources>

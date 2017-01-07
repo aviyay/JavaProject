@@ -61,6 +61,6 @@ public class Address {
 
     @Override
     public String toString() {
-        return getStreet() + "," + getCity() + "," + getCountry();
+        return getStreet() + " ," + getCity() + " ," + getCountry();
     }
 }
