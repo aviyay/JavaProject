@@ -14,4 +14,8 @@
     <string name="dollar_sign">$</string>
     <string name="description">Description:</string>
     <string name="travel_agency">Travel Agency:</string>
+    <string name="exit">Exit</string>
+    <string name="exit_msg">Are you sure you want to exit?</string>
+    <string name="no">No</string>
+    <string name="yes">Yes</string>
 </resources>

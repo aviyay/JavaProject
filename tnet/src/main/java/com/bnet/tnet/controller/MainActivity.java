@@ -214,16 +214,16 @@ return false;
                 break;
             case R.id.nav_exit:
 
-                AlertDialog alertDialog = new AlertDialog.Builder(getApplicationContext()).create();
-                alertDialog.setTitle("Exit");
-                alertDialog.setMessage("Are you sure you want to exit?");
-                alertDialog.setButton(AlertDialog.BUTTON_NEGATIVE, "No",
+                AlertDialog alertDialog = new AlertDialog.Builder(this).create();
+                alertDialog.setTitle(getString(R.string.exit));
+                alertDialog.setMessage(getString(R.string.exit_msg));
+                alertDialog.setButton(AlertDialog.BUTTON_NEGATIVE, getString(R.string.no),
                         new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int which) {
                                 dialog.dismiss();
                             }
                         });
-                alertDialog.setButton(AlertDialog.BUTTON_POSITIVE, "Yes",
+                alertDialog.setButton(AlertDialog.BUTTON_POSITIVE, getString(R.string.yes),
                         new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int which) {
                                 closeApp();
