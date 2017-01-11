@@ -54,6 +54,14 @@ public class ProvidableUtils {
     }
 
 
+    public static void refreshRepositories() {
+        ((ProvidableRecord<Business>) records.get(Business.class)).repository =
+                RepositoriesFactory.getBusinessesRepository();
+
+        ((ProvidableRecord<Activity>) records.get(Activity.class)).repository =
+                RepositoriesFactory.getActivitiesRepository();
+    }
+
     public static ProvidableRepository<Providable> getRepository(Providable providable) {
         return getRepository(providable.getClass());
     }

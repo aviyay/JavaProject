@@ -8,6 +8,7 @@ import android.database.Cursor;
 import android.net.Uri;
 import android.support.annotation.NonNull;
 
+import com.bnet.data.model.backend.RepositoriesFactory;
 import com.bnet.shared.model.Constants;
 import com.bnet.shared.model.backend.Providable;
 import com.bnet.shared.model.backend.ProvidableRepository;
@@ -22,8 +23,6 @@ public class DataProvider extends ContentProvider {
 
     static {
         setupUriMatcher();
-      //  RepositoriesFactory.moveToCloud();
-
     }
 
     @Override
@@ -69,6 +68,7 @@ public class DataProvider extends ContentProvider {
     @Override
     public Cursor query(@NonNull Uri uri, String[] projection, String selection,
                         String[] selectionArgs, String sortOrder) {
+        RepositoriesFactory.moveToCloud();
 
         ProvidableRepository<Providable> repository;
         List<Providable> chosen;
