@@ -9,17 +9,20 @@ public class RepositoriesFactory extends com.bnet.shared.model.backend.Repositor
     private static AccountsRepository accountsRepository = new ListAccountsRepository();
 
 
-    /*static {
+    static {
         moveToCloud();
     }
 
-    private static void moveToCloud() {
-        accountsRepository = new PhpAccountsRepository();
-        activitiesRepository = new PhpActivityProvideableRepository();
-        businessesRepository = new PhpBusinessProvidableRepository();
-    }*/
-
     public static AccountsRepository getAccountsRepository() {
         return accountsRepository;
+    }
+
+    public static void moveToCloud() {
+        if (!(accountsRepository instanceof PhpAccountsRepository))
+            accountsRepository = new PhpAccountsRepository();
+        if (!(activitiesRepository instanceof PhpActivityProvideableRepository))
+            activitiesRepository = new PhpActivityProvideableRepository();
+        if (!(businessesRepository instanceof PhpBusinessProvidableRepository))
+            businessesRepository = new PhpBusinessProvidableRepository();
     }
 }

@@ -7,5 +7,8 @@
         <item
             android:id="@+id/nav_travels"
             android:title="Travels" />
+        <item
+            android:id="@+id/nav_exit"
+            android:title="Exit" />
     </group>
 </menu>

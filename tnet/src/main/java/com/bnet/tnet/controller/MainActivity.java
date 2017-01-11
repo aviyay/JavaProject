@@ -1,5 +1,6 @@
 package com.bnet.tnet.controller;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.graphics.Color;
@@ -10,6 +11,7 @@ import android.support.v4.view.MenuItemCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
@@ -210,6 +212,26 @@ return false;
                 chosen = travelsAdapter;
                 currentSearchFilter = travelSearchFilter;
                 break;
+            case R.id.nav_exit:
+
+                AlertDialog alertDialog = new AlertDialog.Builder(getApplicationContext()).create();
+                alertDialog.setTitle("Exit");
+                alertDialog.setMessage("Are you sure you want to exit?");
+                alertDialog.setButton(AlertDialog.BUTTON_NEGATIVE, "No",
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+                                dialog.dismiss();
+                            }
+                        });
+                alertDialog.setButton(AlertDialog.BUTTON_POSITIVE, "Yes",
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+                                closeApp();
+                                dialog.dismiss();
+                            }
+                        });
+                alertDialog.show();
+                return;
             default:
                 chosen = null;
                 currentSearchFilter = null;
@@ -217,6 +239,11 @@ return false;
         }
 
         recyclerView.setAdapter(chosen);
+    }
+
+    private void closeApp() {
+        finish();
+        System.exit(0);
     }
 
     private void setSearchText(String searchText) {

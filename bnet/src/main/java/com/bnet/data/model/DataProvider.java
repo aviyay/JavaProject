@@ -22,6 +22,8 @@ public class DataProvider extends ContentProvider {
 
     static {
         setupUriMatcher();
+      //  RepositoriesFactory.moveToCloud();
+
     }
 
     @Override

@@ -28,7 +28,6 @@ public class MainActivity extends Activity {
     @Override
     protected void onPostCreate(Bundle savedInstanceState) {
         super.onPostCreate(savedInstanceState);
-
         startService(new Intent(this, Updater.class));
     }
 

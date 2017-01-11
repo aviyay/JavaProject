@@ -69,7 +69,7 @@ public class    TravelListRow extends CardView {
 
     private void bindViews() {
         travelCountry.setText(travel.getCountry());
-        travelDates.setText(travel.getStart().toDateString() + " - " + travel.getEnd().toDateString());
+        travelDates.setText(String.format("%s - %s", travel.getStart().toDateString(), travel.getEnd().toDateString()));
         travelPrice.setText(String.format("%.2f", travel.getPrice()));
 
         Business agencyReference = RepositoriesFactory.getBusinessesRepository().getOrNull(travel.getBusinessId());

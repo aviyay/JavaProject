@@ -2,6 +2,7 @@ package com.bnet.tnet.controller;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
 import android.view.View;
 
 import com.bnet.shared.model.Constants;
@@ -19,6 +20,8 @@ import com.bnet.tnet.view.ShortTravelDetails;
 public class TravelDetails extends android.app.Activity {
     private ShortTravelDetails shortTravelDetails;
     private AgencyListRow agencyListRow;
+    private Toolbar toolbar;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,13 +31,22 @@ public class TravelDetails extends android.app.Activity {
         findViews();
 
         registerAgencyListener();
+        setUpToolBar();
 
         bindViews();
     }
-
+    private void setUpToolBar() {
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
+    }
     private void findViews() {
         shortTravelDetails = (ShortTravelDetails) findViewById(R.id.short_travel_details);
         agencyListRow = (AgencyListRow) findViewById(R.id.agency_list_row);
+        toolbar = (Toolbar) findViewById(R.id.toolbar_back);
     }
 
     private void registerAgencyListener() {
@@ -52,6 +64,7 @@ public class TravelDetails extends android.app.Activity {
 
         shortTravelDetails.setTravel(travel);
         agencyListRow.setAgency(agencyReference);
+        toolbar.setTitle(travel.getCountry());
     }
 
     private Activity retrieveTravelFromIntent(Intent intent) {

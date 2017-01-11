@@ -17,6 +17,7 @@ import android.widget.ExpandableListAdapter;
 import android.widget.ExpandableListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.support.v7.widget.Toolbar;
 
 import com.bnet.shared.model.Constants;
 import com.bnet.shared.model.backend.RepositoriesFactory;
@@ -34,7 +35,8 @@ import java.net.URLEncoder;
 public class AgencyDetails extends android.app.Activity {
     private Business agency = new Business();
 
-    private TextView agencyName;
+    private Toolbar toolbar;
+
     private TextView agencyStreet;
     private TextView agencyPhone;
     private TextView agencyEmail;
@@ -57,10 +59,23 @@ public class AgencyDetails extends android.app.Activity {
 
         findViews();
         setUpDetailsButtons();
+        setUpToolBar();
         bindAgencyDetails();
 
         setupBottomSheetBehavior();
         setupTravelsAdapter();
+
+
+
+    }
+
+    private void setUpToolBar() {
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
     }
 
     private void setUpDetailsButtons() {
@@ -133,7 +148,8 @@ public class AgencyDetails extends android.app.Activity {
         recyclerView = (RecyclerView) findViewById(R.id.recycler_view);
         shortTravelDetails = (ShortTravelDetails) findViewById(R.id.short_travel_details);
 
-        agencyName = (TextView) findViewById(R.id.agencyName);
+        toolbar = (Toolbar) findViewById(R.id.toolbar_back);
+
         agencyStreet = (TextView) findViewById(R.id.agencyStreet);
         agencyPhone = (TextView) findViewById(R.id.agencyPhone);
         agencyEmail = (TextView) findViewById(R.id.agencyEmail);
@@ -144,7 +160,7 @@ public class AgencyDetails extends android.app.Activity {
     }
 
     private void bindAgencyDetails() {
-        agencyName.setText(agency.getName());
+        toolbar.setTitle(agency.getName());
         agencyStreet.setText(agency.getAddress().toString());
         agencyPhone.setText(agency.getPhone());
         agencyEmail.setText(agency.getEmail());

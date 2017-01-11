@@ -100,10 +100,13 @@ public class DateTime {
 
     @Override
     public String toString() {
-        return String.format(Locale.US, "%02d:%02d %s", getHour(), getMinute(), toDateString());
+        return String.format(Locale.US, "%s %s", toHourString(), toDateString());
     }
 
     public String toDateString() {
         return String.format(Locale.US, "%02d/%02d/%02d", getDay(), getMonth(), getYear());
+    }
+    public String toHourString() {
+        return String.format(Locale.US, "%02d:%02d",  getHour(), getMinute());
     }
 }

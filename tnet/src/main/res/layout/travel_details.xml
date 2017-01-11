@@ -3,21 +3,39 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingBottom="@dimen/activity_vertical_margin"
-    android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="com.bnet.tnet.controller.TravelDetails"
     android:orientation="vertical">
-
-    <com.bnet.tnet.view.ShortTravelDetails
+    <include
+        layout="@layout/toolbar_back"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@id/short_travel_details"/>
-
-    <com.bnet.tnet.view.AgencyListRow
-        android:id="@+id/agency_list_row"
+        android:layout_height="wrap_content" />
+    <LinearLayout
+        android:paddingBottom="@dimen/activity_vertical_margin"
+        android:paddingLeft="@dimen/activity_horizontal_margin"
+        android:paddingRight="@dimen/activity_horizontal_margin"
+        android:paddingTop="@dimen/activity_vertical_margin"
+        android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
-
+        android:layout_height="match_parent">
+        <com.bnet.tnet.view.ShortTravelDetails
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@id/short_travel_details"/>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:gravity="bottom|center">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textStyle="bold"
+                android:textSize="20dp"
+                android:text="@string/travel_agency"/>
+            <com.bnet.tnet.view.AgencyListRow
+                android:id="@+id/agency_list_row"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+        </LinearLayout>
+    </LinearLayout>
 </LinearLayout>
