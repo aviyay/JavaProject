@@ -1,7 +1,9 @@
 package com.bnet.tnet.controller;
 
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.v4.view.animation.LinearOutSlowInInterpolator;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 
@@ -60,11 +62,24 @@ public class TravelDetails extends android.app.Activity {
 
     private void bindViews() {
         Activity travel = retrieveTravelFromIntent(getIntent());
-        Business agencyReference = getAgencyReference(travel.getBusinessId());
-
         shortTravelDetails.setTravel(travel);
-        agencyListRow.setAgency(agencyReference);
         toolbar.setTitle(travel.getCountry());
+        new AsyncTask<Long,Void,Business>()
+        {
+            @Override
+            protected Business doInBackground(Long... params) {
+
+               return getAgencyReference(params[0]);
+            }
+
+            @Override
+            protected void onPostExecute(Business agencyReference) {
+                super.onPostExecute(agencyReference);
+                agencyListRow.setAgency(agencyReference);
+
+            }
+        }.execute(travel.getBusinessId());
+
     }
 
     private Activity retrieveTravelFromIntent(Intent intent) {

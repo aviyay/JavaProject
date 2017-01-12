@@ -1,5 +1,6 @@
 package com.bnet.tnet.controller;
 
+import android.os.AsyncTask;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -59,13 +60,24 @@ class AgenciesAdapter extends RecyclerView.Adapter<AgenciesAdapter.AgencyViewHol
     }
 
     @Override
-    public void onBindViewHolder(AgencyViewHolder holder, int position) {
-        Business agency = repository.getAll().get(position);
-        holder.bind(agency);
+    public void onBindViewHolder(final AgencyViewHolder holder, int position) {
+        new AsyncTask<Integer,Void,Business>()
+        {
+            @Override
+            protected Business doInBackground(Integer... params) {
+                return repository.getAll().get(params[0]);
+            }
+
+            @Override
+            protected void onPostExecute(Business aAgency) {
+                super.onPostExecute(aAgency);
+                holder.bind(aAgency);
+            }
+        }.execute(position);
     }
 
     @Override
-    public int getItemCount() {
+    public int getItemCount() {//TODO
         return repository.getAll().size();
     }
 }

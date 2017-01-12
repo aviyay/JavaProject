@@ -14,6 +14,7 @@ import com.bnet.shared.model.entities.DateTime;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import java.util.AbstractCollection;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -107,6 +108,9 @@ public class PhpActivityProvideableRepository implements ProvidableRepository<Ac
 
     @Override
     public Activity getOrNull(long id) {
-        return null;
+        List<Activity> list=getList(WEB_URL+"activity_get.php?_id="+id);
+        if(list.isEmpty())
+            return null;
+        return list.get(0);
     }
 }

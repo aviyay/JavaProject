@@ -5,6 +5,7 @@ import android.content.ContentResolver;
 import android.content.ContentUris;
 import android.database.Cursor;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.support.annotation.NonNull;
 import android.test.mock.MockContentProvider;
 import android.test.mock.MockContentResolver;
@@ -110,151 +111,206 @@ public class UpdatesReceiverTest {
 
     @Test
     public void oneAgencyWithOneTravel() throws Exception {
-        Activity activity = EntitiesSamples.makeActivity();
-        Business business = EntitiesSamples.makeBusiness();
+        new AsyncTask<Void,Void,Void>()
+        {
+            @Override
+            protected Void doInBackground(Void... params) {
+                Activity activity = EntitiesSamples.makeActivity();
+                Business business = EntitiesSamples.makeBusiness();
 
-        ProviderRepoActivities.addAndReturnAssignedId(activity);
-        ProviderRepoBusinesses.addAndReturnAssignedId(business);
+                ProviderRepoActivities.addAndReturnAssignedId(activity);
+                ProviderRepoBusinesses.addAndReturnAssignedId(business);
 
-        runFreshStart();
+                runFreshStart();
 
-        assertEquals(1, curRepoActivities.getAll().size());
-        assertEquals(1, curRepoBusinesses.getAll().size());
+                assertEquals(1, curRepoActivities.getAll().size());
+                assertEquals(1, curRepoBusinesses.getAll().size());
 
-        assertEquals(activity, curRepoActivities.getAll().get(0));
-        assertEquals(business, curRepoBusinesses.getAll().get(0));
+                assertEquals(activity, curRepoActivities.getAll().get(0));
+                assertEquals(business, curRepoBusinesses.getAll().get(0));
+                return null;
+            }
+        }.execute();
+
     }
 
     @Test
     public void oneNonAgencyWithOneNonTravel() throws Exception {
-        Activity activity = EntitiesSamples.makeNonTravelActivity();
-        Business business = EntitiesSamples.makeNonAgencyBusiness();
+        new AsyncTask<Void,Void,Void>()
+        {
+            @Override
+            protected Void doInBackground(Void... params) {
+                Activity activity = EntitiesSamples.makeNonTravelActivity();
+                Business business = EntitiesSamples.makeNonAgencyBusiness();
 
-        ProviderRepoActivities.addAndReturnAssignedId(activity);
-        ProviderRepoBusinesses.addAndReturnAssignedId(business);
+                ProviderRepoActivities.addAndReturnAssignedId(activity);
+                ProviderRepoBusinesses.addAndReturnAssignedId(business);
 
-        runFreshStart();
+                runFreshStart();
 
-        assertEquals(0, curRepoActivities.getAll().size());
-        assertEquals(0, curRepoBusinesses.getAll().size());
+                assertEquals(0, curRepoActivities.getAll().size());
+                assertEquals(0, curRepoBusinesses.getAll().size());
+                return null;
+            }
+        }.execute();
+
     }
 
     @Test
     public void mixedAgencyAndTravelWithNonAgencyAndNonTravel() throws Exception {
-        Activity activity1 = EntitiesSamples.makeActivity();
-        Activity activity2 = EntitiesSamples.makeNonTravelActivity();
-        Business business1 = EntitiesSamples.makeBusiness();
-        Business business2 = EntitiesSamples.makeNonAgencyBusiness();
+        new AsyncTask<Void,Void,Void>()
+        {
+            @Override
+            protected Void doInBackground(Void... params) {
+                Activity activity1 = EntitiesSamples.makeActivity();
+                Activity activity2 = EntitiesSamples.makeNonTravelActivity();
+                Business business1 = EntitiesSamples.makeBusiness();
+                Business business2 = EntitiesSamples.makeNonAgencyBusiness();
 
-        ProviderRepoActivities.addAndReturnAssignedId(activity1);
-        ProviderRepoActivities.addAndReturnAssignedId(activity2);
-        ProviderRepoBusinesses.addAndReturnAssignedId(business1);
-        ProviderRepoBusinesses.addAndReturnAssignedId(business2);
+                ProviderRepoActivities.addAndReturnAssignedId(activity1);
+                ProviderRepoActivities.addAndReturnAssignedId(activity2);
+                ProviderRepoBusinesses.addAndReturnAssignedId(business1);
+                ProviderRepoBusinesses.addAndReturnAssignedId(business2);
 
-        runFreshStart();
+                runFreshStart();
 
-        assertEquals(1, curRepoActivities.getAll().size());
-        assertEquals(1, curRepoBusinesses.getAll().size());
+                assertEquals(1, curRepoActivities.getAll().size());
+                assertEquals(1, curRepoBusinesses.getAll().size());
 
-        assertEquals(activity1, curRepoActivities.getAll().get(0));
-        assertEquals(business1, curRepoBusinesses.getAll().get(0));
+                assertEquals(activity1, curRepoActivities.getAll().get(0));
+                assertEquals(business1, curRepoBusinesses.getAll().get(0));
+                return null;
+            }
+        }.execute();
+
     }
 
     @Test
     public void addOneNonTravelAndRefresh() throws Exception {
-        Activity activity = EntitiesSamples.makeActivity();
-        Activity activity2 = EntitiesSamples.makeNonTravelActivity();
-        Business business = EntitiesSamples.makeBusiness();
+        new AsyncTask<Void,Void,Void>()
+        {
+            @Override
+            protected Void doInBackground(Void... params) {
+                Activity activity = EntitiesSamples.makeActivity();
+                Activity activity2 = EntitiesSamples.makeNonTravelActivity();
+                Business business = EntitiesSamples.makeBusiness();
 
-        ProviderRepoActivities.addAndReturnAssignedId(activity);
-        ProviderRepoBusinesses.addAndReturnAssignedId(business);
+                ProviderRepoActivities.addAndReturnAssignedId(activity);
+                ProviderRepoBusinesses.addAndReturnAssignedId(business);
 
-        runFreshStart();
+                runFreshStart();
 
-        activity2.setBusinessId(business.getId());
-        ProviderRepoActivities.addAndReturnAssignedId(activity2);
+                activity2.setBusinessId(business.getId());
+                ProviderRepoActivities.addAndReturnAssignedId(activity2);
 
-        runRefresh();
+                runRefresh();
 
-        assertEquals(1, curRepoActivities.getAll().size());
-        assertEquals(1, curRepoBusinesses.getAll().size());
+                assertEquals(1, curRepoActivities.getAll().size());
+                assertEquals(1, curRepoBusinesses.getAll().size());
 
-        assertTrue(curRepoActivities.getAll().contains(activity));
-        assertEquals(business, curRepoBusinesses.getAll().get(0));
+                assertTrue(curRepoActivities.getAll().contains(activity));
+                assertEquals(business, curRepoBusinesses.getAll().get(0));
+                return null;
+            }
+        }.execute();
+
     }
 
     @Test
     public void addOneTravelThatWeAlreadyHaveItsAgencyAndRefresh() throws Exception {
-        Activity activity = EntitiesSamples.makeActivity();
-        Activity activity2 = EntitiesSamples.makeActivity2();
-        Business business = EntitiesSamples.makeBusiness();
+        new AsyncTask<Void,Void,Void>()
+        {
+            @Override
+            protected Void doInBackground(Void... params) {
+                Activity activity = EntitiesSamples.makeActivity();
+                Activity activity2 = EntitiesSamples.makeActivity2();
+                Business business = EntitiesSamples.makeBusiness();
 
-        ProviderRepoActivities.addAndReturnAssignedId(activity);
-        ProviderRepoBusinesses.addAndReturnAssignedId(business);
+                ProviderRepoActivities.addAndReturnAssignedId(activity);
+                ProviderRepoBusinesses.addAndReturnAssignedId(business);
 
-        runFreshStart();
+                runFreshStart();
 
-        activity2.setBusinessId(business.getId());
-        ProviderRepoActivities.addAndReturnAssignedId(activity2);
+                activity2.setBusinessId(business.getId());
+                ProviderRepoActivities.addAndReturnAssignedId(activity2);
 
-        runRefresh();
+                runRefresh();
 
-        assertEquals(2, curRepoActivities.getAll().size());
-        assertEquals(1, curRepoBusinesses.getAll().size());
+                assertEquals(2, curRepoActivities.getAll().size());
+                assertEquals(1, curRepoBusinesses.getAll().size());
 
-        assertTrue(curRepoActivities.getAll().contains(activity));
-        assertTrue(curRepoActivities.getAll().contains(activity2));
-        assertEquals(business, curRepoBusinesses.getAll().get(0));
+                assertTrue(curRepoActivities.getAll().contains(activity));
+                assertTrue(curRepoActivities.getAll().contains(activity2));
+                assertEquals(business, curRepoBusinesses.getAll().get(0));
+                return null;
+            }
+        }.execute();
     }
 
     @Test
     public void addOneTravelThatWeDoNotHaveItsAgencyAndRefresh() throws Exception {
-        Activity activity = EntitiesSamples.makeActivity();
-        Activity activity2 = EntitiesSamples.makeActivity2();
-        Business business = EntitiesSamples.makeBusiness();
-        Business business2 = EntitiesSamples.makeBusiness2();
+        new AsyncTask<Void,Void,Void>()
+        {
+            @Override
+            protected Void doInBackground(Void... params) {
+                Activity activity = EntitiesSamples.makeActivity();
+                Activity activity2 = EntitiesSamples.makeActivity2();
+                Business business = EntitiesSamples.makeBusiness();
+                Business business2 = EntitiesSamples.makeBusiness2();
 
-        ProviderRepoActivities.addAndReturnAssignedId(activity);
-        ProviderRepoBusinesses.addAndReturnAssignedId(business);
-        ProviderRepoBusinesses.addAndReturnAssignedId(business2);
+                ProviderRepoActivities.addAndReturnAssignedId(activity);
+                ProviderRepoBusinesses.addAndReturnAssignedId(business);
+                ProviderRepoBusinesses.addAndReturnAssignedId(business2);
 
-        runFreshStart();
+                runFreshStart();
 
-        assertEquals(1, curRepoBusinesses.getAll().size());
+                assertEquals(1, curRepoBusinesses.getAll().size());
 
-        ProviderRepoActivities.addAndReturnAssignedId(activity2);
+                ProviderRepoActivities.addAndReturnAssignedId(activity2);
 
-        runRefresh();
+                runRefresh();
 
-        assertEquals(2, curRepoActivities.getAll().size());
-        assertEquals(2, curRepoBusinesses.getAll().size());
+                assertEquals(2, curRepoActivities.getAll().size());
+                assertEquals(2, curRepoBusinesses.getAll().size());
 
-        assertTrue(curRepoActivities.getAll().contains(activity));
-        assertTrue(curRepoActivities.getAll().contains(activity2));
-        assertTrue(curRepoBusinesses.getAll().contains(business));
-        assertTrue(curRepoBusinesses.getAll().contains(business2));
+                assertTrue(curRepoActivities.getAll().contains(activity));
+                assertTrue(curRepoActivities.getAll().contains(activity2));
+                assertTrue(curRepoBusinesses.getAll().contains(business));
+                assertTrue(curRepoBusinesses.getAll().contains(business2));
+                return null;
+            }
+        }.execute();
+
     }
 
     @Test
     public void preserveDataEvenWhenBNetIsClosed() throws Exception {
-        Activity activity = EntitiesSamples.makeActivity();
-        Business business = EntitiesSamples.makeBusiness();
+        new AsyncTask<Void,Void,Void>()
+        {
+            @Override
+            protected Void doInBackground(Void... params) {
+                Activity activity = EntitiesSamples.makeActivity();
+                Business business = EntitiesSamples.makeBusiness();
 
-        ProviderRepoActivities.addAndReturnAssignedId(activity);
-        ProviderRepoBusinesses.addAndReturnAssignedId(business);
+                ProviderRepoActivities.addAndReturnAssignedId(activity);
+                ProviderRepoBusinesses.addAndReturnAssignedId(business);
 
-        runFreshStart();
+                runFreshStart();
 
-        ProviderRepoActivities.reset();
-        ProviderRepoBusinesses.reset();
+                ProviderRepoActivities.reset();
+                ProviderRepoBusinesses.reset();
 
-        runRefresh();
+                runRefresh();
 
-        assertEquals(1, curRepoActivities.getAll().size());
-        assertEquals(1, curRepoBusinesses.getAll().size());
+                assertEquals(1, curRepoActivities.getAll().size());
+                assertEquals(1, curRepoBusinesses.getAll().size());
 
-        assertEquals(activity, curRepoActivities.getAll().get(0));
-        assertEquals(business, curRepoBusinesses.getAll().get(0));
+                assertEquals(activity, curRepoActivities.getAll().get(0));
+                assertEquals(business, curRepoBusinesses.getAll().get(0));
+                return null;
+            }
+        }.execute();
+
     }
 
     private void runFreshStart() {

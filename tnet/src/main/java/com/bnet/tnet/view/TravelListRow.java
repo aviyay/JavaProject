@@ -1,6 +1,7 @@
 package com.bnet.tnet.view;
 
 import android.content.Context;
+import android.os.AsyncTask;
 import android.support.v7.widget.ActionBarOverlayLayout;
 import android.support.v7.widget.CardView;
 import android.util.AttributeSet;
@@ -72,11 +73,21 @@ public class    TravelListRow extends CardView {
         travelDates.setText(String.format("%s - %s", travel.getStart().toDateString(), travel.getEnd().toDateString()));
         travelPrice.setText(String.format("%.2f", travel.getPrice()));
 
-        Business agencyReference = RepositoriesFactory.getBusinessesRepository().getOrNull(travel.getBusinessId());
-        if (agencyReference == null)
-            throw new IllegalArgumentException("illegal business id");
+        new AsyncTask<Long,Void,String>() {
+            @Override
+            protected String doInBackground(Long... params) {
+                Business agencyReference = RepositoriesFactory.getBusinessesRepository().getOrNull(params[0]);
+                if (agencyReference == null)
+                    throw new IllegalArgumentException("illegal business id");
+                return agencyReference.getName();
+            }
 
-        travelAgency.setText(agencyReference.getName());
+            @Override
+            protected void onPostExecute(String s) {
+                super.onPostExecute(s);
+                travelAgency.setText(s);
+            }
+        }.execute(travel.getBusinessId());
     }
 
 }

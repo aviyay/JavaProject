@@ -4,6 +4,7 @@ import android.content.ContentValues;
 import android.support.annotation.NonNull;
 
 import com.bnet.data.model.PhpHelper;
+import com.bnet.shared.model.entities.Activity;
 import com.bnet.shared.model.services.utils.ProvidableUtils;
 import com.bnet.shared.model.backend.ProvidableRepository;
 import com.bnet.shared.model.entities.Address;
@@ -102,6 +103,9 @@ public class PhpBusinessProvidableRepository implements ProvidableRepository<Bus
 
     @Override
     public Business getOrNull(long id) {
-        return null;
+        List<Business> list=getList(WEB_URL+"business_get.php?_id="+id);
+        if(list.isEmpty())
+            return null;
+        return list.get(0);
     }
 }

@@ -4,6 +4,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.graphics.Color;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
@@ -50,10 +51,18 @@ public class MainActivity extends AppCompatActivity {
     private SearchFilter currentSearchFilter;
 
     static {
-        RepositoriesFactory.getBusinessesRepository().addAndReturnAssignedId(EntitiesSamples.makeBusiness());
-        RepositoriesFactory.getBusinessesRepository().addAndReturnAssignedId(EntitiesSamples.makeBusiness2());
-        RepositoriesFactory.getActivitiesRepository().addAndReturnAssignedId(EntitiesSamples.makeActivity());
-        RepositoriesFactory.getActivitiesRepository().addAndReturnAssignedId(EntitiesSamples.makeActivity2());
+        new AsyncTask<Void,Void,Void>()
+        {
+            @Override
+            protected Void doInBackground(Void... params) {
+
+                RepositoriesFactory.getBusinessesRepository().addAndReturnAssignedId(EntitiesSamples.makeBusiness());
+                RepositoriesFactory.getBusinessesRepository().addAndReturnAssignedId(EntitiesSamples.makeBusiness2());
+                RepositoriesFactory.getActivitiesRepository().addAndReturnAssignedId(EntitiesSamples.makeActivity());
+                RepositoriesFactory.getActivitiesRepository().addAndReturnAssignedId(EntitiesSamples.makeActivity2());
+                return null;
+            }
+        }.execute();
     }
 
     @Override

@@ -2,6 +2,7 @@ package com.bnet.data.model;
 
 import android.app.IntentService;
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.util.Log;
 
 import com.bnet.shared.model.Constants;
@@ -39,16 +40,24 @@ public class Updater extends IntentService {
     }
 
     private void runCheck() {
-        Log.d("MyCustomTag", "BNet: Run checks");
+         Log.d("MyCustomTag", "BNet: Run checks");
 
-        boolean shouldUpdate = false;
+        new AsyncTask<Void,Void,Void>()
+        {
+            @Override
+            protected Void doInBackground(Void... params) {
+                boolean shouldUpdate = false;
 
-        for (int i = 0; i < repositories.size() && !shouldUpdate; i++)
-            if (repositories.get(i).isSomethingNew())
-                shouldUpdate = true;
+                for (int i = 0; i < repositories.size() && !shouldUpdate; i++)
+                    if (repositories.get(i).isSomethingNew())
+                        shouldUpdate = true;
 
-        if (shouldUpdate)
-            updateReceivers();
+                if (shouldUpdate)
+                    updateReceivers();
+                return null;
+            }
+        }.execute();
+
     }
 
     private void updateReceivers() {
