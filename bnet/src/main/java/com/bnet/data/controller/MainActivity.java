@@ -1,11 +1,13 @@
 package com.bnet.data.controller;
 
 import android.app.Activity;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.support.v7.app.AlertDialog;
 import android.view.View;
 import android.widget.CheckBox;
 import android.widget.EditText;
@@ -15,10 +17,7 @@ import com.bnet.data.R;
 import com.bnet.data.model.Updater;
 import com.bnet.data.model.backend.AccountsRepository;
 import com.bnet.data.model.backend.RepositoriesFactory;
-import com.bnet.data.model.datasource.PhpAccountsRepository;
 import com.bnet.data.model.entities.Account;
-
-import java.util.List;
 
 public class MainActivity extends Activity {
 
@@ -44,29 +43,51 @@ public class MainActivity extends Activity {
         findViewById(R.id.registerButton).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(!validateFields())
-                    return;
-                new AsyncTask<String,Void,Boolean>()
-                {
+                AlertDialog.Builder builder=new AlertDialog.Builder(MainActivity.this);
+                builder.setView(R.layout.dialog_register);
+                builder.setMessage("Register to BNet");
+                builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
                     @Override
-                    protected void onPostExecute(Boolean aBoolean) {
-                        super.onPostExecute(aBoolean);
-                        if(aBoolean)
-                            Toast.makeText(getApplicationContext(), "TEMP: Account registered successfully", Toast.LENGTH_SHORT).show();
-                        else
-                            Toast.makeText(getApplicationContext(), R.string.username_is_taken_msg, Toast.LENGTH_SHORT).show();
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
                     }
+                });
+                builder.setPositiveButton(R.string.register_label, new DialogInterface.OnClickListener() {
                     @Override
-                    protected Boolean doInBackground(String... params) {
-                        AccountsRepository repository = RepositoriesFactory.getAccountsRepository();
-                        if(repository.getOrNull(params[0])!=null)
-                            return false;
-                        repository.add(new Account(params[0].toString(), params[1]));
-                        return true;
+                    public void onClick(final DialogInterface dialog, int which) {
+                        String username=((EditText)((AlertDialog) dialog).findViewById(R.id.usernameField)).getText().toString();
+                        String password=((EditText)((AlertDialog) dialog).findViewById(R.id.passwordField)).getText().toString();
+                        String confirmPassword=((EditText)((AlertDialog) dialog).findViewById(R.id.confirmPasswordField)).getText().toString();
+                        if(!password.equals(confirmPassword))
+                        {
+                            Toast.makeText(getApplicationContext(),"Passwords doesn't match!",Toast.LENGTH_SHORT).show();
+                            return;
+                        }
+                        new AsyncTask<String,Void,Boolean>()
+                        {
+                            @Override
+                            protected void onPostExecute(Boolean aBoolean) {
+                                super.onPostExecute(aBoolean);
+                                if(aBoolean) {
+                                    Toast.makeText(getApplicationContext(), "Account registered successfully", Toast.LENGTH_SHORT).show();
+                                    dialog.dismiss();
+                                }
+                                else
+                                    Toast.makeText(getApplicationContext(), R.string.username_is_taken_msg, Toast.LENGTH_SHORT).show();
+                            }
+                            @Override
+                            protected Boolean doInBackground(String... params) {
+                                AccountsRepository repository = RepositoriesFactory.getAccountsRepository();
+                                if(repository.getOrNull(params[0])!=null)
+                                    return false;
+                                repository.add(new Account(params[0].toString(), params[1]));
+                                return true;
+                            }
+
+                        }.execute(username,password);
                     }
-
-                }.execute(usernameField.getText().toString(),passwordField.getText().toString());
-
+                });
+                builder.create().show();
             }
         });
     }

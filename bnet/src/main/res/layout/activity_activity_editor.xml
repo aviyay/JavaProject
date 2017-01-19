@@ -40,113 +40,27 @@
                 android:layout_below="@id/typeSpinner"
                 android:hint="@string/country"/>
             <LinearLayout
-                android:id="@+id/startDate"
+                android:id="@+id/startDateLinear"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/countryField">
-                <TextView
+                <Button
+                    android:id="@+id/setStartDateBtn"
+                    android:text="@string/start_date"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textSize="16sp"
-                    android:text="@string/start_date"/>
-                <EditText
-                    android:layout_marginLeft="10dp"
-                    android:inputType="date"
-                    android:id="@+id/startDay"
-                    android:layout_width="70dp"
-                    android:layout_height="wrap_content"
-                    android:hint="@string/day"/>
-                <EditText
-                    android:id="@+id/startMonth"
-                    android:inputType="date"
-                    android:layout_width="80dp"
-                    android:layout_height="wrap_content"
-                    android:hint="@string/month"/>
-                <EditText
-                    android:id="@+id/startYear"
-                    android:inputType="date"
-                    android:layout_width="100dp"
-                    android:layout_height="wrap_content"
-                    android:hint="@string/year"/>
+                    android:layout_height="wrap_content" />
             </LinearLayout>
             <LinearLayout
-                android:id="@+id/startTime"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/startDate">
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textSize="16sp"
-                    android:text="@string/start_time"/>
-                <EditText
-                    android:layout_marginLeft="10dp"
-                    android:inputType="datetime"
-                    android:id="@+id/startHour"
-                    android:layout_width="70dp"
-                    android:layout_height="wrap_content"
-                    android:hint="@string/hour"/>
-                <EditText
-                    android:id="@+id/startMinute"
-                    android:inputType="datetime"
-                    android:layout_width="80dp"
-                    android:layout_height="wrap_content"
-                    android:hint="@string/minute"/>
-            </LinearLayout>
-            <LinearLayout
-                android:id="@+id/endDate"
+                android:id="@+id/endDateLinear"
                 android:layout_marginTop="15dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/startTime">
-                <TextView
+                android:layout_below="@id/startDateLinear">
+                <Button
+                    android:id="@+id/setEndDateBtn"
+                    android:text="@string/end_date"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textSize="16sp"
-                    android:text="@string/end_date"/>
-                <EditText
-                    android:layout_marginLeft="10dp"
-                    android:inputType="date"
-                    android:id="@+id/endDay"
-                    android:layout_width="70dp"
-                    android:layout_height="wrap_content"
-                    android:hint="@string/day"/>
-                <EditText
-                    android:id="@+id/endMonth"
-                    android:inputType="date"
-                    android:layout_width="80dp"
-                    android:layout_height="wrap_content"
-                    android:hint="@string/month"/>
-                <EditText
-                    android:id="@+id/endYear"
-                    android:inputType="date"
-                    android:layout_width="100dp"
-                    android:layout_height="wrap_content"
-                    android:hint="@string/year"/>
-            </LinearLayout>
-            <LinearLayout
-                android:id="@+id/endTime"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/endDate">
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textSize="16sp"
-                    android:text="@string/end_time"/>
-                <EditText
-                    android:layout_marginLeft="10dp"
-                    android:inputType="datetime"
-                    android:id="@+id/endHour"
-                    android:layout_width="70dp"
-                    android:layout_height="wrap_content"
-                    android:hint="@string/hour"/>
-                <EditText
-                    android:id="@+id/endMinute"
-                    android:inputType="datetime"
-                    android:layout_width="80dp"
-                    android:layout_height="wrap_content"
-                    android:hint="@string/minute"/>
+                    android:layout_height="wrap_content" />
             </LinearLayout>
 
             <EditText
@@ -155,7 +69,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:inputType="numberDecimal"
-                android:layout_below="@id/endTime"/>
+                android:layout_below="@id/endDateLinear"/>
             <EditText
                 android:id="@+id/descriptionField"
                 android:layout_marginTop="10dp"

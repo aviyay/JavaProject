@@ -175,7 +175,7 @@ return false;
         });
     }
 
-    private void startActivity(Class activity, Providable providable) {
+    private  void startActivity(Class activity, Providable providable) {
 
         Intent intent = new Intent(this, activity);
 
@@ -200,7 +200,8 @@ return false;
     public void selectDrawerItem(MenuItem menuItem) {
 
         selectAdapterAndSearchFilter(menuItem.getItemId());
-
+        if(menuItem.getTitle().equals("Exit"))
+            mDrawer.closeDrawers();
         // Highlight the selected item has been done by NavigationView
         menuItem.setChecked(true);
         // Set action bar title

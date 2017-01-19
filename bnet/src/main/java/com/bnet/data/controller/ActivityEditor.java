@@ -1,15 +1,20 @@
 package com.bnet.data.controller;
 
+import android.app.DatePickerDialog;
+import android.app.TimePickerDialog;
+import android.content.DialogInterface;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.app.Activity;
-import android.text.Editable;
-import android.text.TextWatcher;
+import android.support.v7.app.AlertDialog;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.TextView;
+import android.widget.TimePicker;
 import android.widget.Toast;
 
 import com.bnet.data.R;
@@ -20,25 +25,24 @@ import com.bnet.shared.model.entities.Business;
 import com.bnet.shared.model.entities.DateTime;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 public class ActivityEditor extends Activity {
 
     private Spinner typeSpinner;
     private EditText countryField;
-    private EditText startDay;
-    private EditText startMonth;
-    private EditText startYear;
-    private EditText startHour;
-    private EditText startMinute;
-    private EditText endDay;
-    private EditText endMonth;
-    private EditText endYear;
-    private EditText endHour;
-    private EditText endMinute;
+    private TextView startDateView;
     private EditText priceField;
     private EditText descriptionField;
     private Spinner businessIDSpinner;
+    private DateTime startDate=new DateTime();
+    private DateTime endDate=new DateTime();
+    private Button setStartDateBtn;
+    private Button setStartTimeBtn;
+    private Button setEndDateBtn;
+    private Button setEndTimeBtn;
+
     private boolean isEmpty(EditText etText) {
         return etText.getText().toString().trim().length() == 0;
     }
@@ -60,19 +64,69 @@ public class ActivityEditor extends Activity {
         typeSpinner = (Spinner)findViewById( R.id.typeSpinner );
         typeSpinner.setAdapter(new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, ActivityType.values()));
         countryField = (EditText)findViewById( R.id.countryField );
-        startDay=(EditText)findViewById( R.id.startDay );
-        startMonth=(EditText)findViewById( R.id.startMonth );
-        startYear=(EditText)findViewById( R.id.startYear );
-        startHour=(EditText)findViewById( R.id.startHour );
-        startMinute=(EditText)findViewById( R.id.startMinute );
-        endDay=(EditText)findViewById( R.id.endDay );
-        endMonth=(EditText)findViewById( R.id.endMonth );
-        endYear=(EditText)findViewById( R.id.endYear );
-        endHour=(EditText)findViewById( R.id.endHour );
-        endMinute=(EditText)findViewById( R.id.endMinute );
+        Calendar cal = Calendar.getInstance();
+        startDate.setYear(cal.get(Calendar.YEAR));
+        startDate.setMonth(cal.get(Calendar.MONTH)+1);
+        startDate.setDay(cal.get(Calendar.DAY_OF_MONTH));
+        startDate.setHour(8);
+        startDate.setMinute(0);
+        endDate=DateTime.parse(startDate.toString());
+        endDate.setDay(endDate.getDay()+1);
         priceField = (EditText)findViewById( R.id.priceField );
         descriptionField = (EditText)findViewById( R.id.descriptionField );
-        initializeBusinessId();
+        setStartDateBtn=(Button)findViewById(R.id.setStartDateBtn);
+        setEndDateBtn=(Button)findViewById(R.id.setEndDateBtn);
+
+        setStartDateBtn.setText("Start Date"+"\n"+startDate.toString());
+        setEndDateBtn.setText("End Date"+"\n"+endDate.toString());
+
+        setStartDateBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                DatePickerDialog datePickerDialog=new DatePickerDialog(ActivityEditor.this, new DatePickerDialog.OnDateSetListener() {
+                    @Override
+                    public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
+                        startDate.setYear(year);
+                        startDate.setMonth(month);
+                        startDate.setDay(dayOfMonth);
+                        TimePickerDialog timePickerDialog=new TimePickerDialog(ActivityEditor.this, new TimePickerDialog.OnTimeSetListener() {
+                            @Override
+                            public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
+                                startDate.setHour(hourOfDay);
+                                startDate.setMinute(minute);
+                                setStartDateBtn.setText("Start Date"+"\n"+startDate.toString());
+                            }
+                        }, startDate.getHour(), startDate.getMinute(), true);
+                        timePickerDialog.show();
+                    }
+                }, startDate.getYear(), startDate.getMonth(), startDate.getDay());
+                datePickerDialog.show();
+            }
+        });
+        setEndDateBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                DatePickerDialog datePickerDialog=new DatePickerDialog(ActivityEditor.this, new DatePickerDialog.OnDateSetListener() {
+                    @Override
+                    public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
+                        endDate.setYear(year);
+                        endDate.setMonth(month+1);
+                        endDate.setDay(dayOfMonth);
+                        TimePickerDialog timePickerDialog=new TimePickerDialog(ActivityEditor.this, new TimePickerDialog.OnTimeSetListener() {
+                            @Override
+                            public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
+                                endDate.setHour(hourOfDay);
+                                endDate.setMinute(minute);
+                                setEndDateBtn.setText("End Date"+"\n"+endDate.toString());
+                            }
+                        }, endDate.getHour(), endDate.getMinute(), true);
+                        timePickerDialog.show();
+                    }
+                }, startDate.getYear(), startDate.getMonth(), startDate.getDay());
+                datePickerDialog.show();
+            }
+        });
+       initializeBusinessId();
     }
 
     private void initializeBusinessId() {
@@ -97,7 +151,7 @@ public class ActivityEditor extends Activity {
                 }
                 else
                 {
-                    Toast.makeText(getApplicationContext(),"The server is unavailable at this time",Toast.LENGTH_SHORT);
+                    Toast.makeText(getApplicationContext(),"The server is unavailable at this time",Toast.LENGTH_SHORT).show();
                     finish();
                 }
 
@@ -114,8 +168,8 @@ public class ActivityEditor extends Activity {
                     com.bnet.shared.model.entities.Activity acti=new com.bnet.shared.model.entities.Activity();
                             acti.setType(ActivityType.valueOf(typeSpinner.getSelectedItem().toString()));
                     acti.setCountry(getText(countryField));
-                    acti.setStart(DateTime.parse(String.format("%02s:%02s %02s/%02s/%02s", getText(startHour), getText(startMinute), getText(startDay), getText(startMonth), getText(startYear))));
-                    acti.setEnd(DateTime.parse(String.format("%02s:%02s %02s/%02s/%02s", getText(endHour), getText(endMinute), getText(endDay), getText(endMonth), getText(endYear))));
+                    acti.setStart(startDate);
+                    acti.setEnd(endDate);
                     acti.setPrice(Double.parseDouble(getText(priceField)));
                     acti.setDescription(getText(descriptionField));
                     String item=(String)businessIDSpinner.getSelectedItem();

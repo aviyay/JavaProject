@@ -11,43 +11,43 @@ public class DateTime {
     private int hour;
     private int minute;
 
-    int getYear() {
+    public int getYear() {
         return year;
     }
 
-    void setYear(int year) {
+    public void setYear(int year) {
         this.year = year;
     }
 
-    int getMonth() {
+    public int getMonth() {
         return month;
     }
 
-    void setMonth(int month) {
+    public void setMonth(int month) {
         this.month = month;
     }
 
-    int getDay() {
+    public int getDay() {
         return day;
     }
 
-    void setDay(int day) {
+    public void setDay(int day) {
         this.day = day;
     }
 
-    int getHour() {
+    public int getHour() {
         return hour;
     }
 
-    void setHour(int hour) {
+    public void setHour(int hour) {
         this.hour = hour;
     }
 
-    int getMinute() {
+    public int getMinute() {
         return minute;
     }
 
-    void setMinute(int minute) {
+    public  void setMinute(int minute) {
         this.minute = minute;
     }
 
