@@ -1,11 +1,13 @@
 package com.bnet.tnet.controller;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.DataSetObserver;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomSheetBehavior;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.ViewGroup;
@@ -41,9 +43,8 @@ public class AgencyDetails extends android.app.Activity {
     private TextView agencyPhone;
     private TextView agencyEmail;
     private TextView agencyLink;
+    private TextView businessName;
 
-    private ProgressBar webViewProgressBar;
-    private WebView agencyWebView;
 
     private ShortTravelDetails shortTravelDetails;
 
@@ -121,11 +122,28 @@ public class AgencyDetails extends android.app.Activity {
         (findViewById(R.id.openLink)).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Uri webpage = Uri.parse(addHttpIfNeeded(agencyLink.getText().toString()));
-                Intent intent = new Intent(Intent.ACTION_VIEW, webpage);
-                if (intent.resolveActivity(getPackageManager()) != null) {
-                    startActivity(intent);
-                }
+                AlertDialog.Builder builder=new AlertDialog.Builder(AgencyDetails.this);
+                builder.setMessage("Would you like to open the link inside the app?");
+                builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                Uri webpage = Uri.parse(addHttpIfNeeded(agencyLink.getText().toString()));
+                                Intent intent = new Intent(Intent.ACTION_VIEW, webpage);
+                                if (intent.resolveActivity(getPackageManager()) != null) {
+                                    startActivity(intent);
+                                }
+                            }
+                        });
+                builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        Intent intent = new Intent(getApplicationContext(), WebActivity.class);
+                        intent.putExtra("LINK", agencyLink.getText());
+                        startActivity(intent);
+                    }
+                });
+                builder.show();
+
             }
         });
     }
@@ -154,9 +172,8 @@ public class AgencyDetails extends android.app.Activity {
         agencyPhone = (TextView) findViewById(R.id.agencyPhone);
         agencyEmail = (TextView) findViewById(R.id.agencyEmail);
         agencyLink = (TextView) findViewById(R.id.agencyLink);
+        businessName = (TextView) findViewById(R.id.businessName);
 
-        webViewProgressBar=(ProgressBar)findViewById(R.id.webViewProgressBar);
-        agencyWebView=(WebView) findViewById(R.id.agencyWebView);
     }
 
     private void bindAgencyDetails() {
@@ -165,32 +182,8 @@ public class AgencyDetails extends android.app.Activity {
         agencyPhone.setText(agency.getPhone());
         agencyEmail.setText(agency.getEmail());
         agencyLink.setText(agency.getLinkToWebsite());
-
-
-
-        agencyWebView.getSettings().setJavaScriptEnabled(true);
-        agencyWebView.setWebChromeClient(new WebChromeClient(){
-            @Override
-            public void onProgressChanged(WebView view, int newProgress) {
-                super.onProgressChanged(view, newProgress);
-                webViewProgressBar.setProgress(newProgress);
-            }
-        });
-        agencyWebView.setWebViewClient(new WebViewClient() {
-            @Override
-            public boolean shouldOverrideUrlLoading(WebView view,String url) {
-                view.loadUrl(url);
-                return false;
-            }
-        });
-        openLinkInWebView(agencyLink.getText().toString());
-
+        businessName.setText(agency.getName());
     }
-
-    private void openLinkInWebView(String link) {
-        agencyWebView.loadUrl(addHttpIfNeeded(link));
-    }
-
     private void setupBottomSheetBehavior() {
         View bottomSheet = findViewById(R.id.bottom_sheet);
         mBottomSheetBehavior = BottomSheetBehavior.from(bottomSheet);
