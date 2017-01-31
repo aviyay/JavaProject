@@ -36,9 +36,15 @@ public class UpdatesReceiver extends BroadcastReceiver {
     }
 
     @Override
-    public void onReceive(Context context, Intent intent) {
+    public void onReceive(final Context context, Intent intent) {
         Log.d("MyCustomTag", "TNet: BroadCast received");
-        refresh(context);
+        new AsyncTask<Void, Void, Void>() {
+            @Override
+            protected Void doInBackground(Void... params) {
+                refresh(context);
+                return null;
+            }
+        }.execute();
     }
 
     public static void refresh(Context context) {
@@ -56,27 +62,21 @@ public class UpdatesReceiver extends BroadcastReceiver {
         ProvidableUtils.getRepository(Business.class).reset();
     }
 
-    private static void pull(final Context context,final String activityQuerySelection) {
-        new AsyncTask<Void,Void,Void>() {
-            @Override
-            protected Void doInBackground(Void... params) {
-                ContentResolver resolver = context.getContentResolver();
+    private static void pull(final Context context, final String activityQuerySelection) {
+        ContentResolver resolver = context.getContentResolver();
 
-                Cursor cursor = runQuery(resolver, activityUri, activityQuerySelection);
-                List<Activity> travels = filterTravels(cursor);
+        Cursor cursor = runQuery(resolver, activityUri, activityQuerySelection);
+        List<Activity> travels = filterTravels(cursor);
 
-                ArrayList<Long> agenciesToPull = findMissingAgencies(travels);
-                ArrayList<Cursor> agenciesRows = new ArrayList<>();
+        ArrayList<Long> agenciesToPull = findMissingAgencies(travels);
+        ArrayList<Cursor> agenciesRows = new ArrayList<>();
 
-                for (long id : agenciesToPull)
-                    agenciesRows.add(runQuery(resolver, getAgencyUri(id)));
+        for (long id : agenciesToPull)
+            agenciesRows.add(runQuery(resolver, getAgencyUri(id)));
 
-                List<Business> agencies = convertAgencies(agenciesRows);
+        List<Business> agencies = convertAgencies(agenciesRows);
 
-                fillRepositories(travels, agencies);
-                return  null;
-            }
-        }.execute();
+        fillRepositories(travels, agencies);
     }
 
     private static Cursor runQuery(ContentResolver resolver, Uri uri) {
@@ -114,7 +114,7 @@ public class UpdatesReceiver extends BroadcastReceiver {
                     break;
                 }
 
-            if (!found&&!result.contains(travel.getBusinessId()))
+            if (!found && !result.contains(travel.getBusinessId()))
                 result.add(travel.getBusinessId());
         }
 
@@ -135,16 +135,10 @@ public class UpdatesReceiver extends BroadcastReceiver {
     }
 
     private static void fillRepositories(List<Activity> travels, List<Business> agencies) {
-        new AsyncTask<List,Void,Void>()
-        {
-            @Override
-            protected Void doInBackground(List... params) {
-                for (Object travel : params[0])
-                    ProvidableUtils.getRepository(Activity.class).addAndReturnAssignedId((Activity)travel);
-                for (Object agency : params[1])
-                    ProvidableUtils.getRepository(Business.class).addAndReturnAssignedId((Business)agency);
-                return null;
-            }
-        }.execute(travels,agencies);
+        for (Activity travel : travels)
+            ProvidableUtils.getRepository(Activity.class).addAndReturnAssignedId(travel);
+        for (Business agency : agencies)
+            ProvidableUtils.getRepository(Business.class).addAndReturnAssignedId(agency);
+
     }
 }

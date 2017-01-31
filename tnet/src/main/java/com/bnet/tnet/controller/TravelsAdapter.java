@@ -64,7 +64,6 @@ class TravelsAdapter extends RecyclerView.Adapter<TravelsAdapter.TravelViewHolde
 
             @Override
             protected void onPostExecute(Activity aTravel) {
-                super.onPostExecute(aTravel);
                 holder.bind(aTravel);
             }
         }.execute(position);

@@ -50,7 +50,7 @@ public class MainActivity extends AppCompatActivity {
     private BusinessSearchFilter agencySearchFilter = new BusinessSearchFilter();
     private SearchFilter currentSearchFilter;
 
-    static {
+    /*static {
         new AsyncTask<Void,Void,Void>()
         {
             @Override
@@ -63,7 +63,7 @@ public class MainActivity extends AppCompatActivity {
                 return null;
             }
         }.execute();
-    }
+    }*/
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -105,7 +105,7 @@ return false;
 
         setupSwipeRefreshListener();
 
-        //UpdatesReceiver.freshStart(this); //TODO: enable this
+        UpdatesReceiver.freshStart(this);
 
         setupAdapters();
 
@@ -135,16 +135,25 @@ return false;
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                runFreshStart();
-                swipeRefreshLayout.setRefreshing(false);
+                new AsyncTask<Void, Void, Void>() {
+                    @Override
+                    protected Void doInBackground(Void... params) {
+                        runFreshStart();
+                        return null;
+                    }
+
+                    @Override
+                    protected void onPostExecute(Void aVoid) {
+                        recyclerView.getAdapter().notifyDataSetChanged();
+                        swipeRefreshLayout.setRefreshing(false);
+                    }
+                }.execute();
             }
         });
     }
 
     private void runFreshStart() {
         UpdatesReceiver.freshStart(this);
-        recyclerView.getAdapter().notifyDataSetChanged();
-         swipeRefreshLayout.setRefreshing(false);
     }
 
     private void setupAdapters() {
@@ -175,7 +184,7 @@ return false;
         });
     }
 
-    private  void startActivity(Class activity, Providable providable) {
+    private void startActivity(Class activity, Providable providable) {
 
         Intent intent = new Intent(this, activity);
 
