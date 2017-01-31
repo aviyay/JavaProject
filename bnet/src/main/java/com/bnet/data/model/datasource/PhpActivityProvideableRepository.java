@@ -4,17 +4,15 @@ import android.content.ContentValues;
 import android.support.annotation.NonNull;
 
 import com.bnet.data.model.PhpHelper;
-import com.bnet.shared.model.services.converters.Converter;
-import com.bnet.shared.model.services.utils.ProvidableUtils;
 import com.bnet.shared.model.backend.ProvidableRepository;
 import com.bnet.shared.model.entities.Activity;
 import com.bnet.shared.model.entities.ActivityType;
 import com.bnet.shared.model.entities.DateTime;
+import com.bnet.shared.model.services.utils.ProvidableUtils;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
 
-import java.util.AbstractCollection;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;

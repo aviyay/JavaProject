@@ -12,7 +12,6 @@ import android.support.annotation.NonNull;
 import android.util.Log;
 
 import com.bnet.shared.model.Constants;
-import com.bnet.shared.model.backend.Providable;
 import com.bnet.shared.model.backend.RepositoriesFactory;
 import com.bnet.shared.model.entities.Activity;
 import com.bnet.shared.model.entities.ActivityType;
@@ -22,7 +21,6 @@ import com.bnet.shared.model.services.utils.ProvidableUtils;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
 public class UpdatesReceiver extends BroadcastReceiver {
 

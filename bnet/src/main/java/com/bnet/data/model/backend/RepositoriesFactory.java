@@ -2,7 +2,6 @@ package com.bnet.data.model.backend;
 
 import android.util.Log;
 
-import com.bnet.data.model.datasource.ListAccountsRepository;
 import com.bnet.data.model.datasource.PhpAccountsRepository;
 import com.bnet.data.model.datasource.PhpActivityProvideableRepository;
 import com.bnet.data.model.datasource.PhpBusinessProvidableRepository;

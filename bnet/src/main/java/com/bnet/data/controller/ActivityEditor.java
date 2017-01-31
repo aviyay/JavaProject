@@ -1,26 +1,22 @@
 package com.bnet.data.controller;
 
+import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
-import android.content.DialogInterface;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.app.Activity;
-import android.support.v7.app.AlertDialog;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Spinner;
-import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
 import com.bnet.data.R;
 import com.bnet.data.model.backend.RepositoriesFactory;
 import com.bnet.shared.model.entities.ActivityType;
-
 import com.bnet.shared.model.entities.Business;
 import com.bnet.shared.model.entities.DateTime;
 
@@ -32,17 +28,13 @@ public class ActivityEditor extends Activity {
 
     private Spinner typeSpinner;
     private EditText countryField;
-    private TextView startDateView;
     private EditText priceField;
     private EditText descriptionField;
     private Spinner businessIDSpinner;
     private DateTime startDate=new DateTime();
     private DateTime endDate=new DateTime();
     private Button setStartDateBtn;
-    private Button setStartTimeBtn;
     private Button setEndDateBtn;
-    private Button setEndTimeBtn;
-
     private boolean isEmpty(EditText etText) {
         return etText.getText().toString().trim().length() == 0;
     }

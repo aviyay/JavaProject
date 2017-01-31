@@ -6,7 +6,6 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.os.Handler;
 import android.preference.PreferenceManager;
 import android.support.v7.app.AlertDialog;
 import android.view.View;
@@ -81,7 +80,7 @@ public class MainActivity extends Activity {
                                 AccountsRepository repository = RepositoriesFactory.getAccountsRepository();
                                 if(repository.getOrNull(params[0])!=null)
                                     return false;
-                                repository.add(new Account(params[0].toString(), params[1]));
+                                repository.add(new Account(params[0], params[1]));
                                 return true;
                             }
 
@@ -138,7 +137,6 @@ public class MainActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
-        SharedPreferences.Editor editor =  sharedPreferences.edit();
         if(!sharedPreferences.getString("userLogIn","").equals(""))
             goToMenu();
         usernameField=(EditText)findViewById(R.id.usernameField);
@@ -156,7 +154,7 @@ public class MainActivity extends Activity {
             SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
             SharedPreferences.Editor editor = sharedPreferences.edit();
             editor.putString("userLogIn", item.getUsername());
-            editor.commit();
+            editor.apply();
         }
             Toast.makeText(getApplicationContext(), "TEMP: Signed in - "+ item.getUsername(), Toast.LENGTH_SHORT).show();
         goToMenu();

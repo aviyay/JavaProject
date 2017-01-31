@@ -2,7 +2,6 @@ package com.bnet.tnet.view;
 
 import android.content.Context;
 import android.os.AsyncTask;
-import android.support.v7.widget.ActionBarOverlayLayout;
 import android.support.v7.widget.CardView;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;

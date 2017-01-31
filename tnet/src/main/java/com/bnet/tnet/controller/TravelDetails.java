@@ -3,12 +3,10 @@ package com.bnet.tnet.controller;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.support.v4.view.animation.LinearOutSlowInInterpolator;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 
 import com.bnet.shared.model.Constants;
-import com.bnet.shared.model.backend.Providable;
 import com.bnet.shared.model.backend.RepositoriesFactory;
 import com.bnet.shared.model.entities.Activity;
 import com.bnet.shared.model.entities.Business;

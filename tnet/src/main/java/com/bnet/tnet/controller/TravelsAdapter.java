@@ -2,18 +2,11 @@ package com.bnet.tnet.controller;
 
 import android.os.AsyncTask;
 import android.support.v7.widget.RecyclerView;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 
 import com.bnet.shared.model.backend.ProvidableRepository;
-import com.bnet.shared.model.backend.RepositoriesFactory;
 import com.bnet.shared.model.entities.Activity;
-import com.bnet.shared.model.entities.Business;
-import com.bnet.shared.model.entities.DateTime;
-import com.bnet.shared.model.entities.EntitiesSamples;
-import com.bnet.tnet.R;
 import com.bnet.tnet.view.TravelListRow;
 
 class TravelsAdapter extends RecyclerView.Adapter<TravelsAdapter.TravelViewHolder> {

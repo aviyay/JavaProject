@@ -1,9 +1,8 @@
 package com.bnet.tnet.controller;
 
-import android.content.Intent;
+import android.os.Bundle;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.view.KeyEvent;
 import android.webkit.WebChromeClient;
 import android.webkit.WebView;
@@ -17,12 +16,12 @@ public class WebActivity extends AppCompatActivity {
 
     private ProgressBar webViewProgressBar;
     private WebView agencyWebView;
-    private String link;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_web);
-        link=getIntent().getStringExtra("LINK");
+        String link = getIntent().getStringExtra("LINK");
         findViews();
 
         agencyWebView.getSettings().setJavaScriptEnabled(true);
@@ -40,7 +39,7 @@ public class WebActivity extends AppCompatActivity {
                 return false;
             }
         });
-        openLinkInWebView(link.toString());
+        openLinkInWebView(link);
         Toast.makeText(this,"Press Double BACK to exit",Toast.LENGTH_LONG).show();
     }
     private void findViews()

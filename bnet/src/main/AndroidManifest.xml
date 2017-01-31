@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.bnet.data">
-<uses-permission android:name="android.permission.INTERNET"/>
+
+    <uses-permission android:name="android.permission.INTERNET" />
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -29,14 +31,6 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.bnet.data.controller.MainActivity" />
         </activity>
-        <activity
-            android:name=".controller.ViewBusiness"
-            android:label="@string/title_activity_view_business"
-            android:parentActivityName=".controller.Menu">
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.bnet.data.controller.Menu" />
-        </activity>
         <activity android:name=".controller.BusinessEditor" />
         <activity
             android:name=".controller.ActivityEditor"
@@ -49,7 +43,8 @@
 
         <service
             android:name=".model.Updater"
-            android:exported="true"/>
+            android:exported="true" />
+
     </application>
 
 </manifest>
