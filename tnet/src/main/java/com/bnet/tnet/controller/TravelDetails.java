@@ -1,10 +1,10 @@
 package com.bnet.tnet.controller;
 
 import android.content.Intent;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.widget.ImageButton;
 
 import com.bnet.shared.model.Constants;
 import com.bnet.shared.model.backend.RepositoriesFactory;
@@ -21,6 +21,7 @@ public class TravelDetails extends android.app.Activity {
     private ShortTravelDetails shortTravelDetails;
     private AgencyListRow agencyListRow;
     private Toolbar toolbar;
+    private ImageButton shareBtn;
 
 
     @Override
@@ -47,6 +48,7 @@ public class TravelDetails extends android.app.Activity {
         shortTravelDetails = (ShortTravelDetails) findViewById(R.id.short_travel_details);
         agencyListRow = (AgencyListRow) findViewById(R.id.agency_list_row);
         toolbar = (Toolbar) findViewById(R.id.toolbar_back);
+        shareBtn=(ImageButton)findViewById(R.id.shareBtn);
     }
 
     private void registerAgencyListener() {
@@ -59,10 +61,20 @@ public class TravelDetails extends android.app.Activity {
     }
 
     private void bindViews() {
-        Activity travel = retrieveTravelFromIntent(getIntent());
+        final Activity travel = retrieveTravelFromIntent(getIntent());
         shortTravelDetails.setTravel(travel);
         toolbar.setTitle(travel.getCountry());
         agencyListRow.setAgency(getAgencyReference(travel.getBusinessId()));
+        shareBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent shareIntent = new Intent();
+                shareIntent.setAction(Intent.ACTION_SEND);
+                shareIntent.putExtra(Intent.EXTRA_TEXT, String.format(getString(R.string.share_msg_trip), travel.getStart().toDateString(), travel.getEnd().toDateString(), travel.getDescription(), travel.getPrice()));
+                shareIntent.setType("text/plain");
+                startActivity(Intent.createChooser(shareIntent,getString(R.string.share_trip_to)));
+            }
+        });
     }
 
     private Activity retrieveTravelFromIntent(Intent intent) {

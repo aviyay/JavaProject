@@ -11,4 +11,14 @@
     android:minHeight="?attr/actionBarSize"
     android:theme="@style/BaseTheme"
     app:navigationIcon="?attr/homeAsUpIndicator">
+        <ImageButton
+            android:layout_marginRight="10dp"
+            android:layout_marginEnd="10dp"
+            android:layout_gravity="right|end"
+            android:id="@+id/shareBtn"
+            android:background="@android:color/transparent"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@android:color/white"
+            android:src="@drawable/share_icon"/>
     </android.support.v7.widget.Toolbar>

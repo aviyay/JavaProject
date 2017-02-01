@@ -6,10 +6,18 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomSheetBehavior;
+import android.support.v4.view.MenuItemCompat;
 import android.support.v7.app.AlertDialog;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.ShareActionProvider;
 import android.support.v7.widget.Toolbar;
+
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.bnet.shared.model.Constants;
@@ -25,23 +33,28 @@ import com.bnet.tnet.view.ShortTravelDetails;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 
-public class AgencyDetails extends android.app.Activity {
+public class AgencyDetails extends AppCompatActivity {
     private Business agency = new Business();
 
+
+
     private Toolbar toolbar;
+
+    private ImageButton shareBtn;
 
     private TextView agencyStreet;
     private TextView agencyPhone;
     private TextView agencyEmail;
     private TextView agencyLink;
-    private TextView businessName;
+    private TextView agencyName;
+
+
 
 
     private ShortTravelDetails shortTravelDetails;
 
     private RecyclerView recyclerView;
     private BottomSheetBehavior mBottomSheetBehavior;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -66,6 +79,16 @@ public class AgencyDetails extends android.app.Activity {
             @Override
             public void onClick(View v) {
                 finish();
+            }
+        });
+        shareBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent shareIntent = new Intent();
+                shareIntent.setAction(Intent.ACTION_SEND);
+                shareIntent.putExtra(Intent.EXTRA_TEXT, String.format(getString(R.string.share_msg_agency), agencyName.getText().toString(), agencyLink.getText().toString()));
+                shareIntent.setType("text/plain");
+                startActivity(Intent.createChooser(shareIntent,getString(R.string.share_agency_to)));
             }
         });
     }
@@ -159,11 +182,13 @@ public class AgencyDetails extends android.app.Activity {
 
         toolbar = (Toolbar) findViewById(R.id.toolbar_back);
 
+        shareBtn=(ImageButton)findViewById(R.id.shareBtn);
+
         agencyStreet = (TextView) findViewById(R.id.agencyStreet);
         agencyPhone = (TextView) findViewById(R.id.agencyPhone);
         agencyEmail = (TextView) findViewById(R.id.agencyEmail);
         agencyLink = (TextView) findViewById(R.id.agencyLink);
-        businessName = (TextView) findViewById(R.id.businessName);
+        agencyName = (TextView) findViewById(R.id.agencyName);
 
     }
 
@@ -173,7 +198,7 @@ public class AgencyDetails extends android.app.Activity {
         agencyPhone.setText(agency.getPhone());
         agencyEmail.setText(agency.getEmail());
         agencyLink.setText(agency.getLinkToWebsite());
-        businessName.setText(agency.getName());
+        agencyName.setText(agency.getName());
     }
     private void setupBottomSheetBehavior() {
         View bottomSheet = findViewById(R.id.bottom_sheet);
