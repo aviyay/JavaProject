@@ -19,8 +19,10 @@
     <string name="no">No</string>
     <string name="yes">Yes</string>
     <string name="travels_from">Travels from</string>
-    <string name="share_msg_trip">Check out this trip:%s - %s\n%s\nPrice: %s$</string>
+    <string name="share_msg_trip" formatted="false">Check out this trip:%s - %s\n%s\nPrice: %s$</string>
     <string name="share_trip_to">Share trip to...</string>
     <string name="share_agency_to">Share agency to...</string>
-    <string name="share_msg_agency">Check out this agency: %s\n%s</string>
+    <string name="share_msg_agency" formatted="false">Check out this agency: %s\n%s</string>
+    <string name="agencies">Agencies</string>
+    <string name="travels">Travels</string>
 </resources>
