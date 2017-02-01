@@ -9,9 +9,12 @@ import android.database.Cursor;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.support.annotation.NonNull;
+import android.support.v4.util.LongSparseArray;
 import android.util.Log;
 
 import com.bnet.shared.model.Constants;
+import com.bnet.shared.model.backend.Providable;
+import com.bnet.shared.model.backend.ProvidableRepository;
 import com.bnet.shared.model.backend.RepositoriesFactory;
 import com.bnet.shared.model.entities.Activity;
 import com.bnet.shared.model.entities.ActivityType;
@@ -20,7 +23,9 @@ import com.bnet.shared.model.services.utils.CursorUtils;
 import com.bnet.shared.model.services.utils.ProvidableUtils;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class UpdatesReceiver extends BroadcastReceiver {
 
@@ -62,7 +67,7 @@ public class UpdatesReceiver extends BroadcastReceiver {
         ProvidableUtils.getRepository(Business.class).reset();
     }
 
-    private static void pull(final Context context, final String activityQuerySelection) {
+    private static void pull(final Context context, String activityQuerySelection) {
         ContentResolver resolver = context.getContentResolver();
 
         Cursor cursor = runQuery(resolver, activityUri, activityQuerySelection);
@@ -135,10 +140,14 @@ public class UpdatesReceiver extends BroadcastReceiver {
     }
 
     private static void fillRepositories(List<Activity> travels, List<Business> agencies) {
+        long original_id;
+        for (Business agency : agencies){
+            original_id = agency.getId();
+            ProvidableUtils.getRepository(Business.class).addAndReturnAssignedId(agency);
+            agency.setId(original_id);
+        }
+
         for (Activity travel : travels)
             ProvidableUtils.getRepository(Activity.class).addAndReturnAssignedId(travel);
-        for (Business agency : agencies)
-            ProvidableUtils.getRepository(Business.class).addAndReturnAssignedId(agency);
-
     }
 }

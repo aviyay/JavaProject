@@ -23,6 +23,7 @@ public class DataProvider extends ContentProvider {
 
     static {
         setupUriMatcher();
+        RepositoriesFactory.moveToCloud();
     }
 
     @Override
@@ -68,7 +69,6 @@ public class DataProvider extends ContentProvider {
     @Override
     public Cursor query(@NonNull Uri uri, String[] projection, String selection,
                         String[] selectionArgs, String sortOrder) {
-        RepositoriesFactory.moveToCloud();
 
         ProvidableRepository<Providable> repository;
         List<Providable> chosen;

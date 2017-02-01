@@ -26,7 +26,6 @@ import com.bnet.shared.model.backend.ProvidableRepository;
 import com.bnet.shared.model.backend.RepositoriesFactory;
 import com.bnet.shared.model.entities.Activity;
 import com.bnet.shared.model.entities.Business;
-import com.bnet.shared.model.entities.EntitiesSamples;
 import com.bnet.shared.model.services.utils.ProvidableUtils;
 import com.bnet.tnet.R;
 import com.bnet.tnet.model.ActivitySearchFilter;
@@ -49,6 +48,25 @@ public class MainActivity extends AppCompatActivity {
     private ActivitySearchFilter travelSearchFilter = new ActivitySearchFilter();
     private BusinessSearchFilter agencySearchFilter = new BusinessSearchFilter();
     private SearchFilter currentSearchFilter;
+
+    private SwipeRefreshLayout.OnRefreshListener refreshListener = new SwipeRefreshLayout.OnRefreshListener() {
+        @Override
+        public void onRefresh() {
+            new AsyncTask<Void, Void, Void>() {
+                @Override
+                protected Void doInBackground(Void... params) {
+                    runFreshStart();
+                    return null;
+                }
+
+                @Override
+                protected void onPostExecute(Void aVoid) {
+                    recyclerView.getAdapter().notifyDataSetChanged();
+                    swipeRefreshLayout.setRefreshing(false);
+                }
+            }.execute();
+        }
+    };
 
     /*static {
         new AsyncTask<Void,Void,Void>()
@@ -105,7 +123,8 @@ return false;
 
         setupSwipeRefreshListener();
 
-        UpdatesReceiver.freshStart(this);
+        swipeRefreshLayout.setRefreshing(true);
+        refreshListener.onRefresh();
 
         setupAdapters();
 
@@ -132,24 +151,7 @@ return false;
                 R.color.swipeRefresh2,
                 R.color.swipeRefresh3);
 
-        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-            @Override
-            public void onRefresh() {
-                new AsyncTask<Void, Void, Void>() {
-                    @Override
-                    protected Void doInBackground(Void... params) {
-                        runFreshStart();
-                        return null;
-                    }
-
-                    @Override
-                    protected void onPostExecute(Void aVoid) {
-                        recyclerView.getAdapter().notifyDataSetChanged();
-                        swipeRefreshLayout.setRefreshing(false);
-                    }
-                }.execute();
-            }
-        });
+        swipeRefreshLayout.setOnRefreshListener(refreshListener);
     }
 
     private void runFreshStart() {
@@ -160,8 +162,8 @@ return false;
         ProvidableRepository<Activity> activityRepository = RepositoriesFactory.getActivitiesRepository();
         ProvidableRepository<Business> businessRepository = RepositoriesFactory.getBusinessesRepository();
 
-        FilterDecorator travelFilterDecorator = new FilterDecorator(activityRepository, travelSearchFilter);
-        FilterDecorator agencyFilterDecorator = new FilterDecorator(businessRepository, agencySearchFilter);
+        FilterDecorator<Activity> travelFilterDecorator = new FilterDecorator<>(activityRepository, travelSearchFilter);
+        FilterDecorator<Business> agencyFilterDecorator = new FilterDecorator<>(businessRepository, agencySearchFilter);
 
         agenciesAdapter = new AgenciesAdapter(agencyFilterDecorator);
         travelsAdapter = new TravelsAdapter(travelFilterDecorator);

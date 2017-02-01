@@ -7,6 +7,7 @@ import android.net.Uri;
 import com.bnet.shared.model.Constants;
 import com.bnet.shared.model.backend.Providable;
 import com.bnet.shared.model.backend.ProvidableRepository;
+import com.bnet.shared.model.datasource.ListProvidableRepository;
 import com.bnet.shared.model.services.utils.CursorUtils;
 import com.bnet.data.model.backend.RepositoriesFactory;
 import com.bnet.shared.model.services.utils.ProvidableUtils;
@@ -14,6 +15,7 @@ import com.bnet.shared.model.entities.Activity;
 import com.bnet.shared.model.entities.Business;
 import com.bnet.shared.model.entities.EntitiesSamples;
 
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -28,11 +30,26 @@ public class DataProviderTest {
 
     private static final String URI_PREFIX = "content://" + Constants.PROVIDER_AUTHORITY + "/";
 
+    private ProvidableRepository<Business> oldBusinessRepository;
+    private ProvidableRepository<Activity> oldActivityRepository;
+
     @Before
     public void setUp() throws Exception {
         provider = new DataProvider();
-        RepositoriesFactory.getActivitiesRepository().reset();
-        RepositoriesFactory.getBusinessesRepository().reset();
+
+        oldActivityRepository = RepositoriesFactory.getActivitiesRepository();
+        oldBusinessRepository = RepositoriesFactory.getBusinessesRepository();
+
+        RepositoriesFactory.setBusinessesRepository(new ListProvidableRepository<Business>());
+        RepositoriesFactory.setActivitiesRepository(new ListProvidableRepository<Activity>());
+        ProvidableUtils.refreshRepositories();
+    }
+
+    @After
+    public void tearDown() throws Exception {
+        RepositoriesFactory.setBusinessesRepository(oldBusinessRepository);
+        RepositoriesFactory.setActivitiesRepository(oldActivityRepository);
+        ProvidableUtils.refreshRepositories();
     }
 
     @Test

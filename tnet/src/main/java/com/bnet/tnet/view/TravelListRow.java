@@ -13,7 +13,7 @@ import com.bnet.shared.model.entities.Activity;
 import com.bnet.shared.model.entities.Business;
 import com.bnet.tnet.R;
 
-public class    TravelListRow extends CardView {
+public class TravelListRow extends CardView {
     private TextView travelCountry;
     private TextView travelDates;
     private TextView travelAgency;
@@ -72,21 +72,15 @@ public class    TravelListRow extends CardView {
         travelDates.setText(String.format("%s - %s", travel.getStart().toDateString(), travel.getEnd().toDateString()));
         travelPrice.setText(String.format("%.2f", travel.getPrice()));
 
-        new AsyncTask<Long,Void,String>() {
-            @Override
-            protected String doInBackground(Long... params) {
-                Business agencyReference = RepositoriesFactory.getBusinessesRepository().getOrNull(params[0]);
-                if (agencyReference == null)
-                    throw new IllegalArgumentException("illegal business id");
-                return agencyReference.getName();
-            }
+        Business agencyReference = RepositoriesFactory
+                .getBusinessesRepository()
+                .getOrNull(travel.getBusinessId());
 
-            @Override
-            protected void onPostExecute(String s) {
-                super.onPostExecute(s);
-                travelAgency.setText(s);
-            }
-        }.execute(travel.getBusinessId());
+        if (agencyReference == null)
+            throw new IllegalArgumentException("illegal business id");
+
+        travelAgency.setText(agencyReference.getName());
+
     }
 
 }

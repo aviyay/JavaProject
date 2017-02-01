@@ -20,4 +20,14 @@ public class RepositoriesFactory {
     public static ProvidableRepository<Business> getBusinessesRepository() {
         return businessesRepository;
     }
+
+
+    public static void setBusinessesRepository(ProvidableRepository<Business> businessesRepository) {
+        RepositoriesFactory.businessesRepository = businessesRepository;
+    }
+
+    public static void setActivitiesRepository(ProvidableRepository<Activity> activitiesRepository) {
+        RepositoriesFactory.activitiesRepository = activitiesRepository;
+    }
+
 }

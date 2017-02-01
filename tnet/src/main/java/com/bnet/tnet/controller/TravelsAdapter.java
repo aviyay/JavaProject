@@ -1,6 +1,5 @@
 package com.bnet.tnet.controller;
 
-import android.os.AsyncTask;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.ViewGroup;
@@ -55,22 +54,11 @@ class TravelsAdapter extends RecyclerView.Adapter<TravelsAdapter.TravelViewHolde
 
     @Override
     public void onBindViewHolder(final TravelViewHolder holder, int position) {
-        new AsyncTask<Integer,Void,Activity>()
-        {
-            @Override
-            protected Activity doInBackground(Integer... params) {
-                return repository.getAll().get(params[0]);
-            }
-
-            @Override
-            protected void onPostExecute(Activity aTravel) {
-                holder.bind(aTravel);
-            }
-        }.execute(position);
+        holder.bind(repository.getAll().get(position));
     }
 
     @Override
-    public int getItemCount() {//TODO
+    public int getItemCount() {
         return repository.getAll().size();
     }
 }

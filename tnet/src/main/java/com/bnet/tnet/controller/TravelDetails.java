@@ -62,22 +62,7 @@ public class TravelDetails extends android.app.Activity {
         Activity travel = retrieveTravelFromIntent(getIntent());
         shortTravelDetails.setTravel(travel);
         toolbar.setTitle(travel.getCountry());
-        new AsyncTask<Long,Void,Business>()
-        {
-            @Override
-            protected Business doInBackground(Long... params) {
-
-               return getAgencyReference(params[0]);
-            }
-
-            @Override
-            protected void onPostExecute(Business agencyReference) {
-                super.onPostExecute(agencyReference);
-                agencyListRow.setAgency(agencyReference);
-
-            }
-        }.execute(travel.getBusinessId());
-
+        agencyListRow.setAgency(getAgencyReference(travel.getBusinessId()));
     }
 
     private Activity retrieveTravelFromIntent(Intent intent) {

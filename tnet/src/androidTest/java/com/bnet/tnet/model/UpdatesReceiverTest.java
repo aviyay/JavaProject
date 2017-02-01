@@ -5,7 +5,6 @@ import android.content.ContentResolver;
 import android.content.ContentUris;
 import android.database.Cursor;
 import android.net.Uri;
-import android.os.AsyncTask;
 import android.support.annotation.NonNull;
 import android.test.mock.MockContentProvider;
 import android.test.mock.MockContentResolver;
@@ -24,12 +23,11 @@ import com.bnet.shared.model.services.utils.CursorUtils;
 import org.junit.Before;
 import org.junit.Test;
 
-import static org.junit.Assert.*;
-
 import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 public class UpdatesReceiverTest {
 
@@ -111,57 +109,37 @@ public class UpdatesReceiverTest {
 
     @Test
     public void oneAgencyWithOneTravel() throws Exception {
-        new AsyncTask<Void,Void,Void>()
-        {
-            @Override
-            protected Void doInBackground(Void... params) {
-                Activity activity = EntitiesSamples.makeActivity();
-                Business business = EntitiesSamples.makeBusiness();
+        Activity activity = EntitiesSamples.makeActivity();
+        Business business = EntitiesSamples.makeBusiness();
 
-                ProviderRepoActivities.addAndReturnAssignedId(activity);
-                ProviderRepoBusinesses.addAndReturnAssignedId(business);
+        ProviderRepoActivities.addAndReturnAssignedId(activity);
+        ProviderRepoBusinesses.addAndReturnAssignedId(business);
 
-                runFreshStart();
+        runFreshStart();
 
-                assertEquals(1, curRepoActivities.getAll().size());
-                assertEquals(1, curRepoBusinesses.getAll().size());
+        assertEquals(1, curRepoActivities.getAll().size());
+        assertEquals(1, curRepoBusinesses.getAll().size());
 
-                assertEquals(activity, curRepoActivities.getAll().get(0));
-                assertEquals(business, curRepoBusinesses.getAll().get(0));
-                return null;
-            }
-        }.execute();
-
+        assertEquals(activity, curRepoActivities.getAll().get(0));
+        assertEquals(business, curRepoBusinesses.getAll().get(0));
     }
 
     @Test
     public void oneNonAgencyWithOneNonTravel() throws Exception {
-        new AsyncTask<Void,Void,Void>()
-        {
-            @Override
-            protected Void doInBackground(Void... params) {
-                Activity activity = EntitiesSamples.makeNonTravelActivity();
-                Business business = EntitiesSamples.makeNonAgencyBusiness();
+        Activity activity = EntitiesSamples.makeNonTravelActivity();
+        Business business = EntitiesSamples.makeNonAgencyBusiness();
 
-                ProviderRepoActivities.addAndReturnAssignedId(activity);
-                ProviderRepoBusinesses.addAndReturnAssignedId(business);
+        ProviderRepoActivities.addAndReturnAssignedId(activity);
+        ProviderRepoBusinesses.addAndReturnAssignedId(business);
 
-                runFreshStart();
+        runFreshStart();
 
-                assertEquals(0, curRepoActivities.getAll().size());
-                assertEquals(0, curRepoBusinesses.getAll().size());
-                return null;
-            }
-        }.execute();
-
+        assertEquals(0, curRepoActivities.getAll().size());
+        assertEquals(0, curRepoBusinesses.getAll().size());
     }
 
     @Test
     public void mixedAgencyAndTravelWithNonAgencyAndNonTravel() throws Exception {
-        new AsyncTask<Void,Void,Void>()
-        {
-            @Override
-            protected Void doInBackground(Void... params) {
                 Activity activity1 = EntitiesSamples.makeActivity();
                 Activity activity2 = EntitiesSamples.makeNonTravelActivity();
                 Business business1 = EntitiesSamples.makeBusiness();
@@ -179,18 +157,10 @@ public class UpdatesReceiverTest {
 
                 assertEquals(activity1, curRepoActivities.getAll().get(0));
                 assertEquals(business1, curRepoBusinesses.getAll().get(0));
-                return null;
-            }
-        }.execute();
-
     }
 
     @Test
     public void addOneNonTravelAndRefresh() throws Exception {
-        new AsyncTask<Void,Void,Void>()
-        {
-            @Override
-            protected Void doInBackground(Void... params) {
                 Activity activity = EntitiesSamples.makeActivity();
                 Activity activity2 = EntitiesSamples.makeNonTravelActivity();
                 Business business = EntitiesSamples.makeBusiness();
@@ -210,18 +180,10 @@ public class UpdatesReceiverTest {
 
                 assertTrue(curRepoActivities.getAll().contains(activity));
                 assertEquals(business, curRepoBusinesses.getAll().get(0));
-                return null;
-            }
-        }.execute();
-
     }
 
     @Test
     public void addOneTravelThatWeAlreadyHaveItsAgencyAndRefresh() throws Exception {
-        new AsyncTask<Void,Void,Void>()
-        {
-            @Override
-            protected Void doInBackground(Void... params) {
                 Activity activity = EntitiesSamples.makeActivity();
                 Activity activity2 = EntitiesSamples.makeActivity2();
                 Business business = EntitiesSamples.makeBusiness();
@@ -242,17 +204,10 @@ public class UpdatesReceiverTest {
                 assertTrue(curRepoActivities.getAll().contains(activity));
                 assertTrue(curRepoActivities.getAll().contains(activity2));
                 assertEquals(business, curRepoBusinesses.getAll().get(0));
-                return null;
-            }
-        }.execute();
     }
 
     @Test
     public void addOneTravelThatWeDoNotHaveItsAgencyAndRefresh() throws Exception {
-        new AsyncTask<Void,Void,Void>()
-        {
-            @Override
-            protected Void doInBackground(Void... params) {
                 Activity activity = EntitiesSamples.makeActivity();
                 Activity activity2 = EntitiesSamples.makeActivity2();
                 Business business = EntitiesSamples.makeBusiness();
@@ -277,18 +232,10 @@ public class UpdatesReceiverTest {
                 assertTrue(curRepoActivities.getAll().contains(activity2));
                 assertTrue(curRepoBusinesses.getAll().contains(business));
                 assertTrue(curRepoBusinesses.getAll().contains(business2));
-                return null;
-            }
-        }.execute();
-
     }
 
     @Test
     public void preserveDataEvenWhenBNetIsClosed() throws Exception {
-        new AsyncTask<Void,Void,Void>()
-        {
-            @Override
-            protected Void doInBackground(Void... params) {
                 Activity activity = EntitiesSamples.makeActivity();
                 Business business = EntitiesSamples.makeBusiness();
 
@@ -307,10 +254,6 @@ public class UpdatesReceiverTest {
 
                 assertEquals(activity, curRepoActivities.getAll().get(0));
                 assertEquals(business, curRepoBusinesses.getAll().get(0));
-                return null;
-            }
-        }.execute();
-
     }
 
     private void runFreshStart() {
