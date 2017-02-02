@@ -183,7 +183,7 @@ public class ActivityEditor extends Activity {
                         @Override
                         protected void onPostExecute(Void aVoid) {
                             super.onPostExecute(aVoid);
-                            Toast.makeText(getApplicationContext(), "TEMP: Activity was added", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getApplicationContext(), "Activity was added", Toast.LENGTH_SHORT).show();
                             finish();
                         }
                     }.execute(acti);

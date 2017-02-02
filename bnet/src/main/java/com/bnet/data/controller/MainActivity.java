@@ -156,7 +156,7 @@ public class MainActivity extends Activity {
             editor.putString("userLogIn", item.getUsername());
             editor.apply();
         }
-            Toast.makeText(getApplicationContext(), "TEMP: Signed in - "+ item.getUsername(), Toast.LENGTH_SHORT).show();
+            Toast.makeText(getApplicationContext(), "Signed in - "+ item.getUsername(), Toast.LENGTH_SHORT).show();
         goToMenu();
     }
 

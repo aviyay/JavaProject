@@ -18,6 +18,36 @@ public class ActivitySearchFilter extends SearchFilter<Activity> {
             return true;
         if (Double.toString(item.getPrice()).contains(searchText))
             return true;
+        if(searchText.charAt(0)=='<')
+        {
+            double searchPrice;
+            try
+            {
+                searchPrice=Double.valueOf(searchText.substring(1));
+
+            }
+            catch (Exception e)
+            {
+                return false;
+            }
+            if(item.getPrice()<=searchPrice)
+                return true;
+        }
+        if(searchText.charAt(0)=='>')
+        {
+            double searchPrice;
+            try
+            {
+                searchPrice=Double.valueOf(searchText.substring(1));
+
+            }
+            catch (Exception e)
+            {
+                return false;
+            }
+            if(item.getPrice()>=searchPrice)
+                return true;
+        }
 
         return false;
     }

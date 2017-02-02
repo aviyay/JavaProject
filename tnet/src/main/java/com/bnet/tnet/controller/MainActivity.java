@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
+import android.support.v4.view.MenuItemCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -19,6 +20,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.Toast;
 
 import com.bnet.shared.model.backend.Providable;
@@ -48,6 +50,8 @@ public class MainActivity extends AppCompatActivity {
     private ActivitySearchFilter travelSearchFilter = new ActivitySearchFilter();
     private BusinessSearchFilter agencySearchFilter = new BusinessSearchFilter();
     private SearchFilter currentSearchFilter;
+
+    private boolean searchMsgShown=false;
 
     private SwipeRefreshLayout.OnRefreshListener refreshListener = new SwipeRefreshLayout.OnRefreshListener() {
         @Override
@@ -89,10 +93,25 @@ public class MainActivity extends AppCompatActivity {
         inflater.inflate(R.menu.main_menu, menu);
         final MenuItem searchItem = menu.findItem(R.id.action_search);
         final SearchView searchView = (SearchView) searchItem.getActionView();//(SearchView) MenuItemCompat.getActionView(searchItem);
+        MenuItemCompat.setOnActionExpandListener(searchItem, new MenuItemCompat.OnActionExpandListener() {
+            @Override
+            public boolean onMenuItemActionExpand(MenuItem item) {
+                if(!searchMsgShown&&recyclerView.getAdapter()==travelsAdapter) {
+                    Toast.makeText(getApplicationContext(), "You can search for range of prices using \"<150\" or \">50\"", Toast.LENGTH_SHORT).show();
+                    searchMsgShown = true;
+                }
+                return true;
+            }
+
+            @Override
+            public boolean onMenuItemActionCollapse(MenuItem item) {
+                return true;
+            }
+        });
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
-return false;
+                return false;
             }
 
             @Override

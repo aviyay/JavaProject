@@ -55,7 +55,7 @@ public class BusinessEditor extends Activity {
                         @Override
                         protected void onPostExecute(Void aVoid) {
                             super.onPostExecute(aVoid);
-                            Toast.makeText(getApplicationContext(), "TEMP: Business was added", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getApplicationContext(), "Business was added", Toast.LENGTH_SHORT).show();
                             finish();
 
 
