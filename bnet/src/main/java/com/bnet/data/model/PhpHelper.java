@@ -9,15 +9,22 @@ import java.net.URL;
 import java.net.URLEncoder;
 import java.util.Map;
 
-
+/**
+ * Helper class for basic PHP commands
+ */
 public class PhpHelper {
-    public static String GET(String url) throws Exception {
+    /**
+     * Perform a GET request
+     * @param url The address of the server
+     * @return the response from the server
+     * @throws IOException if something goes wrong with the Http request
+     */
+    public static String GET(String url) throws IOException {
         URL obj = new URL(url);
         HttpURLConnection con = (HttpURLConnection) obj.openConnection();
         con.setRequestMethod("GET");
         if (con.getResponseCode() == HttpURLConnection.HTTP_OK) { // success
-            BufferedReader in = new BufferedReader(new InputStreamReader(
-                    con.getInputStream()));
+            BufferedReader in = new BufferedReader(new InputStreamReader(con.getInputStream()));
             String inputLine;
             StringBuilder response = new StringBuilder();
             while ((inputLine = in.readLine()) != null) {
@@ -30,6 +37,13 @@ public class PhpHelper {
             return "";
         }
     }
+    /**
+     * Perform a POST request
+     * @param url The address of the server
+     * @param params The params that will be send as data in the post request
+     * @return the response from the server
+     * @throws IOException if something goes wrong with the Http request
+     */
     public static String POST(String url, Map<String, Object> params) throws
             IOException {
         //Convert Map<String,Object> into key=value&key=value pairs.

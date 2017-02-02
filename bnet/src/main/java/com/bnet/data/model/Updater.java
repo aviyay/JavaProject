@@ -19,6 +19,9 @@ public class Updater extends IntentService {
     private static List<ProvidableRepository> repositories = new ArrayList<>();
     private static final int INTERVAL = 10000;
 
+    /**
+     * Adds the repositories to a local list to be check later when the service starts
+     */
     public Updater() {
         super("Updater");
 
@@ -27,6 +30,10 @@ public class Updater extends IntentService {
                 repositories.add(ProvidableUtils.getRepository(p));
     }
 
+    /**
+     * Start the Schedule Task for the Checks
+     * @param intent The intent used to open the service
+     */
     @Override
     protected void onHandleIntent(Intent intent) {
         Timer timer = new Timer();
@@ -39,8 +46,11 @@ public class Updater extends IntentService {
         timer.scheduleAtFixedRate(runCheck, 0, INTERVAL);
     }
 
+    /**
+     * Perform Checks whether there is something new in the database, if there is calls updateReceivers
+     */
     private void runCheck() {
-         Log.d("MyCustomTag", "BNet: Run checks");
+        Log.d("MyCustomTag", "BNet: Run checks");
 
         new AsyncTask<Void,Void,Void>()
         {
@@ -60,6 +70,9 @@ public class Updater extends IntentService {
 
     }
 
+    /**
+     * Send out a Broadcast message that there is an update in the content provider
+     */
     private void updateReceivers() {
         Log.d("MyCustomTag", "BNet: Sending broadcast");
         sendBroadcast(new Intent(Constants.UPDATE_ACTION));

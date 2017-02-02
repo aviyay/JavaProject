@@ -14,20 +14,45 @@ import com.bnet.shared.model.entities.Business;
 
 public class BusinessEditor extends Activity {
 
-    EditText nameField,countryField,cityField,streetField,phoneField,emailField,websiteField;
+    private EditText nameField;
+    private EditText countryField;
+    private EditText cityField;
+    private EditText streetField;
+    private EditText phoneField;
+    private EditText emailField;
+    private EditText websiteField;
+
+    /**
+     * Checks if the EditText View text is empty
+     * @param etText the editText view
+     * @return whether the EditText is empty or not
+     */
     private boolean isEmpty(EditText etText) {
         return etText.getText().toString().trim().length() == 0;
     }
+    /**
+     * Get String of Text from EditText View
+     * @param editText The EditText View
+     * @return The string inside the text in the EditText
+     * @throws Exception when the Text inside the EditText is empty
+     */
     private String getText(EditText editText) throws Exception {
         assertField(editText);
         return editText.getText().toString();
     }
+    /**
+     * Assert that the EditTest is not empty
+     * @param text the EditText View
+     * @throws Exception when the Text inside the EditText is empty
+     */
     private void assertField(EditText text) throws Exception {
         if(isEmpty(text))
             throw new  Exception(String.format(getString(R.string.error_field_empty), text.getHint()));
     }
-    void initializeSubmit()
-    {
+    /**
+     * Initialize the Submit Button, which includes sending the submitted data into the server
+     */
+    void initializeSubmit(){
         findViewById(R.id.submitBtn).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -71,7 +96,10 @@ public class BusinessEditor extends Activity {
             }
         });
     }
-    void initializeFields()
+    /**
+     * Find the view from the layout and initialize the local variables
+     */
+    void findViews()
     {
         nameField=(EditText)findViewById(R.id.nameField);
         countryField=(EditText)findViewById(R.id.countryField);
@@ -80,12 +108,12 @@ public class BusinessEditor extends Activity {
         phoneField=(EditText)findViewById(R.id.phoneField);
         emailField=(EditText)findViewById(R.id.emailField);
         websiteField=(EditText)findViewById(R.id.websiteField);
+        initializeSubmit();
     }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_business_editor);
-        initializeFields();
-        initializeSubmit();
+        findViews();
     }
 }

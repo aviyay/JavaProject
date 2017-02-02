@@ -24,21 +24,33 @@ public class MainActivity extends Activity {
     EditText usernameField;
     EditText passwordField;
 
+    /**
+     * Starting the service after the activity was started
+     * @param savedInstanceState
+     */
     @Override
     protected void onPostCreate(Bundle savedInstanceState) {
         super.onPostCreate(savedInstanceState);
         startService(new Intent(this, Updater.class));
     }
-
+    /**
+     * Checks if the EditText View text is empty
+     * @param etText the editText view
+     * @return whether the EditText is empty or not
+     */
     private boolean isEmpty(EditText etText) {
         return etText.getText().toString().trim().length() == 0;
     }
-    private void initializeButtons()
-    {
+    /**
+     * Initialize Buttons
+     */
+    private void initializeButtons() {
         initializeRegisterButton();
         initializeSignInButton();
     }
-
+    /**
+     * Initialize the Register Button
+     */
     private void initializeRegisterButton() {
         findViewById(R.id.registerButton).setOnClickListener(new View.OnClickListener() {
             @Override
@@ -91,7 +103,9 @@ public class MainActivity extends Activity {
             }
         });
     }
-
+    /**
+     * Initialize the SignIn Button
+     */
     private void initializeSignInButton() {
        findViewById(R.id.signInButton).setOnClickListener(new View.OnClickListener() {
             @Override
@@ -124,6 +138,10 @@ public class MainActivity extends Activity {
         });
     }
 
+    /**
+     * Make sure all of the Fields are valid
+     * @return True if all of the fields are not empty
+     */
     private boolean validateFields() {
         if(isEmpty(usernameField)||isEmpty(passwordField)) {
             Toast.makeText(getApplicationContext(), R.string.empty_fields_msg, Toast.LENGTH_SHORT).show();
@@ -136,19 +154,41 @@ public class MainActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
-        if(!sharedPreferences.getString("userLogIn","").equals(""))
+        if(isRememberMe())
             goToMenu();
+        findViews();
+    }
+
+    /**
+     * Checks if the user is already log in
+     * @return whether the user is already log in
+     */
+    private boolean isRememberMe() {
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+        return !sharedPreferences.getString("userLogIn","").equals("");
+    }
+
+    /**
+     * Find the view from the layout and initialize the local variables
+     */
+    private void findViews() {
         usernameField=(EditText)findViewById(R.id.usernameField);
         passwordField=(EditText)findViewById(R.id.passwordField);
         initializeButtons();
     }
 
+    /**
+     * Go to Activity Menu
+     */
     private void goToMenu() {
         Intent k = new Intent(this, Menu.class);
         startActivity(k);
     }
 
+    /**
+     * Sign in into the given account
+     * @param item The account to sign in to
+     */
     private void doSignIn(Account item) {
         if(((CheckBox)findViewById(R.id.checkBox)).isChecked()) {
             SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
