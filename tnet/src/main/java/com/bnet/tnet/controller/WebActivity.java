@@ -1,65 +1,61 @@
 package com.bnet.tnet.controller;
 
+import android.app.FragmentManager;
+import android.app.FragmentTransaction;
 import android.os.Bundle;
 import android.os.Handler;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.view.KeyEvent;
-import android.webkit.WebChromeClient;
-import android.webkit.WebView;
-import android.webkit.WebViewClient;
-import android.widget.ProgressBar;
+import android.view.View;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bnet.tnet.R;
 
+import org.w3c.dom.Text;
+
 public class WebActivity extends AppCompatActivity {
 
-    private ProgressBar webViewProgressBar;
-    private WebView agencyWebView;
+    private TextView agencyName;
 
+    private FloatingActionButton homeButton;
+
+    private WebFragment webFragment;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_web);
-        String link = getIntent().getStringExtra("LINK");
         findViews();
+        setFragment(getIntent().getStringExtra("LINK"));
+        Toast.makeText(this, R.string.double_back_to_exit,Toast.LENGTH_LONG).show();
+    }
 
-        agencyWebView.getSettings().setJavaScriptEnabled(true);
-        agencyWebView.setWebChromeClient(new WebChromeClient(){
+    private void setFragment(String link) {
+        Bundle bundle=new Bundle();
+        bundle.putString("LINK",link);
+        FragmentManager fragmentManager = getFragmentManager();
+        FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
+        webFragment = new WebFragment();
+
+        webFragment.setArguments(bundle);
+        fragmentTransaction.add(R.id.fragment_container, webFragment);
+        fragmentTransaction.commit();
+    }
+
+    private void findViews() {
+        agencyName=(TextView)findViewById(R.id.agencyName);
+        agencyName.setText(getIntent().getStringExtra("NAME"));
+
+        homeButton=(FloatingActionButton)findViewById(R.id.homeButton);
+        homeButton.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onProgressChanged(WebView view, int newProgress) {
-                super.onProgressChanged(view, newProgress);
-                webViewProgressBar.setProgress(newProgress);
+            public void onClick(View v) {
+                webFragment.goHome();
             }
         });
-        agencyWebView.setWebViewClient(new WebViewClient() {
-            @Override
-            public boolean shouldOverrideUrlLoading(WebView view,String url) {
-                view.loadUrl(url);
-                return false;
-            }
-        });
-        openLinkInWebView(link);
-        Toast.makeText(this,"Press Double BACK to exit",Toast.LENGTH_LONG).show();
     }
-    private void findViews()
-    {
-        webViewProgressBar=(ProgressBar)findViewById(R.id.webViewProgressBar);
-        agencyWebView=(WebView) findViewById(R.id.agencyWebView);
-    }
-    private void openLinkInWebView(String link) {
-        agencyWebView.loadUrl(addHttpIfNeeded(link));
-    }
-    private String addHttpIfNeeded(String url)
-    {
-        if(!url.startsWith("www.")&& !url.startsWith("http://") && !url.startsWith("https://")){
-            url = "www."+url;
-        }
-        if(!url.startsWith("http://") && !url.startsWith("https://")){
-            url = "http://"+url;
-        }
-        return url;
-    }
+
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event)  {
         if (Integer.parseInt(android.os.Build.VERSION.SDK) > 5
@@ -70,6 +66,7 @@ public class WebActivity extends AppCompatActivity {
         }
         return super.onKeyDown(keyCode, event);
     }
+
     boolean doubleBackToExitPressedOnce = false;
 
     @Override
@@ -78,11 +75,9 @@ public class WebActivity extends AppCompatActivity {
             super.onBackPressed();
             return;
         }
-        if(agencyWebView.canGoBack())
-            agencyWebView.goBack();
-        else {
-            Toast.makeText(this,"Press Double BACK to exit",Toast.LENGTH_LONG).show();
-        }
+        if(!webFragment.goBack())
+            Toast.makeText(this,R.string.double_back_to_exit,Toast.LENGTH_LONG).show();
+
         this.doubleBackToExitPressedOnce = true;
 
         new Handler().postDelayed(new Runnable() {

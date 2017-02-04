@@ -152,7 +152,8 @@ public class AgencyDetails extends AppCompatActivity {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         Intent intent = new Intent(getApplicationContext(), WebActivity.class);
-                        intent.putExtra("LINK", agencyLink.getText());
+                        intent.putExtra("NAME",agency.getName());
+                        intent.putExtra("LINK", agency.getLinkToWebsite());
                         startActivity(intent);
                     }
                 });

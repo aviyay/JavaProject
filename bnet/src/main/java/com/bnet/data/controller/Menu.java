@@ -78,7 +78,7 @@ public class Menu extends Activity {
         }
 
         this.doubleBackToExitPressedOnce = true;
-        Toast.makeText(this, "Please click BACK again to logout", Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, R.string.click_back_again_to_logout, Toast.LENGTH_SHORT).show();
 
         new Handler().postDelayed(new Runnable() {
 
