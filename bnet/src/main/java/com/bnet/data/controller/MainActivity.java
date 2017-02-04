@@ -19,10 +19,25 @@ import com.bnet.data.model.backend.AccountsRepository;
 import com.bnet.data.model.backend.RepositoriesFactory;
 import com.bnet.data.model.entities.Account;
 
+import java.security.MessageDigest;
+import java.util.Formatter;
+
 public class MainActivity extends Activity {
 
     EditText usernameField;
     EditText passwordField;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+        String username= getRememberMe();
+        if(!username.trim().equals("")) {
+            Toast.makeText(getApplicationContext(), String.format("%s %s",getString(R.string.welcome_back), username),Toast.LENGTH_SHORT).show();
+            goToMenu();
+        }
+        findViews();
+    }
 
     /**
      * Starting the service after the activity was started
@@ -33,6 +48,14 @@ public class MainActivity extends Activity {
         super.onPostCreate(savedInstanceState);
         startService(new Intent(this, Updater.class));
     }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        passwordField.getText().clear();
+    }
+
+
     /**
      * Checks if the EditText View text is empty
      * @param etText the editText view
@@ -96,18 +119,57 @@ public class MainActivity extends Activity {
                                 return true;
                             }
 
-                        }.execute(username,password);
+                        }.execute(username, getPasswordHash(password));
                     }
                 });
+
                 builder.create().show();
             }
         });
     }
+
+    /**
+     * Get Password Hash, using SHA-1
+     * @param password password to be hashed
+     * @return The SHA-1 hash of the password
+     */
+    private String getPasswordHash(String password){
+        MessageDigest crypt;
+        try
+        {
+            crypt = MessageDigest.getInstance("SHA-1");
+            crypt.reset();
+            crypt.update(password.getBytes("UTF-8"));
+        }
+        catch (Exception ex)
+        {
+            Toast.makeText(getApplicationContext(),ex.getMessage(),Toast.LENGTH_SHORT).show();
+            return "";
+        }
+        return byteToHex(crypt.digest());
+    }
+
+    /**
+     * Get Hex representation of the bytes of the hash
+     * @param hash The hash
+     * @return The Hex representation
+     */
+    private static String byteToHex(final byte[] hash){
+        Formatter formatter = new Formatter();
+        for (byte b : hash)
+        {
+            formatter.format("%02x", b);
+        }
+        String result = formatter.toString();
+        formatter.close();
+        return result;
+    }
+
     /**
      * Initialize the SignIn Button
      */
     private void initializeSignInButton() {
-       findViewById(R.id.signInButton).setOnClickListener(new View.OnClickListener() {
+        findViewById(R.id.signInButton).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if(!validateFields())
@@ -133,7 +195,7 @@ public class MainActivity extends Activity {
                             Toast.makeText(getApplicationContext(), R.string.password_or_username_incorrect,Toast.LENGTH_SHORT).show();
 
                     }
-                }.execute(usernameField.getText().toString(),passwordField.getText().toString());
+                }.execute(usernameField.getText().toString(), getPasswordHash(passwordField.getText().toString()));
             }
         });
     }
@@ -150,22 +212,14 @@ public class MainActivity extends Activity {
         return true;
     }
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-        if(isRememberMe())
-            goToMenu();
-        findViews();
-    }
-
     /**
-     * Checks if the user is already log in
-     * @return whether the user is already log in
+     * Get the username logged in, if there is one
+     * @return The string of the user logged in
+     *         Empty string if there isn't a user logged in
      */
-    private boolean isRememberMe() {
+    private String getRememberMe() {
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
-        return !sharedPreferences.getString("userLogIn","").equals("");
+        return sharedPreferences.getString("userLogIn","");
     }
 
     /**
@@ -196,7 +250,7 @@ public class MainActivity extends Activity {
             editor.putString("userLogIn", item.getUsername());
             editor.apply();
         }
-            Toast.makeText(getApplicationContext(), "Signed in - "+ item.getUsername(), Toast.LENGTH_SHORT).show();
+        Toast.makeText(getApplicationContext(), "Signed in - "+ item.getUsername(), Toast.LENGTH_SHORT).show();
         goToMenu();
     }
 

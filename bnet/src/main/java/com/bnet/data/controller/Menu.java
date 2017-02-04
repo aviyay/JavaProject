@@ -86,6 +86,6 @@ public class Menu extends Activity {
             public void run() {
                 doubleBackToExitPressedOnce=false;
             }
-        }, 1000);
+        }, 2000);
     }
 }
