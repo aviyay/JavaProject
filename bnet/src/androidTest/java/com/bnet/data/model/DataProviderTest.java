@@ -4,26 +4,24 @@ import android.content.ContentValues;
 import android.database.Cursor;
 import android.net.Uri;
 
+import com.bnet.data.model.backend.RepositoriesFactory;
 import com.bnet.shared.model.Constants;
 import com.bnet.shared.model.backend.Providable;
 import com.bnet.shared.model.backend.ProvidableRepository;
 import com.bnet.shared.model.datasource.ListProvidableRepository;
-import com.bnet.shared.model.services.utils.CursorUtils;
-import com.bnet.data.model.backend.RepositoriesFactory;
-import com.bnet.shared.model.services.utils.ProvidableUtils;
 import com.bnet.shared.model.entities.Activity;
 import com.bnet.shared.model.entities.Business;
 import com.bnet.shared.model.entities.EntitiesSamples;
+import com.bnet.shared.model.services.utils.CursorUtils;
+import com.bnet.shared.model.services.utils.ProvidableUtils;
 
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-import java.lang.reflect.Array;
-import java.util.Arrays;
-import java.util.Collections;
-
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
 
 public class DataProviderTest {
     private DataProvider provider;

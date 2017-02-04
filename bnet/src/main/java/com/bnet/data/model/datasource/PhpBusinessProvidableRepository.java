@@ -1,7 +1,6 @@
 package com.bnet.data.model.datasource;
 
 import android.content.ContentValues;
-import android.support.annotation.NonNull;
 
 import com.bnet.data.model.PhpHelper;
 import com.bnet.shared.model.backend.ProvidableRepository;
@@ -18,7 +17,8 @@ import java.util.List;
 import java.util.Map;
 
 public class PhpBusinessProvidableRepository implements ProvidableRepository<Business> {
-  private final String WEB_URL="http://tennenba.vlab.jct.ac.il/";
+    private final String WEB_URL="http://tennenba.vlab.jct.ac.il/";
+
     @Override
     public long addAndReturnAssignedId(Business item) {
         ContentValues bis= ProvidableUtils.contentValuesConvert(item);
@@ -37,8 +37,8 @@ public class PhpBusinessProvidableRepository implements ProvidableRepository<Bus
             }
             if (results.length()>5)
                 if(results.substring(0, 5).equalsIgnoreCase("error")) {
-                throw new Exception(results.substring(5));
-            }
+                    throw new Exception(results.substring(5));
+                }
             return Long.parseLong(results);
         } catch (Exception e) {
             throw new IllegalArgumentException(e.getMessage());
@@ -50,7 +50,11 @@ public class PhpBusinessProvidableRepository implements ProvidableRepository<Bus
         return getList(WEB_URL+"business_getAll.php");
     }
 
-    @NonNull
+    /**
+     * Get a list of the business's returned from the Get request to the link
+     * @param link The link of the server to send the request to
+     * @return List of the business's from the server
+     */
     private List<Business> getList(String link) {
         JSONArray array;
         JSONObject obj;
@@ -97,7 +101,6 @@ public class PhpBusinessProvidableRepository implements ProvidableRepository<Bus
 
     @Override
     public void reset() {
-        throw new UnsupportedOperationException();
     }
 
     @Override

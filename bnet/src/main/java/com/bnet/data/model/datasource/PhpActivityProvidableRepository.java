@@ -1,7 +1,6 @@
 package com.bnet.data.model.datasource;
 
 import android.content.ContentValues;
-import android.support.annotation.NonNull;
 
 import com.bnet.data.model.PhpHelper;
 import com.bnet.shared.model.backend.ProvidableRepository;
@@ -19,8 +18,9 @@ import java.util.List;
 import java.util.Map;
 
 
-public class PhpActivityProvideableRepository implements ProvidableRepository<Activity> {
+public class PhpActivityProvidableRepository implements ProvidableRepository<Activity> {
     private final String WEB_URL="http://tennenba.vlab.jct.ac.il/";
+
     @Override
     public long addAndReturnAssignedId(Activity item) {
         ContentValues bis= ProvidableUtils.contentValuesConvert(item);
@@ -52,7 +52,11 @@ public class PhpActivityProvideableRepository implements ProvidableRepository<Ac
         return getList(WEB_URL+"activity_getAll.php");
     }
 
-    @NonNull
+    /**
+     * Get a list of the activities returned from the Get request to the link
+     * @param link The link of the server to send the request to
+     * @return List of the activities from the server
+     */
     private List<Activity> getList(String link) {
         JSONArray array;
         JSONObject obj;
@@ -101,7 +105,6 @@ public class PhpActivityProvideableRepository implements ProvidableRepository<Ac
 
     @Override
     public void reset() {
-        throw new UnsupportedOperationException();
     }
 
     @Override

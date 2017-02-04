@@ -8,7 +8,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class ListAccountsRepository implements AccountsRepository {
+class ListAccountsRepository implements AccountsRepository {
     private Map<String, Account> accounts = new HashMap<>();
 
     @Override

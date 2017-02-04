@@ -3,7 +3,7 @@ package com.bnet.data.model;
 import org.junit.Before;
 
 public class UpdaterTest {
-    Updater updater;
+    private Updater updater;
 
     @Before
     public void setUp() throws Exception {

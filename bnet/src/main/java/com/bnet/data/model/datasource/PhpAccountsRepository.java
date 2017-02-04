@@ -41,6 +41,12 @@ public class PhpAccountsRepository  implements AccountsRepository{
             return null;
         return list.get(0);
     }
+
+    /**
+     * Get a list of the accounts returned from the Get request to the link
+     * @param link The link of the server to send the request to
+     * @return List of the accounts from the server
+     */
     private List<Account> getList(String link) {
         JSONArray array;
         JSONObject obj;
@@ -63,8 +69,9 @@ public class PhpAccountsRepository  implements AccountsRepository{
         }
         return list;
     }
+
     @Override
     public List<Account> getAll() {
-      return getList(WEB_URL+"account_getAll.php");
+        return getList(WEB_URL+"account_getAll.php");
     }
 }

@@ -10,7 +10,6 @@
     <string name="password_or_username_incorrect">Password or Username Incorrect</string>
     <string name="add_business_button">Add Business</string>
     <string name="add_activity_button">Add Activity</string>
-    <string name="title_activity_view_business">Businesss</string>
     <string name="business_name_hint">Name</string>
     <string name="business_address_hint">Address</string>
     <string name="business_phone_hint">Phone Number</string>
@@ -21,12 +20,12 @@
     <string name="country">Country</string>
     <string name="city">City</string>
     <string name="street">Street</string>
-    <string name="connecting_to_server">Connecting to server...</string>
+    <string name="connecting_to_server">Connecting to server…</string>
     <string name="error_header">"Error: "</string>
     <string name="sign_out">Sign out</string>
     <string name="error_field_empty">The field %s can\'t be empty!</string>
     <string name="select_business">Select Business</string>
-    <string name="activiy_details">Activiy Details</string>
+    <string name="activity_details">Activity Details</string>
     <string name="price">Price($)</string>
     <string name="description_hint">Description\nWrite a few words about the activity.</string>
     <string name="business_id">Business ID</string>
@@ -43,4 +42,5 @@
     <string name="re_enter_your_password">Re-enter your password</string>
     <string name="activity_was_added">Activity was added</string>
     <string name="server_unavailable">The server is unavailable at this time</string>
+    <string name="business_details">Business details</string>
 </resources>

@@ -11,7 +11,7 @@ import org.junit.Test;
 import static org.junit.Assert.assertEquals;
 
 public class UtiMatcherTest {
-    UriMatcher uriMatcher;
+    private UriMatcher uriMatcher;
 
     private static final int ACTIVITIES = 1;
     private static final int BUSINESSES = 2;
