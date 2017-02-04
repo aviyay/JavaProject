@@ -43,4 +43,5 @@
     <string name="activity_was_added">Activity was added</string>
     <string name="server_unavailable">The server is unavailable at this time</string>
     <string name="business_details">Business details</string>
+    <string name="title_business_editor">Business Editor</string>
 </resources>
