@@ -9,6 +9,11 @@ import com.bnet.shared.model.services.converters.Converter;
 import static com.bnet.shared.model.Constants.BusinessContract.*;
 
 public class BusinessContentValuesConverter implements Converter<ContentValues, Business> {
+    /**
+     * Convert Business to Content Values
+     * @param business business to be converted
+     * @return The converted Content values
+     */
     public ContentValues convert(Business business) {
         ContentValues result = new ContentValues();
 
@@ -25,6 +30,11 @@ public class BusinessContentValuesConverter implements Converter<ContentValues, 
         return result;
     }
 
+    /**
+     * Convert Content Values to Business
+     * @param contentValues The content values to be converted
+     * @return The converted business
+     */
     public Business convertBack(ContentValues contentValues) {
         Business result = new Business();
 

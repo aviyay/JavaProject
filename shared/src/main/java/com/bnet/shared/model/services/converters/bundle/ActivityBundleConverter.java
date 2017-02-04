@@ -10,6 +10,11 @@ import com.bnet.shared.model.services.converters.Converter;
 import static com.bnet.shared.model.Constants.ActivityContract.*;
 
 public class ActivityBundleConverter implements Converter<Bundle, Activity> {
+    /**
+     * Convert Activity to Bundle
+     * @param activity activity to be converted
+     * @return The converted Bundle
+     */
     @Override
     public Bundle convert(Activity activity) {
         Bundle result = new Bundle();
@@ -26,6 +31,11 @@ public class ActivityBundleConverter implements Converter<Bundle, Activity> {
         return result;
     }
 
+    /**
+     * Convert Bundle to Activity
+     * @param bundle The Bundle to be converted
+     * @return The converted activity
+     */
     @Override
     public Activity convertBack(Bundle bundle) {
         Activity result = new Activity();

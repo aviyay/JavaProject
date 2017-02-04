@@ -159,7 +159,7 @@ public class ActivityEditor extends Activity {
     }
 
     /**
-     * Initialize the Business ID Spinner, Including going to the DS and getting the list of available Business's
+     * Initialize the Business ID Spinner, Including going to the DS and getting the list of available businesses
      */
     private void initializeBusinessId() {
         businessIDSpinner=((Spinner) findViewById(R.id.businessSpinner));

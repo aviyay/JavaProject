@@ -9,7 +9,11 @@ import com.bnet.shared.model.services.converters.Converter;
 import static com.bnet.shared.model.Constants.BusinessContract.*;
 
 public class BusinessBundleConverter implements Converter<Bundle, Business> {
-
+    /**
+     * Convert Business to Bundle
+     * @param business business to be converted
+     * @return The converted Bundle
+     */
     @Override
     public Bundle convert(Business business) {
         Bundle result = new Bundle();
@@ -27,6 +31,11 @@ public class BusinessBundleConverter implements Converter<Bundle, Business> {
         return result;
     }
 
+    /**
+     * Convert Bundle to Business
+     * @param bundle The Bundle to be converted
+     * @return The converted business
+     */
     @Override
     public Business convertBack(Bundle bundle) {
         Business result = new Business();

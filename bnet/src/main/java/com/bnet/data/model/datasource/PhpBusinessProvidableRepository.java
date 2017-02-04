@@ -51,9 +51,9 @@ public class PhpBusinessProvidableRepository implements ProvidableRepository<Bus
     }
 
     /**
-     * Get a list of the business's returned from the Get request to the link
+     * Get a list of the businesses returned from the Get request to the link
      * @param link The link of the server to send the request to
-     * @return List of the business's from the server
+     * @return List of the businesses from the server
      */
     private List<Business> getList(String link) {
         JSONArray array;

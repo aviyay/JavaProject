@@ -10,10 +10,6 @@ public class ListProvidableRepository<T extends Providable> implements Providabl
     private final List<T> items = new ArrayList<>();
     private final ArrayList<T> news = new ArrayList<>();
 
-    public ListProvidableRepository() {
-        //Log.d("MyCustomTag", "Shared: ListProvidableRepository " + toString() + " created");
-    }
-
     @Override
     public long addAndReturnAssignedId(T item) {
         items.add(item);

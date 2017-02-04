@@ -13,27 +13,45 @@ public class Address {
         this.city = city;
         this.street = street;
     }
-
+    /**
+     * Get Country
+     * @return The country in the address
+     */
     public String getCountry() {
         return country;
     }
-
+    /**
+     * Set Country
+     * @param country The country to be set
+     */
     public void setCountry(String country) {
         this.country = country;
     }
-
+    /**
+     * Get City
+     * @return The city in the address
+     */
     public String getCity() {
         return city;
     }
-
+    /**
+     * Set City
+     * @param city The city to be set
+     */
     public void setCity(String city) {
         this.city = city;
     }
-
+    /**
+     * Get Street
+     * @return The street in the address
+     */
     public String getStreet() {
         return street;
     }
-
+    /**
+     * Set Street
+     * @param street The street to be set
+     */
     public void setStreet(String street) {
         this.street = street;
     }

@@ -11,14 +11,14 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
-
+//TODO
 public class CursorUtils {
     public static Cursor mergeCursors (List<Cursor> cursors) {
         Cursor[] cursorArray = new Cursor[cursors.size()];
         return new MergeCursor(cursors.toArray(cursorArray)) ;
     }
 
-    static Cursor ProvidablesToCursor(Providable... providables) {
+    static Cursor ProvidableToCursor(Providable... providables) {
         return providableListToCursor(Arrays.asList(providables));
     }
     public static Cursor providableListToCursor(List<? extends Providable> providableList) {

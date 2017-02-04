@@ -27,7 +27,7 @@ public class CursorUtilsTest {
     public void mergeCursors() throws Exception {
         List<Cursor> cursorList = new ArrayList<>();
         for (Activity activity : activityList)
-            cursorList.add(CursorUtils.ProvidablesToCursor(activity));
+            cursorList.add(CursorUtils.ProvidableToCursor(activity));
 
         Cursor merged = CursorUtils.mergeCursors(cursorList);
         List<Activity> result = CursorUtils.cursorToProvidableList(Activity.class, merged);

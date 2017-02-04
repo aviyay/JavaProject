@@ -10,6 +10,11 @@ import com.bnet.shared.model.services.converters.Converter;
 import static com.bnet.shared.model.Constants.ActivityContract.*;
 
 public class ActivityContentValuesConverter implements Converter<ContentValues, Activity> {
+    /**
+     * Convert Activity to Content Values
+     * @param activity activity to be converted
+     * @return The converted Content values
+     */
     public ContentValues convert(Activity activity) {
         ContentValues result = new ContentValues();
 
@@ -25,6 +30,11 @@ public class ActivityContentValuesConverter implements Converter<ContentValues, 
         return result;
     }
 
+    /**
+     * Convert Content Values to Activity
+     * @param contentValues The content values to be converted
+     * @return The converted activity
+     */
     public Activity convertBack(ContentValues contentValues) {
         Activity result = new Activity();
 

@@ -1,5 +1,8 @@
 package com.bnet.shared.model.entities;
 
+/**
+ * Samples Entities for Testing purposes
+ */
 public class EntitiesSamples {
 
     public static Business makeBusiness() {

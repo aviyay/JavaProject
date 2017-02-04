@@ -10,15 +10,15 @@ public class Business implements Providable {
     private String email = "";
     private String linkToWebsite = "";
 
+    public Business() {
+    }
+
     public Business(String name, Address address, String phone, String email, String linkToWebsite) {
         this.name = name;
         this.address = address;
         this.phone = phone;
         this.email = email;
         this.linkToWebsite = linkToWebsite;
-    }
-
-    public Business() {
     }
 
     @Override
@@ -30,47 +30,76 @@ public class Business implements Providable {
     public void setId(long id) {
         this.id = id;
     }
-
+    /**
+     * Get Name
+     * @return The name of the business
+     */
     public String getName() {
         return name;
     }
-
+    /**
+     * Set Name
+     * @param name The Name to be set
+     */
     public void setName(String name) {
         this.name = name;
     }
-
+    /**
+     * Get Address
+     * @return The address of the business
+     */
     public Address getAddress() {
         return address;
     }
-
+    /**
+     * Set Address
+     * @param address The Address to be set
+     */
     public void setAddress(Address address) {
         this.address = address;
     }
-
+    /**
+     * Get Phone
+     * @return The phone of the business
+     */
     public String getPhone() {
         return phone;
     }
-
+    /**
+     * Set Phone
+     * @param phone The Phone to be set
+     */
     public void setPhone(String phone) {
         this.phone = phone;
     }
-
+    /**
+     * Get Email
+     * @return The email of the business
+     */
     public String getEmail() {
         return email;
     }
-
+    /**
+     * Set Email
+     * @param email The Email to be set
+     */
     public void setEmail(String email) {
         this.email = email;
     }
-
+    /**
+     * Get Link to the business website
+     * @return The link to the business website
+     */
     public String getLinkToWebsite() {
         return linkToWebsite;
     }
-
+    /**
+     * Set Website link
+     * @param linkToWebsite The Website link to be set
+     */
     public void setLinkToWebsite(String linkToWebsite) {
         this.linkToWebsite = linkToWebsite;
     }
-
 
     @Override
     public boolean equals(Object o) {
