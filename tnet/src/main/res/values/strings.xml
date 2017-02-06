@@ -10,7 +10,7 @@
     <string name="email">Email:</string>
     <string name="phone">Phone:</string>
     <string name="address">Address:</string>
-    <string name="space_makaf_space">&#160;-&#160;</string>
+    <string name="space_hyphen_space">&#160;-&#160;</string>
     <string name="dollar_sign">$</string>
     <string name="description">Description:</string>
     <string name="travel_agency">Travel Agency:</string>
@@ -20,13 +20,9 @@
     <string name="yes">Yes</string>
     <string name="travels_from">Travels from</string>
     <string name="share_msg_trip" formatted="false">Check out this trip:%s - %s\n%s\nPrice: %s$</string>
-    <string name="share_trip_to">Share trip to...</string>
-    <string name="share_agency_to">Share agency to...</string>
+    <string name="share_trip_to">Share trip to…</string>
+    <string name="share_agency_to">Share agency to…</string>
     <string name="share_msg_agency" formatted="false">Check out this agency: %s\n%s</string>
     <string name="agencies">Agencies</string>
     <string name="travels">Travels</string>
-
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
-    <string name="double_back_to_exit">Press Double BACK to exit</string>
 </resources>

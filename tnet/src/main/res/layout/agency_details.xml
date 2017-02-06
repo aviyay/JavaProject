@@ -6,7 +6,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.bnet.tnet.controller.AgencyDetails">
-
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -25,57 +24,53 @@
             android:orientation="vertical">
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="vertical">
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="30dp"
-                    android:orientation="horizontal"
-                    android:gravity="center_vertical">
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:gravity="center_vertical"
-                        android:textStyle="bold"
-                        android:text="@string/address"/>
-                    <TextView
-                        android:id="@+id/agencyStreet"
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:gravity="center_vertical"/>
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:gravity="right|end">
-                        <ImageButton
-                            android:id="@+id/openMap"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginStart="20dp"
-                            android:layout_marginLeft="20dp"
-                            android:scaleType="fitCenter"
-                            android:background="@android:color/transparent"
-                            android:adjustViewBounds="true"
-                            android:src="@drawable/gmaps_icon"/>
-                    </LinearLayout>
-                </LinearLayout>
-                <LinearLayout
-                    android:layout_width="match_parent"
+                android:layout_height="30dp"
+                android:orientation="horizontal"
+                android:gravity="center_vertical">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:gravity="center_vertical"
-                    android:layout_height="30dp">
-                    <TextView
+                    android:textStyle="bold"
+                    android:text="@string/address"/>
+                <TextView
+                    android:id="@+id/agencyStreet"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:gravity="center_vertical"/>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="right|end">
+                    <ImageButton
+                        android:id="@+id/openMap"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:textStyle="bold"
-                        android:text="@string/phone"/>
-                    <TextView
-                        android:id="@+id/agencyPhone"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"/>
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:gravity="right|end">
+                        android:layout_marginStart="20dp"
+                        android:layout_marginLeft="20dp"
+                        android:scaleType="fitCenter"
+                        android:background="@android:color/transparent"
+                        android:adjustViewBounds="true"
+                        android:src="@drawable/gmaps_icon"/>
+                </LinearLayout>
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:gravity="center_vertical"
+                android:layout_height="30dp">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textStyle="bold"
+                    android:text="@string/phone"/>
+                <TextView
+                    android:id="@+id/agencyPhone"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="right|end">
                     <ImageButton
                         android:id="@+id/callPhone"
                         android:layout_width="wrap_content"
@@ -86,25 +81,25 @@
                         android:adjustViewBounds="true"
                         android:background="@android:color/transparent"
                         android:src="@drawable/phone_icon"/>
-                        </LinearLayout>
                 </LinearLayout>
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:gravity="center_vertical"
+                android:layout_height="30dp">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textStyle="bold"
+                    android:text="@string/email"/>
+                <TextView
+                    android:id="@+id/agencyEmail"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:gravity="center_vertical"
-                    android:layout_height="30dp">
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textStyle="bold"
-                        android:text="@string/email"/>
-                    <TextView
-                        android:id="@+id/agencyEmail"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"/>
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:gravity="right|end">
+                    android:layout_height="match_parent"
+                    android:gravity="right|end">
                     <ImageButton
                         android:id="@+id/sendEmail"
                         android:layout_width="wrap_content"
@@ -115,37 +110,36 @@
                         android:adjustViewBounds="true"
                         android:background="@android:color/transparent"
                         android:src="@drawable/android_icon" />
-                        </LinearLayout>
                 </LinearLayout>
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="30dp"
+                android:gravity="center_vertical"
+                >
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textStyle="bold"
+                    android:text="@string/website"/>
+                <TextView
+                    android:id="@+id/agencyLink"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="30dp"
-                    android:gravity="center_vertical"
-                    >
-                    <TextView
+                    android:layout_height="match_parent"
+                    android:gravity="right|end">
+                    <ImageButton
+                        android:id="@+id/openLink"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:textStyle="bold"
-                        android:text="@string/website"/>
-                    <TextView
-                        android:id="@+id/agencyLink"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"/>
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:gravity="right|end">
-                        <ImageButton
-                            android:id="@+id/openLink"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginStart="20dp"
-                            android:layout_marginLeft="20dp"
-                            android:scaleType="fitCenter"
-                            android:background="@android:color/transparent"
-                            android:adjustViewBounds="true"
-                            android:src="@drawable/browser_icon"/>
-                    </LinearLayout>
+                        android:layout_marginStart="20dp"
+                        android:layout_marginLeft="20dp"
+                        android:scaleType="fitCenter"
+                        android:background="@android:color/transparent"
+                        android:adjustViewBounds="true"
+                        android:src="@drawable/browser_icon"/>
                 </LinearLayout>
             </LinearLayout>
         </LinearLayout>
@@ -153,18 +147,18 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center">
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textStyle="bold"
-            android:textSize="20sp"
-            android:text="@string/travels_from"/>
-        <TextView
-            android:id="@+id/agencyName"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textStyle="bold"
-            android:textSize="20sp"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textStyle="bold"
+                android:textSize="20sp"
+                android:text="@string/travels_from"/>
+            <TextView
+                android:id="@+id/agencyName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textStyle="bold"
+                android:textSize="20sp"/>
         </LinearLayout>
         <android.support.v7.widget.RecyclerView xmlns:app="http://schemas.android.com/apk/res-auto"
             android:id="@id/recycler_view"
@@ -186,18 +180,14 @@
             android:orientation="vertical"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-
-            android:background="@android:color/darker_gray"/>
-        <com.bnet.tnet.view.ShortTravelDetails
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@id/short_travel_details"/>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@android:color/darker_gray"/>
+            <com.bnet.tnet.view.ShortTravelDetails
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@id/short_travel_details"/>
         </LinearLayout>
-
     </android.support.v4.widget.NestedScrollView>
-
-
 </android.support.design.widget.CoordinatorLayout>

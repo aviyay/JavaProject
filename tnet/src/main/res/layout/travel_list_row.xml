@@ -4,13 +4,11 @@
     android:background="?android:attr/selectableItemBackground"
     android:focusable="true"
     android:textDirection="ltr">
-
     <ImageView
         android:id="@+id/logoImage"
         android:layout_width="75dp"
         android:layout_height="75dp"
         android:src="@drawable/travel" />
-
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -18,7 +16,6 @@
         android:layout_marginStart="10dp"
         android:gravity="center"
         android:orientation="vertical">
-
         <TextView
             android:id="@+id/travelCountry"
             android:layout_width="wrap_content"
@@ -26,21 +23,18 @@
             android:layout_marginTop="10dp"
             android:textSize="25sp"
             android:textStyle="bold|italic" />
-
         <TextView
             android:id="@+id/travelDates"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="15sp"
             android:textStyle="bold" />
-
         <TextView
             android:id="@+id/travelAgency"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="15sp" />
     </LinearLayout>
-
     <TextView
         android:id="@+id/travelPrice"
         android:layout_width="match_parent"
@@ -49,6 +43,4 @@
         android:gravity="end"
         android:textSize="25sp"
         android:textStyle="bold"/>
-
-
 </LinearLayout>

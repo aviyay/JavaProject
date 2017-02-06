@@ -43,5 +43,4 @@
             android:layout_gravity="right|end|bottom"
             android:id="@+id/homeButton"/>
     </LinearLayout>
-
 </LinearLayout>

@@ -6,6 +6,5 @@
     android:layout_height="wrap_content"
     android:background="?attr/colorPrimaryDark"
     android:fitsSystemWindows="true"
-
     android:minHeight="?attr/actionBarSize"
     app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"/>
