@@ -30,6 +30,11 @@ public class FilterDecorator<T extends Providable> implements ProvidableReposito
         return filterList(repository.getAllNews());
     }
 
+    /**
+     * Filter the list using the FilterDecorator filter
+     * @param input The list to be filtered
+     * @return The filtered list
+     */
     private List<T> filterList(List<T> input) {
         ArrayList<T> result = new ArrayList<>();
 
