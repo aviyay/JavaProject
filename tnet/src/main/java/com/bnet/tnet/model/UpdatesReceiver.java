@@ -33,6 +33,12 @@ public class UpdatesReceiver extends BroadcastReceiver {
         Log.d("MyCustomTag", "TNet: UpdatesReceiverCreated");
     }
 
+    /**
+     * Invoked when receiving Intent broadcast
+     * The Intent broadcast is sent when new data has been added to the data source
+     * @param context The Context in which the receiver is running.
+     * @param intent The Intent being received.
+     */
     @Override
     public void onReceive(final Context context, Intent intent) {
         Log.d("MyCustomTag", "TNet: BroadCast received");
@@ -47,7 +53,7 @@ public class UpdatesReceiver extends BroadcastReceiver {
 
     /**
      * Refresh the database, and pull new data if there is any
-     * @param context The context of the application
+     * @param context The application context
      */
     public static void refresh(Context context) {
         final String NEWS = "news";
@@ -56,7 +62,7 @@ public class UpdatesReceiver extends BroadcastReceiver {
 
     /**
      * Clean the database and pull the current data
-     * @param context The context of the application
+     * @param context The application context
      */
     public static void freshStart(Context context) {
         resetRepositories();
@@ -71,6 +77,11 @@ public class UpdatesReceiver extends BroadcastReceiver {
         ProvidableUtils.getRepository(Business.class).reset();
     }
 
+    /**
+     * Pull data from the server and store the data in the loacl repositories
+     * @param context The application context
+     * @param activityQuerySelection The query selection(type)
+     */
     private static void pull(final Context context, String activityQuerySelection) {
         ContentResolver resolver = context.getContentResolver();
 
