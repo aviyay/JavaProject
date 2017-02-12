@@ -25,4 +25,5 @@
     <string name="share_msg_agency" formatted="false">Check out this agency: %s\n%s</string>
     <string name="agencies">Agencies</string>
     <string name="travels">Travels</string>
+    <string name="double_back_to_exit">Press Double BACK to exit</string>
 </resources>
