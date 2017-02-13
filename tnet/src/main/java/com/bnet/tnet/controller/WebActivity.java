@@ -1,6 +1,5 @@
 package com.bnet.tnet.controller;
 
-import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.os.Bundle;
 import android.os.Handler;
@@ -13,28 +12,29 @@ import android.widget.Toast;
 
 import com.bnet.tnet.R;
 
-import org.w3c.dom.Text;
-
+/**
+ * This activity helps with surfing the web
+ */
 public class WebActivity extends AppCompatActivity {
 
-    private TextView agencyName;
-
-    private FloatingActionButton homeButton;
-
     private WebFragment webFragment;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_web);
-        findViews();
+        setupViews();
         setFragment(getIntent().getStringExtra("LINK"));
         Toast.makeText(this, R.string.double_back_to_exit,Toast.LENGTH_LONG).show();
     }
 
+    /**
+     * Setup the WebFragment
+     * @param link The link to open
+     */
     private void setFragment(String link) {
         Bundle bundle=new Bundle();
         bundle.putString("LINK",link);
-        FragmentManager fragmentManager = getFragmentManager();
         FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
         webFragment = new WebFragment();
 
@@ -43,11 +43,14 @@ public class WebActivity extends AppCompatActivity {
         fragmentTransaction.commit();
     }
 
-    private void findViews() {
-        agencyName=(TextView)findViewById(R.id.agencyName);
+    /**
+     * Setup the xml views
+     */
+    private void setupViews() {
+        TextView agencyName = (TextView) findViewById(R.id.agencyName);
         agencyName.setText(getIntent().getStringExtra("NAME"));
 
-        homeButton=(FloatingActionButton)findViewById(R.id.homeButton);
+        FloatingActionButton homeButton = (FloatingActionButton) findViewById(R.id.homeButton);
         homeButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -56,6 +59,12 @@ public class WebActivity extends AppCompatActivity {
         });
     }
 
+    /**
+     * ???
+     * @param keyCode ???
+     * @param event ???
+     * @return ???
+     */
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event)  {
         if (Integer.parseInt(android.os.Build.VERSION.SDK) > 5
@@ -69,6 +78,9 @@ public class WebActivity extends AppCompatActivity {
 
     boolean doubleBackToExitPressedOnce = false;
 
+    /**
+     * Exit the activity only if the user clicked the return button twice fast
+     */
     @Override
     public void onBackPressed() {
         if (doubleBackToExitPressedOnce) {

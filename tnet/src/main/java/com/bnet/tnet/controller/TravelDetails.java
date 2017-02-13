@@ -16,8 +16,11 @@ import com.bnet.tnet.Router;
 import com.bnet.tnet.view.AgencyListRow;
 import com.bnet.tnet.view.ShortTravelDetails;
 
-
+/**
+ * An activity to show a travel details
+ */
 public class TravelDetails extends android.app.Activity {
+
     private ShortTravelDetails shortTravelDetails;
     private AgencyListRow agencyListRow;
     private Toolbar toolbar;
@@ -36,6 +39,9 @@ public class TravelDetails extends android.app.Activity {
 
         bindViews();
     }
+    /**
+     * Setup the return button
+     */
     private void setUpToolBar() {
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
@@ -44,6 +50,9 @@ public class TravelDetails extends android.app.Activity {
             }
         });
     }
+    /**
+     * Find all the needed xml views
+     */
     private void findViews() {
         shortTravelDetails = (ShortTravelDetails) findViewById(R.id.short_travel_details);
         agencyListRow = (AgencyListRow) findViewById(R.id.agency_list_row);
@@ -51,6 +60,9 @@ public class TravelDetails extends android.app.Activity {
         shareBtn=(ImageButton)findViewById(R.id.shareBtn);
     }
 
+    /**
+     * Setup the associated agency in the AgencyListRow
+     */
     private void registerAgencyListener() {
         agencyListRow.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -60,6 +72,9 @@ public class TravelDetails extends android.app.Activity {
         });
     }
 
+    /**
+     * Bind the details and actions to their appropriate views
+     */
     private void bindViews() {
         final Activity travel = retrieveTravelFromIntent(getIntent());
         shortTravelDetails.setTravel(travel);
@@ -77,11 +92,21 @@ public class TravelDetails extends android.app.Activity {
         });
     }
 
+    /**
+     * Retrieve the travel from an intent
+     * @param intent The intent that contains the travel
+     * @return The travel that was contained in the intent
+     */
     private Activity retrieveTravelFromIntent(Intent intent) {
         Bundle bundle = intent.getBundleExtra(Constants.ACTIVITIES_URI_PATH);
         return ProvidableUtils.bundleConvert(Activity.class, bundle);
     }
 
+    /**
+     * Get the associated agency with this travel
+     * @param id the Id of the agency
+     * @return The associated agency
+     */
     private Business getAgencyReference(long id) {
         return RepositoriesFactory
                 .getBusinessesRepository()

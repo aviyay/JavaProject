@@ -30,12 +30,16 @@ import com.bnet.shared.model.entities.Activity;
 import com.bnet.shared.model.entities.Business;
 import com.bnet.shared.model.services.utils.ProvidableUtils;
 import com.bnet.tnet.R;
+import com.bnet.tnet.Router;
 import com.bnet.tnet.model.ActivitySearchFilter;
 import com.bnet.tnet.model.BusinessSearchFilter;
 import com.bnet.tnet.model.FilterDecorator;
 import com.bnet.tnet.model.SearchFilter;
 import com.bnet.tnet.model.UpdatesReceiver;
 
+/**
+ * Manages the navigation drawer, the swipe to refresh, the search and the lists
+ */
 public class MainActivity extends AppCompatActivity {
     private DrawerLayout mDrawer;
     private Toolbar toolbar;
@@ -53,6 +57,9 @@ public class MainActivity extends AppCompatActivity {
 
     private boolean searchMsgShown=false;
 
+    /**
+     * Async reset all the known data, pull everything from the content provider and refresh the views
+     */
     private SwipeRefreshLayout.OnRefreshListener refreshListener = new SwipeRefreshLayout.OnRefreshListener() {
         @Override
         public void onRefresh() {
@@ -72,21 +79,11 @@ public class MainActivity extends AppCompatActivity {
         }
     };
 
-    /*static {
-        new AsyncTask<Void,Void,Void>()
-        {
-            @Override
-            protected Void doInBackground(Void... params) {
-
-                RepositoriesFactory.getBusinessesRepository().addAndReturnAssignedId(EntitiesSamples.makeBusiness());
-                RepositoriesFactory.getBusinessesRepository().addAndReturnAssignedId(EntitiesSamples.makeBusiness2());
-                RepositoriesFactory.getActivitiesRepository().addAndReturnAssignedId(EntitiesSamples.makeActivity());
-                RepositoriesFactory.getActivitiesRepository().addAndReturnAssignedId(EntitiesSamples.makeActivity2());
-                return null;
-            }
-        }.execute();
-    }*/
-
+    /**
+     * ????
+     * @param menu ????
+     * @return ????
+     */
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
@@ -152,6 +149,9 @@ public class MainActivity extends AppCompatActivity {
         selectDrawerItem(nvDrawer.getMenu().findItem(R.id.nav_agencies));
     }
 
+    /**
+     * Find all the needed xml views
+     */
     private void findViews() {
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         mDrawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -160,10 +160,17 @@ public class MainActivity extends AppCompatActivity {
         swipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.swipe_refresh);
     }
 
+    /**
+     * Create a toggle button for the navigation drawer
+     * @return the created toggle button
+     */
     private ActionBarDrawerToggle setupDrawerToggle() {
         return new ActionBarDrawerToggle(this, mDrawer, toolbar, R.string.drawer_open, R.string.drawer_close);
     }
 
+    /**
+     * Setup the swipe-to-refresh service
+     */
     private void setupSwipeRefreshListener() {
         swipeRefreshLayout.setColorSchemeResources(
                 R.color.swipeRefresh1,
@@ -173,10 +180,16 @@ public class MainActivity extends AppCompatActivity {
         swipeRefreshLayout.setOnRefreshListener(refreshListener);
     }
 
+    /**
+     * Run FreshStart
+     */
     private void runFreshStart() {
         UpdatesReceiver.freshStart(this);
     }
 
+    /**
+     * Setup the Agency and Travel adapters for the RecyclerView
+     */
     private void setupAdapters() {
         ProvidableRepository<Activity> activityRepository = RepositoriesFactory.getActivitiesRepository();
         ProvidableRepository<Business> businessRepository = RepositoriesFactory.getBusinessesRepository();
@@ -190,6 +203,9 @@ public class MainActivity extends AppCompatActivity {
         registerAdaptersListeners();
     }
 
+    /**
+     * Register the listeners for when the user clicks on a list item
+     */
     private void registerAdaptersListeners() {
         agenciesAdapter.setOnItemClickListener(new AgenciesAdapter.OnItemClickListener() {
             @Override
@@ -205,16 +221,19 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    private void startActivity(Class activity, Providable providable) {
-
-        Intent intent = new Intent(this, activity);
-
-        Bundle bundle = ProvidableUtils.bundleConvert(providable);
-        intent.putExtra(ProvidableUtils.getURIPath(providable), bundle);
-
-        startActivity(intent);
+    /**
+     * Start a new activity with an attached providable
+     * @param activity The activity to start
+     * @param providable The attached Providable
+     */
+    private void startActivity(Class<? extends android.app.Activity> activity, Providable providable) {
+        Router.getInstance().startActivity(this, activity, providable);
     }
 
+    /**
+     * Setup the navigation drawer items selector
+     * @param navigationView
+     */
     private void registerItemsSelector(NavigationView navigationView) {
         navigationView.setNavigationItemSelectedListener(
                 new NavigationView.OnNavigationItemSelectedListener() {
@@ -226,7 +245,10 @@ public class MainActivity extends AppCompatActivity {
                 });
     }
 
-
+    /**
+     * Handle the selection of a navigation drawer menu item
+     * @param menuItem The selected item
+     */
     public void selectDrawerItem(MenuItem menuItem) {
 
         selectAdapterAndSearchFilter(menuItem.getItemId());
@@ -240,6 +262,10 @@ public class MainActivity extends AppCompatActivity {
         mDrawer.closeDrawers();
     }
 
+    /**
+     * Switch to the appropriate adapter and search filter for the selected navigation drawer menu item
+     * @param itemId The id of the selected navigation drawer menu item
+     */
     void selectAdapterAndSearchFilter(int itemId) {
         RecyclerView.Adapter chosen;
 
@@ -281,36 +307,57 @@ public class MainActivity extends AppCompatActivity {
         recyclerView.setAdapter(chosen);
     }
 
+    /**
+     * Close the application
+     */
     private void closeApp() {
         finish();
         System.exit(0);
     }
 
+    /**
+     * Set the text to filter upon
+     * @param searchText The text to filter upon
+     */
     private void setSearchText(String searchText) {
         currentSearchFilter.setSearchText(searchText);
 
     }
 
+    /**
+     * Delegate the onOptionsItemSelected event to both the toggle button and the super class
+     * @param item The selected item
+     * @return True if the event was handled
+     */
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         return drawerToggle.onOptionsItemSelected(item) || super.onOptionsItemSelected(item);
     }
 
+    /**
+     * Sync the toggle state after onRestoreInstanceState has occurred.
+     * @param savedInstanceState The saved data from last show
+     */
     @Override
     protected void onPostCreate(Bundle savedInstanceState) {
         super.onPostCreate(savedInstanceState);
-        // Sync the toggle state after onRestoreInstanceState has occurred.
         drawerToggle.syncState();
     }
 
+    /**
+     * Pass any configuration change to the drawer toggles
+     * @param newConfig The new configuration
+     */
     @Override
     public void onConfigurationChanged(Configuration newConfig) {
         super.onConfigurationChanged(newConfig);
-        // Pass any configuration change to the drawer toggles
         drawerToggle.onConfigurationChanged(newConfig);
     }
     boolean doubleBackToExitPressedOnce = false;
 
+    /**
+     * Do Return only if the user pressed twice on the return button
+     */
     @Override
     public void onBackPressed() {
         if (doubleBackToExitPressedOnce) {

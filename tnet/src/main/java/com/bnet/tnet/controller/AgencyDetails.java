@@ -26,7 +26,13 @@ import com.bnet.tnet.view.ShortTravelDetails;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 
+/**
+ * An activity to show an agency details
+ */
 public class AgencyDetails extends AppCompatActivity {
+    /**
+     * The agency that we show it's details
+     */
     private Business agency = new Business();
 
 
@@ -42,8 +48,9 @@ public class AgencyDetails extends AppCompatActivity {
     private TextView agencyName;
 
 
-
-
+    /**
+     * The view that will be shown in the bottom sheet window, when the user clicks on an associated travel
+     */
     private ShortTravelDetails shortTravelDetails;
 
     private RecyclerView recyclerView;
@@ -67,6 +74,9 @@ public class AgencyDetails extends AppCompatActivity {
 
     }
 
+    /**
+     * Setup the return and the share buttons
+     */
     private void setUpToolBar() {
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
@@ -86,6 +96,9 @@ public class AgencyDetails extends AppCompatActivity {
         });
     }
 
+    /**
+     * Setup the openMap, callPhone, senEmail and the openLink buttons
+     */
     private void setUpDetailsButtons() {
         (findViewById(R.id.openMap)).setOnClickListener(new View.OnClickListener() {
             @Override
@@ -155,6 +168,12 @@ public class AgencyDetails extends AppCompatActivity {
             }
         });
     }
+
+    /**
+     * Make sure the the url starts with http://www.
+     * @param url The url that should starts with http://www.
+     * @return The fixed url
+     */
     private String addHttpIfNeeded(String url)
     {
         if(!url.startsWith("www.")&& !url.startsWith("http://") && !url.startsWith("https://")){
@@ -165,11 +184,19 @@ public class AgencyDetails extends AppCompatActivity {
         }
         return url;
     }
+
+    /**
+     * Retrieve the agency to show from an intent parameter
+     * @param intent The intent to retrieve the agency from
+     */
     private void retrieveBusinessFromIntent(Intent intent) {
         Bundle bundle = intent.getBundleExtra(Constants.BUSINESSES_URI_PATH);
         agency = ProvidableUtils.bundleConvert(Business.class, bundle);
     }
 
+    /**
+     * Find all the needed xml views
+     */
     private void findViews() {
         recyclerView = (RecyclerView) findViewById(R.id.recycler_view);
         shortTravelDetails = (ShortTravelDetails) findViewById(R.id.short_travel_details);
@@ -186,6 +213,9 @@ public class AgencyDetails extends AppCompatActivity {
 
     }
 
+    /**
+     * Bind the agency details to their appropriate views
+     */
     private void bindAgencyDetails() {
         toolbar.setTitle(agency.getName());
         agencyStreet.setText(agency.getAddress().toString());
@@ -194,6 +224,10 @@ public class AgencyDetails extends AppCompatActivity {
         agencyLink.setText(agency.getLinkToWebsite());
         agencyName.setText(agency.getName());
     }
+
+    /**
+     * Setup the bottom sheet
+     */
     private void setupBottomSheetBehavior() {
         View bottomSheet = findViewById(R.id.bottom_sheet);
         mBottomSheetBehavior = BottomSheetBehavior.from(bottomSheet);
@@ -201,6 +235,9 @@ public class AgencyDetails extends AppCompatActivity {
         mBottomSheetBehavior.setState(BottomSheetBehavior.STATE_HIDDEN);
     }
 
+    /**
+     * Setup the adapter to showprovide all the associated travels with the agency
+     */
     private void setupTravelsAdapter() {
         FilterDecorator<Activity> myTravels = getMyTravels();
 
@@ -224,14 +261,20 @@ public class AgencyDetails extends AppCompatActivity {
                 return item.getBusinessId() == agency.getId();
             }
         };
-
         return new FilterDecorator<>(RepositoriesFactory.getActivitiesRepository(), myTravelsFilter);
     }
 
+    /**
+     * Bind a travel to the shortTravelDetails in the bottom sheet
+     * @param travel The travel to bind
+     */
     private void bindTravelDetails(Activity travel) {
         shortTravelDetails.setTravel(travel);
     }
 
+    /**
+     * Show the bottom sheet (to the user)
+     */
     private void showBottomSheet() {
         mBottomSheetBehavior.setState(BottomSheetBehavior.STATE_EXPANDED);
     }

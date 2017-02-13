@@ -20,16 +20,17 @@ import android.widget.Toast;
 import com.bnet.tnet.R;
 
 /**
- * Created by שי on 04/02/2017.
+ * This fragment helps with surfing the web
  */
-
 public class WebFragment extends Fragment {
 
     private ProgressBar webViewProgressBar;
     private WebView agencyWebView;
-    public WebFragment(){
+
+    public WebFragment() {
 
     }
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -40,6 +41,7 @@ public class WebFragment extends Fragment {
         return inflater.inflate(R.layout.fragment_web, container, false);
 
     }
+
 
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
@@ -65,33 +67,56 @@ public class WebFragment extends Fragment {
         openLinkInWebView(link);
     }
 
-    private void findViews()
-    {
-        webViewProgressBar=(ProgressBar)getActivity().findViewById(R.id.webViewProgressBar);
-        agencyWebView=(WebView) getActivity().findViewById(R.id.agencyWebView);
+    /**
+     * Find the needed xml views
+     */
+    private void findViews() {
+        webViewProgressBar = (ProgressBar) getActivity().findViewById(R.id.webViewProgressBar);
+        agencyWebView = (WebView) getActivity().findViewById(R.id.agencyWebView);
 
     }
+
+    /**
+     * Open the given link in the WebView
+     *
+     * @param link The link to open
+     */
     private void openLinkInWebView(String link) {
         agencyWebView.loadUrl(addHttpIfNeeded(link));
     }
+
+    /**
+     * Make sure the the url starts with http://www.
+     *
+     * @param url The url that should starts with http://www.
+     * @return The fixed url
+     */
     private String addHttpIfNeeded(String url) {
-        if(!url.startsWith("www.")&& !url.startsWith("http://") && !url.startsWith("https://")){
-            url = "www."+url;
+        if (!url.startsWith("www.") && !url.startsWith("http://") && !url.startsWith("https://")) {
+            url = "www." + url;
         }
-        if(!url.startsWith("http://") && !url.startsWith("https://")){
-            url = "http://"+url;
+        if (!url.startsWith("http://") && !url.startsWith("https://")) {
+            url = "http://" + url;
         }
         return url;
     }
-    public boolean goBack()
-    {
-        if(agencyWebView.canGoBack()) {
+
+    /**
+     * Do back in the web page
+     *
+     * @return True if the operation was successful
+     */
+    public boolean goBack() {
+        if (agencyWebView.canGoBack()) {
             agencyWebView.goBack();
             return true;
         }
         return false;
     }
 
+    /**
+     * Go to the original link
+     */
     public void goHome() {
         agencyWebView.loadUrl(getArguments().getString("LINK"));
     }
