@@ -13,6 +13,8 @@ import com.bnet.data.R;
 
 public class Menu extends Activity {
 
+    boolean doubleBackToExitPressedOnce = false;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -20,24 +22,11 @@ public class Menu extends Activity {
         initializeAddBusinessButton();
         initializeAddActivityButton();
         initializeSignOutButton();
-       /* new AsyncTask<Void,Void,Void>()
-        {
-            @Override
-            protected Void doInBackground(Void... params) {
-                boolean result=RepositoriesFactory.getActivitiesRepository().isSomethingNew();
-                RepositoriesFactory.getActivitiesRepository().getAllNews();
-                boolean r=RepositoriesFactory.getActivitiesRepository().isSomethingNew();
-
-                boolean result2=RepositoriesFactory.getBusinessesRepository().isSomethingNew();
-                RepositoriesFactory.getBusinessesRepository().getAllNews();
-                boolean r2=RepositoriesFactory.getBusinessesRepository().isSomethingNew();
-                return null;
-            }
-        }.execute();*/
-
-
     }
 
+    /**
+     * Initialize Add Business Button
+     */
     private void initializeAddBusinessButton() {
         findViewById(R.id.addBusinessBtn).setOnClickListener(new View.OnClickListener() {
             @Override
@@ -47,6 +36,10 @@ public class Menu extends Activity {
             }
         });
     }
+
+    /**
+     * Initialize Add Activity Button
+     */
     private void initializeAddActivityButton() {
         findViewById(R.id.addActivityBtn).setOnClickListener(new View.OnClickListener() {
             @Override
@@ -56,6 +49,10 @@ public class Menu extends Activity {
             }
         });
     }
+
+    /**
+     * Initialize Sign Out Button
+     */
     private void initializeSignOutButton() {
         findViewById(R.id.signOutBtn).setOnClickListener(new View.OnClickListener() {
             @Override
@@ -68,7 +65,6 @@ public class Menu extends Activity {
             }
         });
     }
-    boolean doubleBackToExitPressedOnce = false;
 
     @Override
     public void onBackPressed() {

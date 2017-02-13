@@ -44,8 +44,7 @@ public class PhpHelper {
      * @return the response from the server
      * @throws IOException if something goes wrong with the Http request
      */
-    public static String POST(String url, Map<String, Object> params) throws
-            IOException {
+    public static String POST(String url, Map<String, Object> params) throws IOException {
         //Convert Map<String,Object> into key=value&key=value pairs.
         StringBuilder postData = new StringBuilder();
         for (Map.Entry<String,Object> param : params.entrySet()) {
