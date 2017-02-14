@@ -32,7 +32,10 @@ public class ProvidableUtils {
         initializeBusinessRecord();
         initializeActivityRecord();
     }
-    //TODO
+
+    /**
+     * Initialize the business providable record in the providables records
+     */
     private static void initializeBusinessRecord() {
         ProvidableRecord<Business> businessRecord = new ProvidableRecord<>();
         businessRecord.repository = RepositoriesFactory.getBusinessesRepository();
@@ -42,7 +45,10 @@ public class ProvidableUtils {
 
         records.put(Business.class, businessRecord);
     }
-    //TODO
+
+    /**
+     * Initialize the activity providable record in the providables records
+     */
     private static void initializeActivityRecord() {
         ProvidableRecord<Activity> activityRecord = new ProvidableRecord<>();
         activityRecord.repository = RepositoriesFactory.getActivitiesRepository();
@@ -141,7 +147,10 @@ public class ProvidableUtils {
         return (T) records.get(type).bundleConverter.convertBack(bundle);
     }
 
-    //TODO
+    /**
+     * Get a list of all the classes of known providables in the system (currently it's just business and activity)
+     * @return The list of all the classes of known providables in the system
+     */
     public static List<Class<? extends Providable>> getAllProvidable() {
         ArrayList<Class<? extends Providable>> result = new ArrayList<>();
 

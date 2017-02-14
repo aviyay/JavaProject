@@ -236,7 +236,7 @@ public class AgencyDetails extends AppCompatActivity {
     }
 
     /**
-     * Setup the adapter to showprovide all the associated travels with the agency
+     * Setup the associated travels adapter
      */
     private void setupTravelsAdapter() {
         FilterDecorator<Activity> myTravels = getMyTravels();
@@ -254,6 +254,10 @@ public class AgencyDetails extends AppCompatActivity {
         recyclerView.setAdapter(adapter);
     }
 
+    /**
+     * Get a repository that is filtered to provide only the associated travels with the agency
+     * @return
+     */
     private FilterDecorator<Activity> getMyTravels() {
         Filter<Activity> myTravelsFilter = new Filter<Activity>() {
             @Override
