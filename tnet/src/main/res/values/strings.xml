@@ -18,7 +18,7 @@
     <string name="exit_msg">Are you sure you want to exit?</string>
     <string name="no">No</string>
     <string name="yes">Yes</string>
-    <string name="travels_from">Travels from</string>
+    <string name="travels_from">Travels from </string>
     <string name="share_msg_trip" formatted="false">Check out this trip:%s - %s\n%s\nPrice: %s$</string>
     <string name="share_trip_to">Share trip to…</string>
     <string name="share_agency_to">Share agency to…</string>

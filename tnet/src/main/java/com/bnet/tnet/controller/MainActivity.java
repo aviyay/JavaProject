@@ -353,6 +353,7 @@ public class MainActivity extends AppCompatActivity {
         super.onConfigurationChanged(newConfig);
         drawerToggle.onConfigurationChanged(newConfig);
     }
+
     boolean doubleBackToExitPressedOnce = false;
 
     /**

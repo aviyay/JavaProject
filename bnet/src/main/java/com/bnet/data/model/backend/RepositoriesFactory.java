@@ -10,12 +10,6 @@ import com.bnet.shared.model.services.utils.ProvidableUtils;
 public class RepositoriesFactory extends com.bnet.shared.model.backend.RepositoriesFactory {
     private static AccountsRepository accountsRepository = new PhpAccountsRepository();
 
-
-    /*static {
-        moveToCloud();
-    }
-*/
-
     /**
      * Move the repositories to the cloud repositories
      */

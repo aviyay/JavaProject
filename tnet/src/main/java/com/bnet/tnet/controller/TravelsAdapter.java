@@ -53,6 +53,7 @@ class TravelsAdapter extends RecyclerView.Adapter<TravelsAdapter.TravelViewHolde
      * The subscribed listener
      */
     private OnItemClickListener listener;
+
     /**
      * The data access repository to retrieve data from
      */

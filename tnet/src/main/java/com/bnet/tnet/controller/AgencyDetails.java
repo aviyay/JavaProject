@@ -35,8 +35,6 @@ public class AgencyDetails extends AppCompatActivity {
      */
     private Business agency = new Business();
 
-
-
     private Toolbar toolbar;
 
     private ImageButton shareBtn;
@@ -46,7 +44,6 @@ public class AgencyDetails extends AppCompatActivity {
     private TextView agencyEmail;
     private TextView agencyLink;
     private TextView agencyName;
-
 
     /**
      * The view that will be shown in the bottom sheet window, when the user clicks on an associated travel
@@ -174,8 +171,7 @@ public class AgencyDetails extends AppCompatActivity {
      * @param url The url that should starts with http://www.
      * @return The fixed url
      */
-    private String addHttpIfNeeded(String url)
-    {
+    private String addHttpIfNeeded(String url) {
         if(!url.startsWith("www.")&& !url.startsWith("http://") && !url.startsWith("https://")){
             url = "www."+url;
         }
