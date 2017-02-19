@@ -18,6 +18,9 @@ public class ShortTravelDetails extends LinearLayout {
     private TextView travelEndTime;
     private TextView travelDescription;
 
+    /**
+     * The view's associated Travel
+     */
     private Activity travel;
 
     public ShortTravelDetails(Context context) {
@@ -35,18 +38,27 @@ public class ShortTravelDetails extends LinearLayout {
         initializeView(context);
     }
 
+    /**
+     * Initialize the view of the ShortTravelDetails
+     * @param context The context of the view
+     */
     private void initializeView(Context context) {
         inflateViews(context);
         findViews();
     }
-
+    /**
+     * Inflate the ShortTravelDetails
+     * @param context The context of the view
+     */
     private void inflateViews(Context context) {
         LayoutInflater inflater = (LayoutInflater) context
                 .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
         inflater.inflate(R.layout.short_travel_details, this);
     }
-
+    /**
+     * Find the view from the layout and initialize the local variables
+     */
     private void findViews() {
         travelCountry=(TextView)findViewById(R.id.travelCountry);
         travelPrice=(TextView)findViewById(R.id.travelPrice);
@@ -56,16 +68,24 @@ public class ShortTravelDetails extends LinearLayout {
         travelEndTime=(TextView)findViewById(R.id.travelEndTime);
         travelDescription=(TextView)findViewById(R.id.travelDescription);
     }
-
+    /**
+     * Get the associated travel of this ShortTravelDetails
+     * @return The travel of the ShortTravelDetails
+     */
     public Activity getTravel() {
         return travel;
     }
-
+    /**
+     * Set the associated agency of this ShortTravelDetails
+     * @param travel The agency to be set
+     */
     public void setTravel(Activity travel) {
         this.travel = travel;
         bindViews();
     }
-
+    /**
+     * Bind the views with the Travel values
+     */
     private void bindViews() {
         travelCountry.setText(travel.getCountry());
         travelPrice.setText(String.format("%.2f", travel.getPrice()));
